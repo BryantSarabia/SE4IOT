@@ -5,7 +5,7 @@
   "main": "src/app.js",
   "type": "module",
   "scripts": {
-    "start": "node --watch src/app.js",
+    "start:mongodb": "node --watch src/servers/mongodb-server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],

@@ -1,11 +1,11 @@
-import { MONGODB_CONFIG } from './config'
-import { mongodbClient } from './services/mongodb-client'
+import { MONGODB_CONFIG } from '../config.js'
+import { mongodbClient } from '../services/mongodb-client.js'
 
 const mongodbUserPreferencesCollection = MONGODB_CONFIG.collectionName
 const DefaultUserPreferences = MONGODB_CONFIG.user_preferences
 
 async function insertUserPreferencesIfNotExists () {
-  const userPreferences = mongodbClient.getDB().collection(mongodbUserPreferencesCollection).find({}).toArray()
+  const userPreferences = await mongodbClient.getDB().collection(mongodbUserPreferencesCollection).find({}).toArray()
   if (userPreferences.length === 0) {
     await mongodbClient.insertDocument(mongodbUserPreferencesCollection, DefaultUserPreferences)
     console.log(`User preferences inserted in collection '${mongodbUserPreferencesCollection}'`)

@@ -1,5 +1,5 @@
 import { Router } from 'express'
-import { UserPreferencesController } from '../controllers/userPreferences'
+import { UserPreferencesController } from '../controllers/userPreferences.js'
 export const createUserPreferencesRouter = ({ userPreferencesModel }) => {
   const userPreferencesController = new UserPreferencesController({ userPreferencesModel })
   const router = Router()

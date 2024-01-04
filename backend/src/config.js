@@ -1,5 +1,5 @@
 export const MONGODB_CONFIG = {
-  dbUrl: process.env.mongodbURL ?? 'mongodb://localhost:27017',
+  dbUrl: process.env.mongodbURL ?? 'mongodb://127.0.0.1:27017',
   dbName: 'mydb',
   collectionName: 'user_preferences',
   user_preferences: {

@@ -1,7 +1,7 @@
 // backend/src/services/mongodb-client.js
 
 import { MongoClient } from 'mongodb'
-import { MONGODB_CONFIG } from '../config'
+import { MONGODB_CONFIG } from '../config.js'
 
 class MongoDBClient {
   constructor () {

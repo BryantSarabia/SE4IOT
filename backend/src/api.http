@@ -1,0 +1,21 @@
+### Get user preferences
+GET http://localhost:3000/user-preferences
+
+### Update user preferences
+PUT http://localhost:3000/user-preferences
+Content-Type: application/json
+
+{
+    "lightIntensityThreshold": "30"
+}
+
+### Delete user preferences
+DELETE http://localhost:3000/user-preferences
+
+### Insert User Preferences
+POST http://localhost:3000/user-preferences
+Content-Type: application/json
+
+{
+    "lightIntensityThreshold": "54"
+}
