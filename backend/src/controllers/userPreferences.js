@@ -1,3 +1,4 @@
+import { mqttClient } from '../services/mqtt-client.js'
 export class UserPreferencesController {
   constructor ({ userPreferencesModel }) {
     this.userPreferencesModel = userPreferencesModel
@@ -26,6 +27,7 @@ export class UserPreferencesController {
     try {
       const userPreferences = req.body
       const document = await this.userPreferencesModel.updateUserPreferences(userPreferences)
+      mqttClient.publish('user-preferences', JSON.stringify(userPreferences))
       return res.status(200).json({ message: 'User preferences updated successfully.', userPreferences: document })
     } catch (error) {
       next(error)

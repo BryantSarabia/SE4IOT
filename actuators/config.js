@@ -1,12 +1,3 @@
-export const MONGODB_CONFIG = {
-  dbUrl: process.env.mongodbURL ?? 'mongodb://127.0.0.1:27017',
-  dbName: 'mydb',
-  collectionName: 'user_preferences',
-  user_preferences: {
-    lightIntensityThreshold: 50
-  }
-}
-
 export const SERVER_CONFIG = {
   url: process.env.url ?? 'http://localhost',
   port: process.env.port ?? 3000
