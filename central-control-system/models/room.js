@@ -1,7 +1,10 @@
 export class Room {
   constructor (name) {
     this.name = name
-    this.values = {}
+    this.values = {
+      isLightOn: false
+      // isAirConditionerOn: false,
+    }
     this.sensors = []
   }
 

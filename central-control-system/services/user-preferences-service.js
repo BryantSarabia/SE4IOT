@@ -1,6 +1,6 @@
 // backend/src/central-control/services/user-preferences-service.js
 
-import { SERVER_CONFIG } from '../../config.js'
+import { SERVER_CONFIG } from '../config.js'
 export async function getUserPreferencesService () {
   try {
     const response = await fetch(`${SERVER_CONFIG.url}:${SERVER_CONFIG.port}/user-preferences`)

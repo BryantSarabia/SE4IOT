@@ -1,5 +1,6 @@
-import { SENSOR_TYPES } from '../consts/sensorType'
-import { Rule } from './rule'
+import { ACTUATOR_TYPES } from '../consts/actuatorTypes.js'
+import { SENSOR_TYPES } from '../consts/sensorType.js'
+import { Rule } from './rule.js'
 
 export class LightRule extends Rule {
   constructor () {
@@ -8,23 +9,26 @@ export class LightRule extends Rule {
 
   evaluate ({ sensorData, userPreferences, room }) {
     const { value, type } = sensorData
-    const { lightLevelThreshold } = userPreferences
-    const [sensor] = room.getSensorByType(SENSOR_TYPES.MOTION)
+    const lightIntensityThreshold = Number(userPreferences.lightIntensityThreshold)
+    const [sensor] = room.getSensorsByType(SENSOR_TYPES.MOTION)
+    if (!sensor) return null
+    const actuatorType = ACTUATOR_TYPES[type]
     // Get motion sensor data of the room
     const { value: motionDetected } = sensor.getData()
+    console.log(sensor.getData())
     let action = null
-    if (value < lightLevelThreshold && motionDetected) {
+    if (value < lightIntensityThreshold && motionDetected) {
       action = {
-        topic: `actuators/${room.name}/${type}/increase`,
+        topic: `actuators/${room.name}/${actuatorType}/increase`,
         message: {
-          value: lightLevelThreshold
+          value: lightIntensityThreshold - value // Increase the light level to the threshold
         }
       }
-    } else if (value > lightLevelThreshold && motionDetected) {
+    } else if (value > lightIntensityThreshold && motionDetected) {
       action = {
-        topic: `actuators/${room.name}/${type}/decrease`,
+        topic: `actuators/${room.name}/${actuatorType}/decrease`,
         message: {
-          value: lightLevelThreshold
+          value: value - lightIntensityThreshold // Decrease the light level to the threshold
         }
       }
     }

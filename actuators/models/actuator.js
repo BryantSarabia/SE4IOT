@@ -1,11 +1,10 @@
 export class Actuator {
-  constructor ({ type, room, value }) {
+  constructor ({ type, room }) {
     if (this.constructor === Actuator) {
       throw new Error('Abstract class "Actuator" cannot be instantiated directly.')
     }
     this.type = type
     this.room = room
-    this.value = value
   }
 
   initialize () {

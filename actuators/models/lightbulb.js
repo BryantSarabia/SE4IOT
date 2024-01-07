@@ -1,11 +1,11 @@
-import { mqttClient } from '../services/mqtt-client'
-import { Actuator } from './actuator'
-
+import { ACTUATOR_TYPES } from '../consts/actuatorTypes.js'
+import { mqttClient } from '../services/mqtt-client.js'
+import { Actuator } from './actuator.js'
 export class Lightbulb extends Actuator {
-  constructor ({ type, room, value }) {
-    super({ type, room, value })
+  constructor ({ room }) {
+    const type = ACTUATOR_TYPES.LIGHTBULB
+    super({ type, room })
     this.topic = `actuators/${room.name}/${type}`
-    this.initialize()
   }
 
   initialize () {
@@ -13,16 +13,18 @@ export class Lightbulb extends Actuator {
   }
 
   onMessage (topic, message) {
+    // topic: actuators/<room>/<type>/<action>
+    if (!topic) return
     const [action] = topic.split('/').slice(3)
     if (!this[action]) return
-    this[action](message)
+    this[action]({ message })
   }
 
-  increase (message) {
+  increase ({ message }) {
     mqttClient.publish(`${this.topic}/increase`, message)
   }
 
-  decrease (message) {
+  decrease ({ message }) {
     mqttClient.publish(`${this.topic}/decrease`, message)
   }
 
@@ -31,6 +33,6 @@ export class Lightbulb extends Actuator {
   }
 
   off () {
-    mqttClient.publish(`${this.topic}/on`)
+    mqttClient.publish(`${this.topic}/off`)
   }
 }
