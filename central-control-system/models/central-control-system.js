@@ -58,6 +58,7 @@ export class CentralControlSystem {
 
   handleSensorActivation (topic) {
     const subscribedTopic = topic.replace('/#', '')
+
     return (topic, message) => {
     // topic: sensors/activate/<room>/<type>/<id>
       if (!topic || !topic.includes(subscribedTopic)) return
@@ -96,9 +97,13 @@ export class CentralControlSystem {
       if (!topic || !topic.includes(subscribedTopic)) return
       const [room, type, id] = topic.split('/').slice(2)
       if (type && room && id && message) {
-        const payload = JSON.parse(message.toString())
-        console.log(payload)
-        this.updateSensorData({ type, roomName: room, id, message: payload })
+        try {
+          const payload = JSON.parse(message.toString())
+          // console.log(payload)
+          this.updateSensorData({ type, roomName: room, id, message: payload })
+        } catch (error) {
+          console.log(error.message)
+        }
       }
     }
   }
@@ -122,7 +127,7 @@ export class CentralControlSystem {
       const rule = this.getRule(type)
       const action = rule.evaluate({ sensorData: sensor.getData(), userPreferences: this.userPreferences, room })
       if (!action) return
-      console.log(action)
+      console.log('Action to perform', action)
       mqttClient.publish(action.topic, JSON.stringify(action.message))
     } catch (error) {
       console.log(error.message)

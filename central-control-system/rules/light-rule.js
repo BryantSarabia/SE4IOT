@@ -15,7 +15,6 @@ export class LightRule extends Rule {
     const actuatorType = ACTUATOR_TYPES[type]
     // Get motion sensor data of the room
     const { value: motionDetected } = sensor.getData()
-    console.log(sensor.getData())
     let action = null
     if (value < lightIntensityThreshold && motionDetected) {
       action = {

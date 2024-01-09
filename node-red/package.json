@@ -1,0 +1,16 @@
+{
+  "name": "red",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start":   "set MQTT_BROKER=localhost&& set MQTT_BROKER_PORT=1883&& set ACTUATORS_TOPIC=actuators/#&& node-red --s settings.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "node-red": "3.1.3"
+  }
+}

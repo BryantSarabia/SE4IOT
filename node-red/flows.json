@@ -1,0 +1,331 @@
+[
+    {
+        "id": "916b9dbcf5ad3e00",
+        "type": "tab",
+        "label": "Initialize variables",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "755838468578bf48",
+        "type": "tab",
+        "label": "Init sensors",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "83a9756fa4a9cf54",
+        "type": "tab",
+        "label": "Flow 3",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "e08a334d8688ae84",
+        "type": "mqtt-broker",
+        "name": "",
+        "broker": "${MQTT_BROKER}",
+        "port": "${MQTT_BROKER_PORT}",
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": "4",
+        "keepalive": "60",
+        "cleansession": true,
+        "autoUnsubscribe": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthRetain": "false",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closeRetain": "false",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willRetain": "false",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    },
+    {
+        "id": "c9b6bf2b60f41964",
+        "type": "mqtt-broker",
+        "name": "",
+        "broker": "localhost",
+        "port": "1883",
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": "4",
+        "keepalive": "60",
+        "cleansession": true,
+        "autoUnsubscribe": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthRetain": "false",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closeRetain": "false",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willRetain": "false",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    },
+    {
+        "id": "df5f40a3d923ee29",
+        "type": "function",
+        "z": "916b9dbcf5ad3e00",
+        "name": "Set rooms",
+        "func": "const SENSOR_TYPES = {\n    LIGHT: 'light',\n    MOTION: 'motion',\n    TEMPERATURE: 'temperature'\n}\n\nconst MEASURE_UNITS = {\n    [SENSOR_TYPES.LIGHT]: 'lm',\n    [SENSOR_TYPES.TEMPERATURE]: '°C',\n    [SENSOR_TYPES.MOTION]: 'boolean'\n}\n\nglobal.set('sensorTypes', SENSOR_TYPES)\nglobal.set('measureUnits', MEASURE_UNITS)\n\n\nconst ROOMS = [\n    {\n        roomName: 'living-room',\n        sensors: [\n            {\n                type: SENSOR_TYPES.LIGHT,\n                measureUnit: MEASURE_UNITS[SENSOR_TYPES.LIGHT],\n                value: 0\n            },\n            {\n                type: SENSOR_TYPES.MOTION,\n                measureUnit: MEASURE_UNITS[SENSOR_TYPES.MOTION],\n                value: false\n            }\n        ]\n    }\n    // {\n    //     roomName: 'kitchen',\n    //     sensors: [{\n    //         type: SENSOR_TYPES.LIGHT,\n    //         measureUnit: MEASURE_UNITS[SENSOR_TYPES.LIGHT],\n    //         value: 0\n    //     },\n    //     {\n    //         type: SENSOR_TYPES.MOTION,\n    //         measureUnit: MEASURE_UNITS[SENSOR_TYPES.MOTION],\n    //         value: false\n    //     }\n    //     ]\n    // },\n    // {\n    //     roomName: 'bathroom',\n    //     sensors: [{\n    //         type: SENSOR_TYPES.LIGHT,\n    //         measureUnit: MEASURE_UNITS[SENSOR_TYPES.LIGHT],\n    //         value: 0\n    //     },\n    //     {\n    //         type: SENSOR_TYPES.MOTION,\n    //         measureUnit: MEASURE_UNITS[SENSOR_TYPES.MOTION],\n    //         value: false\n    //     }\n    //     ]\n    // },\n    // {\n    //     roomName: 'bedroom',\n    //     sensors: [{\n    //         type: SENSOR_TYPES.LIGHT,\n    //         measureUnit: MEASURE_UNITS[SENSOR_TYPES.LIGHT],\n    //         value: 0\n    //     },\n    //     {\n    //         type: SENSOR_TYPES.MOTION,\n    //         measureUnit: MEASURE_UNITS[SENSOR_TYPES.MOTION],\n    //         value: false\n    //     }\n    //     ]\n    // },\n    // {\n    //     roomName: 'office',\n    //     sensors: [{\n    //         type: SENSOR_TYPES.LIGHT,\n    //         measureUnit: MEASURE_UNITS[SENSOR_TYPES.LIGHT],\n    //         value: 0\n    //     },\n    //     {\n    //         type: SENSOR_TYPES.MOTION,\n    //         measureUnit: MEASURE_UNITS[SENSOR_TYPES.MOTION],\n    //         value: false\n    //     }\n    //     ]\n    // },\n    // {\n    //     roomName: 'garage',\n    //     sensors: [{\n    //         type: SENSOR_TYPES.LIGHT,\n    //         measureUnit: MEASURE_UNITS[SENSOR_TYPES.LIGHT],\n    //         value: 0\n    //     },\n    //     {\n    //         type: SENSOR_TYPES.MOTION,\n    //         measureUnit: MEASURE_UNITS[SENSOR_TYPES.MOTION],\n    //         value: false\n    //     }\n    //     ]\n    // },\n    // {\n    //     roomName: 'garden',\n    //     sensors: [{\n    //         type: SENSOR_TYPES.LIGHT,\n    //         measureUnit: MEASURE_UNITS[SENSOR_TYPES.LIGHT],\n    //         value: 0\n    //     },\n    //     {\n    //         type: SENSOR_TYPES.MOTION,\n    //         measureUnit: MEASURE_UNITS[SENSOR_TYPES.MOTION],\n    //         value: false\n    //     }\n    //     ]\n    // }\n]\nconst roomKey = global.get('roomKey')\n\nglobal.set(roomKey, ROOMS)\n\nreturn msg",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 650,
+        "y": 80,
+        "wires": [
+            [
+                "c623a22e0f8f2072"
+            ]
+        ]
+    },
+    {
+        "id": "fc03d7aeb9681b90",
+        "type": "inject",
+        "z": "916b9dbcf5ad3e00",
+        "name": "Initialize Global Variable",
+        "props": [
+            {
+                "p": "payload.roomKey",
+                "v": "rooms",
+                "vt": "str"
+            },
+            {
+                "p": "payload.activateSensorTopic",
+                "v": "sensors/activate",
+                "vt": "str"
+            },
+            {
+                "p": "payload.dataSensorTopic",
+                "v": "sensors/data",
+                "vt": "str"
+            },
+            {
+                "p": "payload.actuatorsTopic",
+                "v": "actuators/#",
+                "vt": "str"
+            },
+            {
+                "p": "payload.broker",
+                "v": "{\"broker\":\"localhost\",\"port\":1883,\"force\":true}",
+                "vt": "json"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 180,
+        "y": 80,
+        "wires": [
+            [
+                "ab94d42d03980f77"
+            ]
+        ]
+    },
+    {
+        "id": "c623a22e0f8f2072",
+        "type": "link out",
+        "z": "916b9dbcf5ad3e00",
+        "name": "Global Var Initialized",
+        "mode": "link",
+        "links": [
+            "b5678455cca2a097"
+        ],
+        "x": 865,
+        "y": 80,
+        "wires": []
+    },
+    {
+        "id": "ab94d42d03980f77",
+        "type": "change",
+        "z": "916b9dbcf5ad3e00",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "roomKey",
+                "pt": "global",
+                "to": "payload.roomKey",
+                "tot": "msg"
+            },
+            {
+                "t": "set",
+                "p": "dataSensorTopic",
+                "pt": "global",
+                "to": "payload.dataSensorTopic",
+                "tot": "msg"
+            },
+            {
+                "t": "set",
+                "p": "actuatorsTopic",
+                "pt": "global",
+                "to": "payload.actuatorsTopic",
+                "tot": "msg"
+            },
+            {
+                "t": "set",
+                "p": "activateSensorTopic",
+                "pt": "global",
+                "to": "payload.activateSensorTopic",
+                "tot": "msg"
+            },
+            {
+                "t": "set",
+                "p": "broker",
+                "pt": "global",
+                "to": "payload.broker",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 420,
+        "y": 80,
+        "wires": [
+            [
+                "df5f40a3d923ee29"
+            ]
+        ]
+    },
+    {
+        "id": "b5678455cca2a097",
+        "type": "link in",
+        "z": "755838468578bf48",
+        "name": "Global Var Initialized",
+        "links": [
+            "c623a22e0f8f2072"
+        ],
+        "x": 145,
+        "y": 280,
+        "wires": [
+            [
+                "9b279c26c577b1c5"
+            ]
+        ]
+    },
+    {
+        "id": "9b279c26c577b1c5",
+        "type": "function",
+        "z": "755838468578bf48",
+        "name": "Initialize sensors",
+        "func": "const SENSOR_TYPES = global.get('sensorTypes')\nconst MEASURE_UNITS = global.get('measureUnits')\n\nclass Sensor {\n  constructor ({ type, room, id, value, measureUnit, randomProbability }) {\n    if (this.constructor === Sensor) {\n      throw new Error('Abstract class \"Sensor\" cannot be instantiated directly.')\n    }\n    this.type = type\n    this.room = room\n    this.id = id\n    this.value = value\n    this.measureUnit = measureUnit\n    this.randomProbability = randomProbability\n  }\n\n  getData () {\n    return {\n      type: this.type,\n      room: this.room,\n      id: this.id,\n      value: this.value,\n      measureUnit: this.measureUnit\n    }\n  }\n\n  generateData(){\n    throw new Error(\"Method not supported\")\n  }\n\n  updateValue ({ value }) {\n    if (value === null || value === undefined) return\n    this.value = value\n  }\n}\n\nclass LightSensor extends Sensor {\n  constructor ({ room, id, value = null, randomProbability = 50 }) {\n    const type = SENSOR_TYPES.LIGHT\n    const measureUnit = MEASURE_UNITS[type]\n    super({ type: SENSOR_TYPES.LIGHT, room, id, value, measureUnit, randomProbability })\n  }\n\n  generateData(){\n    const by = 2\n    const probability = Math.random() * 100\n    if(probability > this.randomProbability) {\n      const shouldIncrease = (Math.random() * 100) >= 50\n      return shouldIncrease ? this.value + by : this.value - by\n    }\n    return this.value\n  }\n}\n\nclass MotionSensor extends Sensor {\n  constructor({ room, id, value = null, randomProbability = 40 }) {\n    const type = SENSOR_TYPES.LIGHT\n    const measureUnit = MEASURE_UNITS[type]\n    super({ type: SENSOR_TYPES.MOTION, room, id, value, measureUnit, randomProbability })\n  }\n\n    generateData(){\n    const probability = Math.random() * 100\n    if(probability > this.randomProbability) {\n      return !this.value\n    }\n    return this.value\n  }\n}\n\nclass SensorFactory {\n  sensors = {\n    [SENSOR_TYPES.LIGHT]: LightSensor,\n    [SENSOR_TYPES.MOTION]: MotionSensor\n  }\n\n  create({type, room, id}) {\n    if (!this.sensors[type]) {\n      throw new Error(`Sensor type ${type} is not supported.`)\n    }\n    return new this.sensors[type]({ room, id })\n  }\n}\n\nconst sensorFactory = new SensorFactory()\n\nconst roomKey = global.get('roomKey')\nconst rooms = global.get(roomKey)\nconst activateTopic = global.get('activateSensorTopic')\n\nfor(const room of rooms) {\n    const {roomName, sensors} = room\n    let id = 0\n    for(const sensor of sensors){\n      const sens = sensorFactory.create({ type: sensor.type, room: roomName, id })\n      const key = `${roomName}/${sensor.type}/${sens.id}`\n      flow.set(key, sens);\n      // Publish initialized data to the topic\n      msg.topic = `${activateTopic}/${roomName}/${sensor.type}/${id}`;\n      msg.payload = { sensor: sens, roomName};\n        node.send(msg);\n        id++\n    }\n}\nreturn",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 350,
+        "y": 280,
+        "wires": [
+            [
+                "3003505d4d4b64f1",
+                "485036f211773d50",
+                "05d6ff2edfc3f55f"
+            ]
+        ]
+    },
+    {
+        "id": "485036f211773d50",
+        "type": "mqtt out",
+        "z": "755838468578bf48",
+        "name": "Activate Sensor",
+        "topic": "",
+        "qos": "2",
+        "retain": "false",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "e08a334d8688ae84",
+        "x": 620,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "3003505d4d4b64f1",
+        "type": "function",
+        "z": "755838468578bf48",
+        "name": "Generate Data Loop",
+        "func": "const {sensor, roomName} = msg.payload\nconst dataSensorTopic = global.get(\"dataSensorTopic\")\nconst sensorKey = `${roomName}/${sensor.type}/${sensor.id}`\nconst topic = `${dataSensorTopic}/${sensorKey}`\nconst messageRate = 5000\nfunction sendData() {\n    const sensor = flow.get(sensorKey)\n    const value = sensor.generateData()\n    sensor.updateValue( {value} )\n    const message = {topic, payload: sensor.getData()}\n    flow.set(sensorKey, sensor)\n    node.send(message)\n}\n\nsetInterval(sendData, messageRate)\n\nreturn",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 640,
+        "y": 280,
+        "wires": [
+            [
+                "7607e467ec6d66d9"
+            ]
+        ]
+    },
+    {
+        "id": "7607e467ec6d66d9",
+        "type": "mqtt out",
+        "z": "755838468578bf48",
+        "name": "Send Sensor Data",
+        "topic": "",
+        "qos": "0",
+        "retain": "false",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "e08a334d8688ae84",
+        "x": 930,
+        "y": 280,
+        "wires": []
+    },
+    {
+        "id": "05d6ff2edfc3f55f",
+        "type": "debug",
+        "z": "755838468578bf48",
+        "name": "debug 1",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 640,
+        "y": 400,
+        "wires": []
+    }
+]
