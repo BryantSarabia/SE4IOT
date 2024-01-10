@@ -8,6 +8,11 @@ export class LightRule extends Rule {
   }
 
   evaluate ({ sensorData, userPreferences, room }) {
+    let action = null
+    if (!room.getValue('isLightOn')) {
+      console.log(`Lights are OFF on room ${room.name}, no need to evaluate light rule.`)
+      return action
+    }
     const { value, type } = sensorData
     const lightIntensityThreshold = Number(userPreferences.lightIntensityThreshold)
     const [sensor] = room.getSensorsByType(SENSOR_TYPES.MOTION)
@@ -15,19 +20,19 @@ export class LightRule extends Rule {
     const actuatorType = ACTUATOR_TYPES[type]
     // Get motion sensor data of the room
     const { value: motionDetected } = sensor.getData()
-    let action = null
+
     if (value < lightIntensityThreshold && motionDetected) {
       action = {
         topic: `actuators/${room.name}/${actuatorType}/increase`,
         message: {
-          value: lightIntensityThreshold - value // Increase the light level to the threshold
+          value: lightIntensityThreshold// Increase the light level to the threshold
         }
       }
     } else if (value > lightIntensityThreshold && motionDetected) {
       action = {
         topic: `actuators/${room.name}/${actuatorType}/decrease`,
         message: {
-          value: value - lightIntensityThreshold // Decrease the light level to the threshold
+          value: lightIntensityThreshold // Decrease the light level to the threshold
         }
       }
     }

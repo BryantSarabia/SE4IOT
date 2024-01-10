@@ -7,7 +7,7 @@ export async function getUserPreferencesService () {
     const userPreferences = await response.json()
     return userPreferences
   } catch (error) {
-    console.error('Error fetching user preferences:', error)
+    console.error('Error fetching user preferences')
     throw error
   }
 }

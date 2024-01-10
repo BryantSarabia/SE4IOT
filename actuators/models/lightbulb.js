@@ -21,18 +21,19 @@ export class Lightbulb extends Actuator {
   }
 
   increase ({ message }) {
-    mqttClient.publish(`${this.topic}/increase`, message)
+    // mqttClient.publish(`${this.topic}/increase`, message)
   }
 
   decrease ({ message }) {
-    mqttClient.publish(`${this.topic}/decrease`, message)
+    // message.value *= -1
+    // mqttClient.publish(`${this.topic}/decrease`, message)
   }
 
   on () {
-    mqttClient.publish(`${this.topic}/on`)
+    // mqttClient.publish(`${this.topic}/on`)
   }
 
   off () {
-    mqttClient.publish(`${this.topic}/off`)
+    // mqttClient.publish(`${this.topic}/off`)
   }
 }

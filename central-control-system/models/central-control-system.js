@@ -21,6 +21,7 @@ export class CentralControlSystem {
   async initialize () {
     try {
       this.userPreferences = await this.getUserPreferences()
+      console.log('User preferences loaded.')
       // Subscribe to sensors MQTT topics
       this.subscribeSensorActivation()
       this.subscribeSensorData()
@@ -123,7 +124,9 @@ export class CentralControlSystem {
         throw new Error(`No body received for sensor ${id} in room ${room.name}.`)
       }
       sensor.updateValue(message)
+      console.log(`Update by: ${message.value}`)
       console.log(`Updated sensor ${sensor.id} - ${sensor.type} in ${room.name}.`)
+      console.log(`Sensor value: ${sensor.getData().value}`)
       const rule = this.getRule(type)
       const action = rule.evaluate({ sensorData: sensor.getData(), userPreferences: this.userPreferences, room })
       if (!action) return
@@ -143,6 +146,12 @@ export class CentralControlSystem {
   }
 
   async getUserPreferences () {
-    return getUserPreferencesService()
+    try {
+      return await getUserPreferencesService()
+    } catch (error) {
+      if (error.message.includes('ECONNREFUSED')) {
+        console.log('Error connecting to the server. Please make sure the server is running.')
+      }
+    }
   }
 }
