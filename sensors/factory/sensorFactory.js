@@ -1,17 +1,17 @@
-import { SENSOR_TYPES } from '../consts/sensorType.js'
+import { SENSOR_TYPES } from '../../central-control-system/consts/sensorType.js'
 import { LightSensor } from '../models/lightSensor.js'
 import { MotionSensor } from '../models/motionSensor.js'
 
 export class SensorFactory {
-  sensors = {
+  static sensors = {
     [SENSOR_TYPES.LIGHT]: LightSensor,
     [SENSOR_TYPES.MOTION]: MotionSensor
   }
 
-  create (type, room, id) {
-    if (!this.sensors[type]) {
+  static create ({ type, room, id }) {
+    if (!SensorFactory.sensors[type]) {
       throw new Error(`Sensor type ${type} is not supported.`)
     }
-    return new this.sensors[type]({ room, id })
+    return new SensorFactory.sensors[type]({ room, id })
   }
 }

@@ -1,4 +1,5 @@
 import { ACTUATOR_TYPES } from '../consts/actuatorTypes.js'
+import { ROOM_VALUES_KEYS } from '../consts/roomValues.js'
 import { SENSOR_TYPES } from '../consts/sensorType.js'
 import { Rule } from './rule.js'
 
@@ -9,7 +10,7 @@ export class MotionRule extends Rule {
 
   evaluate ({ sensorData, userPreferences, room }) {
     let action = null
-    const isLightOn = room.getValue('isLightOn')
+    const isLightOn = room.getValue(ROOM_VALUES_KEYS.IS_LIGHT_ON)
     const { value, type } = sensorData
     console.log(`Lights are ${isLightOn ? '"ON"' : '"OFF"'} on room ${room.name}`)
     console.log(`Motion value: ${value}`)
@@ -27,7 +28,7 @@ export class MotionRule extends Rule {
           value
         }
       }
-      room.updateValue('isLightOn', value)
+      room.updateValue(ROOM_VALUES_KEYS.IS_LIGHT_ON, value)
     }
     return action
   }

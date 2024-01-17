@@ -1,3 +1,4 @@
+import { ROOM_VALUES } from '../consts/roomValues.js'
 import { SENSOR_TYPES } from '../consts/sensorType.js'
 import { LightRule } from '../rules/light-rule.js'
 import { MotionRule } from '../rules/motion-rule.js'
@@ -6,10 +7,9 @@ import { getUserPreferencesService } from '../services/user-preferences-service.
 import { Room } from './room.js'
 
 export class CentralControlSystem {
-  constructor ({ SensorFactory }) {
+  constructor () {
     // Initialize the Central Control System
     this.rooms = new Map()
-    this.sensorFactory = new SensorFactory()
     this.rules = {
       [SENSOR_TYPES.LIGHT]: new LightRule({ centralControlSystem: this }),
       [SENSOR_TYPES.MOTION]: new MotionRule({ centralControlSystem: this })
@@ -65,21 +65,29 @@ export class CentralControlSystem {
       if (!topic || !topic.includes(subscribedTopic)) return
       const [room, type, id] = topic.split('/').slice(2)
       if (type && room && id) {
-        this.activateSensor({ type, room, id })
+        this.activateSensor({ type, roomName: room, id })
       }
     }
   }
 
-  activateSensor ({ type, room, id }) {
+  activateSensor ({ type, roomName, id }) {
     try {
-      const sensor = this.sensorFactory.create(type, room, id)
       // If the room doesn't exist in the map, create it
-      if (!this.rooms.has(room)) {
-        this.rooms.set(room, new Room(room))
+      if (!this.rooms.has(roomName)) {
+        this.rooms.set(roomName, new Room({ name: roomName }))
       }
-      // Add the sensor to the room
-      this.rooms.get(room).addSensor(sensor)
-      console.log(`Activated ${type} sensor in ${room}.`)
+      const roomAttribute = ROOM_VALUES[type]
+      if (!roomAttribute) {
+        throw new Error(`Room attribute ${type} not found.`)
+      }
+      const room = this.rooms.get(roomName)
+      // Add the room attribute to the room
+      if (!room.hasValue(roomAttribute)) {
+        room.addValue(roomAttribute)
+      }
+      const sensor = { type, room: roomName, id }
+      room.addSensor(sensor)
+      console.log(`Activated ${type} sensor in ${roomName}.`)
     } catch (error) {
       console.log(error.message)
     }
@@ -101,7 +109,7 @@ export class CentralControlSystem {
         try {
           const payload = JSON.parse(message.toString())
           // console.log(payload)
-          this.updateSensorData({ type, roomName: room, id, message: payload })
+          this.evaluateData({ type, roomName: room, id, message: payload })
         } catch (error) {
           console.log(error.message)
         }
@@ -109,7 +117,7 @@ export class CentralControlSystem {
     }
   }
 
-  updateSensorData ({ type, roomName, id, message }) {
+  evaluateData ({ type, roomName, id, message }) {
     const room = this.rooms.get(roomName)
     if (!room) {
       console.log(`Room ${roomName} not found.`)
@@ -123,12 +131,8 @@ export class CentralControlSystem {
       if (!message) {
         throw new Error(`No body received for sensor ${id} in room ${room.name}.`)
       }
-      sensor.updateValue(message)
-      console.log(`Update by: ${message.value}`)
-      console.log(`Updated sensor ${sensor.id} - ${sensor.type} in ${room.name}.`)
-      console.log(`Sensor value: ${sensor.getData().value}`)
       const rule = this.getRule(type)
-      const action = rule.evaluate({ sensorData: sensor.getData(), userPreferences: this.userPreferences, room })
+      const action = rule.evaluate({ sensorData: message, userPreferences: this.userPreferences, room })
       if (!action) return
       console.log('Action to perform', action)
       mqttClient.publish(action.topic, JSON.stringify(action.message))

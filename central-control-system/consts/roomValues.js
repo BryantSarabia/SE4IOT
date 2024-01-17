@@ -1,0 +1,11 @@
+import { SENSOR_TYPES } from './sensorType.js'
+
+export const ROOM_VALUES_KEYS = {
+  IS_LIGHT_ON: 'isLightOn',
+  IS_MOTION_DETECTED: 'isMotionDetected'
+}
+
+export const ROOM_VALUES = {
+  [SENSOR_TYPES.LIGHT]: ROOM_VALUES_KEYS.IS_LIGHT_ON,
+  [SENSOR_TYPES.MOTION]: ROOM_VALUES_KEYS.IS_MOTION_DETECTED
+}

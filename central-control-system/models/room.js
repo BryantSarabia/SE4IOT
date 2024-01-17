@@ -1,10 +1,7 @@
 export class Room {
-  constructor (name) {
+  constructor ({ name }) {
     this.name = name
-    this.values = {
-      isLightOn: false
-      // isAirConditionerOn: false,
-    }
+    this.values = {}
     this.sensors = []
   }
 
@@ -24,29 +21,21 @@ export class Room {
     this.sensors = this.sensors.filter(sensor => sensor.id !== id)
   }
 
-  getSensorDataById (id) {
-    const sensor = this.getSensorById(id)
-    const { value } = sensor.getData()
-    return value || null
-  }
-
-  updateSensorValueById (id, { value }) {
-    const sensor = this.getSensorById(id)
-    if (sensor) {
-      sensor.updateValue({ value })
-    }
-  }
-
-  addValue (key) {
-    this.values[key] = null
+  addValue (key, value = null) {
+    this.values[key] = value
   }
 
   updateValue (key, value) {
+    if (this.values[key] === undefined) throw new Error(`Value ${key} not found in room ${this.name}.`)
     this.values[key] = value
   }
 
   removeValue (key) {
     delete this.values[key]
+  }
+
+  hasValue (key) {
+    return this.values[key] !== undefined
   }
 
   getValue (key) {

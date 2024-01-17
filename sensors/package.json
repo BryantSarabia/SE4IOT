@@ -1,23 +1,23 @@
 {
-  "name": "actuators",
+  "name": "sensors",
   "version": "1.0.0",
   "description": "",
   "main": "app.js",
   "type": "module",
   "scripts": {
-    "start": "node app.js",
+    "start": "node --watch app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
+  "dependencies": {
+    "mqtt": "5.3.4"
+  },
   "devDependencies": {
     "standard": "^17.1.0"
   },
   "eslintConfig": {
     "extends": "standard"
-  },
-  "dependencies": {
-    "mqtt": "5.3.4"
   }
 }
