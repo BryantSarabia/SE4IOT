@@ -1,9 +1,10 @@
 export const MONGODB_CONFIG = {
   dbUrl: process.env.mongodbURL ?? 'mongodb://127.0.0.1:27017',
-  dbName: 'mydb',
+  dbName: 'smart_home',
   collectionName: 'user_preferences',
   user_preferences: {
-    lightIntensityThreshold: 50
+    minimumLightIntensityThreshold: 500,
+    maximumLightIntensityThreshold: 1500
   }
 }
 

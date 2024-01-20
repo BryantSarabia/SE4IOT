@@ -1,25 +1,45 @@
+import { MQTT_CONFIG } from '../config.js'
+import { ACTUATORS_TOPIC, CONSUMPTION_TOPIC, PUBLISH_TOPIC } from '../consts/topics.js'
+import { createMqttClient } from '../services/mqtt-client.js'
 export class Actuator {
-  constructor ({ type, room }) {
+  mqttClient = createMqttClient(MQTT_CONFIG.brokerUrl)
+
+  constructor ({ type, room, id }) {
     if (this.constructor === Actuator) {
       throw new Error('Abstract class "Actuator" cannot be instantiated directly.')
     }
     this.type = type
+    this.id = id
     this.room = room
+    this.totalConsumption = 0
+    this.consumptionInterval = null
+    // actuators/<room>/<type>
+    this.topic = `${ACTUATORS_TOPIC}/${room}/${type}`
+    // sensors/update/<room>/<type>/<id>
+    this.publishTopic = `${PUBLISH_TOPIC}/${room}/${type}/${id}`
+    this.consumptionTopic = `${CONSUMPTION_TOPIC}/${room}/${type}/${id}`
   }
 
   initialize () {
-    throw new Error('Method "initialize" must be implemented.')
+    this.mqttClient.subscribe(`${this.topic}/+`, this.onMessage.bind(this))
+    this.mqttClient.on('message', this.onMessage.bind(this))
   }
 
   onMessage (topic, message) {
-    throw new Error('Method "onMessage" must be implemented.')
+    // topic: actuators/<room>/<type>/<action>
+    if (!topic) return
+    const [, room, type, action] = topic.split('/')
+    if (room !== this.room) return
+    if (type !== this.type) return
+    if (!this[action]) return
+    this[action]({ message })
   }
 
-  increase (message) {
+  increase ({ message }) {
     throw new Error('Method "increase" must be implemented.')
   }
 
-  decrease (message) {
+  decrease ({ message }) {
     throw new Error('Method "decrease" must be implemented.')
   }
 
@@ -29,5 +49,9 @@ export class Actuator {
 
   off () {
     throw new Error('Method "off" must be implemented.')
+  }
+
+  updateComsuption () {
+    throw new Error('Method "updateComsuption" must be implemented.')
   }
 }

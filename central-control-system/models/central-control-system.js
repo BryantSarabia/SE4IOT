@@ -11,8 +11,8 @@ export class CentralControlSystem {
     // Initialize the Central Control System
     this.rooms = new Map()
     this.rules = {
-      [SENSOR_TYPES.LIGHT]: new LightRule({ centralControlSystem: this }),
-      [SENSOR_TYPES.MOTION]: new MotionRule({ centralControlSystem: this })
+      [SENSOR_TYPES.LIGHT]: new LightRule(),
+      [SENSOR_TYPES.MOTION]: new MotionRule()
     }
     this.userPreferences = null
     this.initialize()
@@ -126,7 +126,7 @@ export class CentralControlSystem {
     try {
       const sensor = room.getSensorById(id)
       if (!sensor) {
-        throw new Error(`Sensor ${id} not found in room ${room.name}.`)
+        throw new Error(`Sensor ${type} with ID:${id} not found in room ${room.name}.`)
       }
       if (!message) {
         throw new Error(`No body received for sensor ${id} in room ${room.name}.`)

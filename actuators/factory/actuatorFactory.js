@@ -6,10 +6,10 @@ export class ActuatorFactory {
     [ACTUATOR_TYPES.LIGHTBULB]: Lightbulb
   }
 
-  static create ({ type, room }) {
+  static create ({ type, ...args }) {
     if (!ActuatorFactory.actuators[type]) {
       throw new Error(`Actuator type "${type}" is not supported.`)
     }
-    return new ActuatorFactory.actuators[type]({ room })
+    return new ActuatorFactory.actuators[type](args)
   }
 }

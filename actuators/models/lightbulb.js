@@ -1,39 +1,69 @@
 import { ACTUATOR_TYPES } from '../consts/actuatorTypes.js'
-import { mqttClient } from '../services/mqtt-client.js'
 import { Actuator } from './actuator.js'
 export class Lightbulb extends Actuator {
-  constructor ({ room }) {
+  constructor ({ id, room, maxLux, consumptionPerLux, increaseBy = 5 }) {
     const type = ACTUATOR_TYPES.LIGHTBULB
-    super({ type, room })
-    this.topic = `actuators/${room.name}/${type}`
+    super({ type, room, id })
+    this.currentLux = 0
+    this.isOn = false
+    this.maxLux = maxLux
+    this.consumptionPerLux = consumptionPerLux
+    this.increaseBy = increaseBy
   }
 
-  initialize () {
-    mqttClient.subscribe(`${this.topic}/+`, this.onMessage.bind(this))
+  increase () {
+    if (this.currentLux === this.maxLux) return console.log(`${ACTUATOR_TYPES.LIGHTBULB} in ${this.room} reached max value.`)
+    let payload = null
+    let increaseBy = null
+    if (this.currentLux + this.increaseBy > this.maxLux) {
+      console.log(`${ACTUATOR_TYPES.LIGHTBULB} in ${this.room} reached max value.`)
+      this.currentLux = this.maxLux
+      increaseBy = this.maxLux - this.currentLux
+    } else {
+      this.currentLux += this.increaseBy
+      increaseBy = this.increaseBy
+    }
+    payload = JSON.stringify({ value: increaseBy })
+    this.mqttClient.publish(`${this.publishTopic}`, payload)
   }
 
-  onMessage (topic, message) {
-    // topic: actuators/<room>/<type>/<action>
-    if (!topic) return
-    const [action] = topic.split('/').slice(3)
-    if (!this[action]) return
-    this[action]({ message })
-  }
-
-  increase ({ message }) {
-    // mqttClient.publish(`${this.topic}/increase`, message)
-  }
-
-  decrease ({ message }) {
-    // message.value *= -1
-    // mqttClient.publish(`${this.topic}/decrease`, message)
+  decrease () {
+    if (this.currentLux === 0) return console.log(`${ACTUATOR_TYPES.LIGHTBULB} in ${this.room} reached min value.`)
+    let payload = null
+    let decreaseBy = null
+    if (this.currentLux - this.increaseBy <= 0) {
+      console.log(`${ACTUATOR_TYPES.LIGHTBULB} in ${this.room} reached min value.`)
+      decreaseBy = this.currentLux * -1
+      this.currentLux = 0
+    } else {
+      this.currentLux -= this.increaseBy
+      decreaseBy = this.increaseBy * -1
+    }
+    payload = JSON.stringify({ value: decreaseBy })
+    this.mqttClient.publish(`${this.publishTopic}`, payload)
   }
 
   on () {
-    // mqttClient.publish(`${this.topic}/on`)
+    this.isOn = true
+    this.consumptionInterval = setInterval(() => this.updateComsuption(), 1000)
+    const payload = JSON.stringify({ value: this.currentLux })
+    this.mqttClient.publish(`${this.publishTopic}/on`, payload)
   }
 
   off () {
-    // mqttClient.publish(`${this.topic}/off`)
+    clearInterval(this.consumptionInterval)
+    this.isOn = false
+    const payload = JSON.stringify({ value: this.currentLux * -1 })
+    this.mqttClient.publish(`${this.publishTopic}/off`, payload)
+  }
+
+  updateComsuption () {
+    if (!this.isOn) return
+    this.totalConsumption += this.currentLux * this.consumptionPerLux
+    const payload = JSON.stringify({
+      totalConsumption: this.totalConsumption,
+      consumptionPerSecond: this.currentLux * this.consumptionPerLux
+    })
+    this.mqttClient.publish(`${this.consumptionTopic}`, payload)
   }
 }
