@@ -30,7 +30,7 @@ USER node
 COPY . .
 
 # Expose the port that the application listens on.
-EXPOSE 3000
+EXPOSE 49154
 
 # Run the application.
-CMD node start:mongodb
+CMD npm start

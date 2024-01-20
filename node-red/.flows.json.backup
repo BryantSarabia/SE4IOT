@@ -8,10 +8,18 @@
         "env": []
     },
     {
+        "id": "0b59576ee72e06d9",
+        "type": "tab",
+        "label": "Flow 1",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
         "id": "755838468578bf48",
         "type": "tab",
         "label": "Init sensors",
-        "disabled": false,
+        "disabled": true,
         "info": "",
         "env": []
     },
@@ -47,35 +55,19 @@
         "sessionExpiry": ""
     },
     {
-        "id": "c9b6bf2b60f41964",
-        "type": "mqtt-broker",
-        "name": "",
-        "broker": "localhost",
-        "port": "1883",
-        "clientid": "",
-        "autoConnect": true,
+        "id": "5bf80d3be2d4d4cb",
+        "type": "influxdb",
+        "hostname": "127.0.0.1",
+        "port": "8086",
+        "protocol": "http",
+        "database": "database",
+        "name": "iot",
         "usetls": false,
-        "protocolVersion": "4",
-        "keepalive": "60",
-        "cleansession": true,
-        "autoUnsubscribe": true,
-        "birthTopic": "",
-        "birthQos": "0",
-        "birthRetain": "false",
-        "birthPayload": "",
-        "birthMsg": {},
-        "closeTopic": "",
-        "closeQos": "0",
-        "closeRetain": "false",
-        "closePayload": "",
-        "closeMsg": {},
-        "willTopic": "",
-        "willQos": "0",
-        "willRetain": "false",
-        "willPayload": "",
-        "willMsg": {},
-        "userProps": "",
-        "sessionExpiry": ""
+        "tls": "",
+        "influxdbVersion": "2.0",
+        "url": "${INFLUXDB_HOST}:8086",
+        "timeout": "10",
+        "rejectUnauthorized": true
     },
     {
         "id": "df5f40a3d923ee29",
@@ -92,9 +84,7 @@
         "x": 710,
         "y": 80,
         "wires": [
-            [
-                "c623a22e0f8f2072"
-            ]
+            []
         ]
     },
     {
@@ -205,10 +195,146 @@
         "x": 460,
         "y": 80,
         "wires": [
+            []
+        ]
+    },
+    {
+        "id": "0b70ffec8e46436c",
+        "type": "change",
+        "z": "0b59576ee72e06d9",
+        "name": "Subscribe sensor data topic",
+        "rules": [
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "dataSensorTopic",
+                "tot": "global"
+            },
+            {
+                "t": "set",
+                "p": "action",
+                "pt": "msg",
+                "to": "subscribe",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 300,
+        "y": 80,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "427a379faa538488",
+        "type": "inject",
+        "z": "0b59576ee72e06d9",
+        "name": "",
+        "props": [
+            {
+                "p": "action",
+                "v": "subscribe",
+                "vt": "str"
+            },
+            {
+                "p": "topic",
+                "v": "dataSensorTopic",
+                "vt": "global"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 350,
+        "y": 160,
+        "wires": [
             [
-                "df5f40a3d923ee29"
+                "faafa4fe85213fb1"
             ]
         ]
+    },
+    {
+        "id": "fdcdddfab6cf8126",
+        "type": "debug",
+        "z": "0b59576ee72e06d9",
+        "name": "debug 3",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 920,
+        "y": 160,
+        "wires": []
+    },
+    {
+        "id": "231de59f33547edf",
+        "type": "function",
+        "z": "0b59576ee72e06d9",
+        "name": "function 1",
+        "func": "\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 740,
+        "y": 160,
+        "wires": [
+            [
+                "fdcdddfab6cf8126"
+            ]
+        ]
+    },
+    {
+        "id": "faafa4fe85213fb1",
+        "type": "mqtt in",
+        "z": "0b59576ee72e06d9",
+        "name": "",
+        "topic": "",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "e08a334d8688ae84",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 1,
+        "x": 530,
+        "y": 160,
+        "wires": [
+            [
+                "231de59f33547edf"
+            ]
+        ]
+    },
+    {
+        "id": "f822ca8b8f05285d",
+        "type": "influxdb out",
+        "z": "0b59576ee72e06d9",
+        "influxdb": "5bf80d3be2d4d4cb",
+        "name": "Save sensor data",
+        "measurement": "",
+        "precision": "",
+        "retentionPolicy": "",
+        "database": "database",
+        "precisionV18FluxV20": "ms",
+        "retentionPolicyV18Flux": "",
+        "org": "${DOCKER_INFLUXDB_INIT_ORG}",
+        "bucket": "${DOCKER_INFLUXDB_INIT_BUCKET}",
+        "x": 490,
+        "y": 440,
+        "wires": []
     },
     {
         "id": "b5678455cca2a097",

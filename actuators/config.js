@@ -6,11 +6,7 @@ export const SERVER_CONFIG = {
 }
 
 export const MQTT_CONFIG = {
-  brokerUrl: process.env.mqttBrokerURL ?? 'mqtt://localhost',
-  topics: {
-    lightIntensity: 'light/intensity',
-    lightIntensityThreshold: 'light/intensity/threshold'
-  }
+  brokerUrl: process.env.MQTT_BROKER ?? 'mqtt://localhost'
 }
 
 export const ROOMS = [

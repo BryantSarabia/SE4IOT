@@ -1,0 +1,95 @@
+version: '3.8'
+
+services:
+  influxdb:
+    image: influxdb:latest
+    container_name: influxdb
+    hostname: influx
+    restart: always
+    ports:
+      - 8086:8086
+    volumes:
+      - ./database/influxdb:/var/lib/influxdb2
+      - ./database/influxdb/config:/etc/influxdb2
+    env_file:
+      - ./database/influxdb/.env
+    networks:
+      se4iot:
+        ipv4_address: 172.20.0.101
+  mosquitto:
+    image: eclipse-mosquitto:latest
+    container_name: mosquitto
+    hostname: mosquitto
+    restart: always
+    ports:
+      - 1883:1883
+      - 9001:9001
+    volumes:
+      - ./mosquitto:/mosquitto/data
+      - ./mosquitto/config/mosquitto.conf:/mosquitto/config/mosquitto.conf
+      - ./mosquitto/log:/mosquitto/log
+    networks:
+      se4iot:
+        ipv4_address: 172.20.0.102
+  actuators:
+    image: otherlude/se4iot:actuators
+    container_name: actuators
+    hostname: actuators
+    restart: always
+    env_file:
+      - .env
+    depends_on:
+      - mosquitto
+    networks:
+      se4iot:
+        ipv4_address: 172.20.0.103
+  server:
+    image: otherlude/se4iot:server
+    container_name: server
+    hostname: server
+    restart: always
+    env_file:
+      - .env
+    depends_on:
+      - mosquitto
+    networks:
+      se4iot:
+        ipv4_address: 172.20.0.105
+  central-control-system:
+    image: otherlude/se4iot:central-control-system
+    container_name: central-control-system
+    hostname: central-control-system
+    restart: always
+    env_file:
+      - .env
+    depends_on:
+      - server
+      - mosquitto
+    networks:
+      se4iot:
+        ipv4_address: 172.20.0.106
+  node-red:
+    image: nodered/node-red:latest
+    container_name: node-red
+    hostname: nodered
+    restart: always
+    ports:
+      - 1880:1880
+    volumes:
+      - ./node-red:/data
+    env_file:
+      - ./node-red/.env
+      - ./database/influxdb/.env
+      - .env
+    depends_on:
+      - influxdb
+      - mosquitto
+    networks:
+      se4iot:
+        ipv4_address: 172.20.0.107
+
+networks:
+  se4iot:
+    ipam:
+      config:
+        - subnet: 172.20.0.0/16
