@@ -2,7 +2,7 @@ import { MQTT_CONFIG } from '../config.js'
 import { ACTUATORS_TOPIC, CONSUMPTION_TOPIC, PUBLISH_TOPIC } from '../consts/topics.js'
 import { createMqttClient } from '../services/mqtt-client.js'
 export class Actuator {
-  mqttClient = createMqttClient(MQTT_CONFIG.brokerUrl)
+  mqttClient = createMqttClient({ brokerUrl: MQTT_CONFIG.brokerUrl })
 
   constructor ({ type, room, id }) {
     if (this.constructor === Actuator) {
@@ -21,7 +21,9 @@ export class Actuator {
   }
 
   initialize () {
-    this.mqttClient.subscribe(`${this.topic}/+`, this.onMessage.bind(this))
+    this.mqttClient.subscribe(`${this.topic}/+`)
+    this.mqttClient.on('connect', () => { console.log(`Actuator ${this.type}-${this.id} in room:${this.room} connected to MQTT broker succesfully`) })
+    this.mqttClient.on('error', (e) => { console.log(`Actuator ${this.type}-${this.id} in room:${this.room} could not connect to the MQTT broker. Reason: ${e}`) })
     this.mqttClient.on('message', this.onMessage.bind(this))
   }
 

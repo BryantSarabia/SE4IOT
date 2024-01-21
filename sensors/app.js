@@ -17,5 +17,9 @@ function initSensors () {
 function initialize () {
   initSensors()
 }
-
-initialize()
+/**
+ * TODO: Remove this timeout and wait for the central control system to be initialized and listen to the sensors/activate topic
+ *
+ * */
+setTimeout(() => initialize(), 5000)
+// initialize()

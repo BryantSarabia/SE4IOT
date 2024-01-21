@@ -55,7 +55,7 @@
         "sessionExpiry": ""
     },
     {
-        "id": "5bf80d3be2d4d4cb",
+        "id": "0e8f129c76ace03a",
         "type": "influxdb",
         "hostname": "127.0.0.1",
         "port": "8086",
@@ -65,27 +65,9 @@
         "usetls": false,
         "tls": "",
         "influxdbVersion": "2.0",
-        "url": "${INFLUXDB_HOST}:8086",
+        "url": "http://influx:8086",
         "timeout": "10",
         "rejectUnauthorized": true
-    },
-    {
-        "id": "df5f40a3d923ee29",
-        "type": "function",
-        "z": "916b9dbcf5ad3e00",
-        "name": "Set rooms",
-        "func": "const SENSOR_TYPES = {\n    LIGHT: 'light',\n    MOTION: 'motion',\n    TEMPERATURE: 'temperature'\n}\n\nconst MEASURE_UNITS = {\n    [SENSOR_TYPES.LIGHT]: 'lm',\n    [SENSOR_TYPES.TEMPERATURE]: '°C',\n    [SENSOR_TYPES.MOTION]: 'boolean'\n}\n\nglobal.set('sensorTypes', SENSOR_TYPES)\nglobal.set('measureUnits', MEASURE_UNITS)\n\n\nconst ROOMS = [\n    {\n        roomName: 'living-room',\n        sensors: [\n            {\n                type: SENSOR_TYPES.LIGHT,\n                measureUnit: MEASURE_UNITS[SENSOR_TYPES.LIGHT],\n                value: 0\n            },\n            {\n                type: SENSOR_TYPES.MOTION,\n                measureUnit: MEASURE_UNITS[SENSOR_TYPES.MOTION],\n                value: false\n            }\n        ]\n    }\n    // {\n    //     roomName: 'kitchen',\n    //     sensors: [{\n    //         type: SENSOR_TYPES.LIGHT,\n    //         measureUnit: MEASURE_UNITS[SENSOR_TYPES.LIGHT],\n    //         value: 0\n    //     },\n    //     {\n    //         type: SENSOR_TYPES.MOTION,\n    //         measureUnit: MEASURE_UNITS[SENSOR_TYPES.MOTION],\n    //         value: false\n    //     }\n    //     ]\n    // },\n    // {\n    //     roomName: 'bathroom',\n    //     sensors: [{\n    //         type: SENSOR_TYPES.LIGHT,\n    //         measureUnit: MEASURE_UNITS[SENSOR_TYPES.LIGHT],\n    //         value: 0\n    //     },\n    //     {\n    //         type: SENSOR_TYPES.MOTION,\n    //         measureUnit: MEASURE_UNITS[SENSOR_TYPES.MOTION],\n    //         value: false\n    //     }\n    //     ]\n    // },\n    // {\n    //     roomName: 'bedroom',\n    //     sensors: [{\n    //         type: SENSOR_TYPES.LIGHT,\n    //         measureUnit: MEASURE_UNITS[SENSOR_TYPES.LIGHT],\n    //         value: 0\n    //     },\n    //     {\n    //         type: SENSOR_TYPES.MOTION,\n    //         measureUnit: MEASURE_UNITS[SENSOR_TYPES.MOTION],\n    //         value: false\n    //     }\n    //     ]\n    // },\n    // {\n    //     roomName: 'office',\n    //     sensors: [{\n    //         type: SENSOR_TYPES.LIGHT,\n    //         measureUnit: MEASURE_UNITS[SENSOR_TYPES.LIGHT],\n    //         value: 0\n    //     },\n    //     {\n    //         type: SENSOR_TYPES.MOTION,\n    //         measureUnit: MEASURE_UNITS[SENSOR_TYPES.MOTION],\n    //         value: false\n    //     }\n    //     ]\n    // },\n    // {\n    //     roomName: 'garage',\n    //     sensors: [{\n    //         type: SENSOR_TYPES.LIGHT,\n    //         measureUnit: MEASURE_UNITS[SENSOR_TYPES.LIGHT],\n    //         value: 0\n    //     },\n    //     {\n    //         type: SENSOR_TYPES.MOTION,\n    //         measureUnit: MEASURE_UNITS[SENSOR_TYPES.MOTION],\n    //         value: false\n    //     }\n    //     ]\n    // },\n    // {\n    //     roomName: 'garden',\n    //     sensors: [{\n    //         type: SENSOR_TYPES.LIGHT,\n    //         measureUnit: MEASURE_UNITS[SENSOR_TYPES.LIGHT],\n    //         value: 0\n    //     },\n    //     {\n    //         type: SENSOR_TYPES.MOTION,\n    //         measureUnit: MEASURE_UNITS[SENSOR_TYPES.MOTION],\n    //         value: false\n    //     }\n    //     ]\n    // }\n]\nconst roomKey = global.get('roomKey')\n\nglobal.set(roomKey, ROOMS)\n\nreturn msg",
-        "outputs": 1,
-        "timeout": 0,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 710,
-        "y": 80,
-        "wires": [
-            []
-        ]
     },
     {
         "id": "fc03d7aeb9681b90",
@@ -109,8 +91,8 @@
                 "vt": "str"
             },
             {
-                "p": "payload.actuatorsTopic",
-                "v": "actuators/#",
+                "p": "payload.actuatorsConsumptionTopic",
+                "v": "actuators/consumption/#",
                 "vt": "str"
             },
             {
@@ -121,29 +103,16 @@
         ],
         "repeat": "",
         "crontab": "",
-        "once": false,
+        "once": true,
         "onceDelay": 0.1,
         "topic": "",
-        "x": 180,
+        "x": 190,
         "y": 80,
         "wires": [
             [
                 "ab94d42d03980f77"
             ]
         ]
-    },
-    {
-        "id": "c623a22e0f8f2072",
-        "type": "link out",
-        "z": "916b9dbcf5ad3e00",
-        "name": "Global Var Initialized",
-        "mode": "link",
-        "links": [
-            "b5678455cca2a097"
-        ],
-        "x": 865,
-        "y": 80,
-        "wires": []
     },
     {
         "id": "ab94d42d03980f77",
@@ -153,13 +122,6 @@
         "rules": [
             {
                 "t": "set",
-                "p": "roomKey",
-                "pt": "global",
-                "to": "payload.roomKey",
-                "tot": "msg"
-            },
-            {
-                "t": "set",
                 "p": "dataSensorTopic",
                 "pt": "global",
                 "to": "payload.dataSensorTopic",
@@ -167,9 +129,9 @@
             },
             {
                 "t": "set",
-                "p": "actuatorsTopic",
+                "p": "actuatorsConsumptionTopic",
                 "pt": "global",
-                "to": "payload.actuatorsTopic",
+                "to": "payload.actuatorsConsumptionTopic",
                 "tot": "msg"
             },
             {
@@ -177,13 +139,6 @@
                 "p": "activateSensorTopic",
                 "pt": "global",
                 "to": "payload.activateSensorTopic",
-                "tot": "msg"
-            },
-            {
-                "t": "set",
-                "p": "broker",
-                "pt": "global",
-                "to": "payload.broker",
                 "tot": "msg"
             }
         ],
@@ -193,38 +148,6 @@
         "to": "",
         "reg": false,
         "x": 460,
-        "y": 80,
-        "wires": [
-            []
-        ]
-    },
-    {
-        "id": "0b70ffec8e46436c",
-        "type": "change",
-        "z": "0b59576ee72e06d9",
-        "name": "Subscribe sensor data topic",
-        "rules": [
-            {
-                "t": "set",
-                "p": "topic",
-                "pt": "msg",
-                "to": "dataSensorTopic",
-                "tot": "global"
-            },
-            {
-                "t": "set",
-                "p": "action",
-                "pt": "msg",
-                "to": "subscribe",
-                "tot": "str"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 300,
         "y": 80,
         "wires": [
             []
@@ -243,17 +166,17 @@
             },
             {
                 "p": "topic",
-                "v": "dataSensorTopic",
-                "vt": "global"
+                "v": "$globalContext('dataSensorTopic') & \"/#\"\t",
+                "vt": "jsonata"
             }
         ],
         "repeat": "",
         "crontab": "",
-        "once": false,
+        "once": true,
         "onceDelay": 0.1,
         "topic": "",
-        "x": 350,
-        "y": 160,
+        "x": 250,
+        "y": 200,
         "wires": [
             [
                 "faafa4fe85213fb1"
@@ -265,7 +188,7 @@
         "type": "debug",
         "z": "0b59576ee72e06d9",
         "name": "debug 3",
-        "active": true,
+        "active": false,
         "tosidebar": true,
         "console": false,
         "tostatus": false,
@@ -273,27 +196,28 @@
         "targetType": "msg",
         "statusVal": "",
         "statusType": "auto",
-        "x": 920,
-        "y": 160,
+        "x": 860,
+        "y": 140,
         "wires": []
     },
     {
         "id": "231de59f33547edf",
         "type": "function",
         "z": "0b59576ee72e06d9",
-        "name": "function 1",
-        "func": "\nreturn msg;",
+        "name": "Handle Sensor Data",
+        "func": "function generateInfluxdbData({ type, room, id, value, measureUnit }) {\n    const payload = [\n        {\n            value: value,\n            measureUnit: measureUnit\n        },\n        {\n            room: room,\n            id: id,\n            type: type\n        },\n    ]\n    const measurement = type\n    return { payload, measurement }\n}\n\nconst { type, room, id, value, measureUnit } = msg.payload\nif (!type && !room && !id && !measureUnit) return\nif (value === undefined || value === null) return\nconst dataToWrite = generateInfluxdbData(msg.payload)\nmsg.payload = dataToWrite.payload\nmsg.measurement = dataToWrite.measurement\nreturn msg;",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 740,
-        "y": 160,
+        "x": 680,
+        "y": 200,
         "wires": [
             [
-                "fdcdddfab6cf8126"
+                "fdcdddfab6cf8126",
+                "14e34184220c393f"
             ]
         ]
     },
@@ -301,7 +225,7 @@
         "id": "faafa4fe85213fb1",
         "type": "mqtt in",
         "z": "0b59576ee72e06d9",
-        "name": "",
+        "name": "Sensor Data Topic",
         "topic": "",
         "qos": "2",
         "datatype": "auto-detect",
@@ -310,20 +234,21 @@
         "rap": true,
         "rh": 0,
         "inputs": 1,
-        "x": 530,
-        "y": 160,
+        "x": 450,
+        "y": 200,
         "wires": [
             [
+                "75a22c9c959a2199",
                 "231de59f33547edf"
             ]
         ]
     },
     {
-        "id": "f822ca8b8f05285d",
+        "id": "14e34184220c393f",
         "type": "influxdb out",
         "z": "0b59576ee72e06d9",
-        "influxdb": "5bf80d3be2d4d4cb",
-        "name": "Save sensor data",
+        "influxdb": "0e8f129c76ace03a",
+        "name": "Write sensor data ",
         "measurement": "",
         "precision": "",
         "retentionPolicy": "",
@@ -332,8 +257,130 @@
         "retentionPolicyV18Flux": "",
         "org": "${DOCKER_INFLUXDB_INIT_ORG}",
         "bucket": "${DOCKER_INFLUXDB_INIT_BUCKET}",
-        "x": 490,
-        "y": 440,
+        "x": 890,
+        "y": 260,
+        "wires": []
+    },
+    {
+        "id": "75a22c9c959a2199",
+        "type": "debug",
+        "z": "0b59576ee72e06d9",
+        "name": "debug 4",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 660,
+        "y": 320,
+        "wires": []
+    },
+    {
+        "id": "2291cab0656c8122",
+        "type": "inject",
+        "z": "0b59576ee72e06d9",
+        "name": "",
+        "props": [
+            {
+                "p": "action",
+                "v": "subscribe",
+                "vt": "str"
+            },
+            {
+                "p": "topic",
+                "v": "actuatorsConsumptionTopic",
+                "vt": "global"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 250,
+        "y": 460,
+        "wires": [
+            [
+                "18ad96839c9c1188"
+            ]
+        ]
+    },
+    {
+        "id": "18ad96839c9c1188",
+        "type": "mqtt in",
+        "z": "0b59576ee72e06d9",
+        "name": "Actuator Data Topic",
+        "topic": "",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "e08a334d8688ae84",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 1,
+        "x": 470,
+        "y": 460,
+        "wires": [
+            [
+                "b4bad796aec4dfa2"
+            ]
+        ]
+    },
+    {
+        "id": "8aff8835891ee4bf",
+        "type": "debug",
+        "z": "0b59576ee72e06d9",
+        "name": "debug 5",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 940,
+        "y": 400,
+        "wires": []
+    },
+    {
+        "id": "b4bad796aec4dfa2",
+        "type": "function",
+        "z": "0b59576ee72e06d9",
+        "name": "Handle Actuator Data",
+        "func": "const measurement = 'actuators'\nfunction generateInfluxdbData({ room, actuator, id, totalConsumption, consumptionPerSecond }) {\n    const payload = [\n        {\n            totalConsumption,\n            consumptionPerSecond\n        },\n        {\n            room,\n            actuator,\n            id\n        }\n    ]\n    return payload\n}\n\nconst sliceBy = global.get('actuatorsConsumptionTopic').replace('/#','').split(\"/\").length\nconst [actuator, room, id] = msg.topic.split('/').slice(sliceBy)\nconst {totalConsumption, consumptionPerSecond } = msg.payload\n\nconst payload = generateInfluxdbData({actuator, room, id, totalConsumption, consumptionPerSecond})\nmsg.payload = payload\nmsg.measurement = measurement\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 720,
+        "y": 460,
+        "wires": [
+            [
+                "8aff8835891ee4bf",
+                "a45715321ede61b7"
+            ]
+        ]
+    },
+    {
+        "id": "a45715321ede61b7",
+        "type": "influxdb out",
+        "z": "0b59576ee72e06d9",
+        "influxdb": "0e8f129c76ace03a",
+        "name": "Write actuator consumption",
+        "measurement": "",
+        "precision": "",
+        "retentionPolicy": "",
+        "database": "database",
+        "precisionV18FluxV20": "ms",
+        "retentionPolicyV18Flux": "",
+        "org": "${DOCKER_INFLUXDB_INIT_ORG}",
+        "bucket": "${DOCKER_INFLUXDB_INIT_BUCKET}",
+        "x": 980,
+        "y": 460,
         "wires": []
     },
     {

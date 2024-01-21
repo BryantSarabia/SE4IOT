@@ -1,12 +1,12 @@
 import { createApp } from '../app.js'
 import { initializeMongoDB } from '../conf/mongodb-config.js'
+import { HealthModel } from '../models/health.js'
 import { UserPreferencesModel } from '../models/userPreferences.js'
 import { mongodbClient } from '../services/mongodb-client.js'
-
 // Initialize MongoDB connection and start Express app
 await initializeMongoDB()
 
-createApp({ userPreferencesModel: UserPreferencesModel })
+createApp({ userPreferencesModel: UserPreferencesModel, healthModel: HealthModel })
 
 // Gracefully close MongoDB connection on application shutdown
 process.on('SIGINT', async () => {

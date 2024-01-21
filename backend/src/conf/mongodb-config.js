@@ -23,7 +23,7 @@ export async function initializeMongoDB () {
     console.log(`Collection '${mongodbUserPreferencesCollection}' created`)
     insertUserPreferencesIfNotExists()
   } catch (error) {
-    console.error('Error MongoDB:', error)
+    console.error('Error MongoDB:', error.message)
     process.exit(1) // Exit the application if MongoDB connection fails
   }
 }

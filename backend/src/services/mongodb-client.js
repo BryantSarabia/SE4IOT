@@ -7,11 +7,12 @@ class MongoDBClient {
   constructor () {
     this.client = null
     this.dbName = MONGODB_CONFIG.dbName
+    this.port = MONGODB_CONFIG.port
     this.dbUrl = MONGODB_CONFIG.dbUrl
   }
 
   async connect () {
-    this.client = new MongoClient(this.dbUrl, { useNewUrlParser: true, useUnifiedTopology: true })
+    this.client = new MongoClient(`${this.dbUrl}:${this.port}`)
 
     try {
       await this.client.connect()

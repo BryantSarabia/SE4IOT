@@ -12,11 +12,13 @@ export const MQTT_CONFIG = {
 export const ROOMS = [
   {
     roomName: 'living-room',
-    actuators: [{
-      type: ACTUATOR_TYPES.LIGHTBULB,
-      maxLux: 1500,
-      consumptionPerLux: 0.00015
-    }]
+    actuators: [
+      {
+        type: ACTUATOR_TYPES.LIGHTBULB,
+        maxLux: 1500,
+        consumptionPerLux: 0.00015
+      }
+    ]
   },
   {
     roomName: 'kitchen',

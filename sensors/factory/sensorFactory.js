@@ -1,4 +1,4 @@
-import { SENSOR_TYPES } from '../../central-control-system/consts/sensorType.js'
+import { SENSOR_TYPES } from '../consts/sensorType.js'
 import { LightSensor } from '../models/lightSensor.js'
 import { MotionSensor } from '../models/motionSensor.js'
 

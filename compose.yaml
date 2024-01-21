@@ -9,10 +9,10 @@ services:
     ports:
       - 8086:8086
     volumes:
-      - ./database/influxdb:/var/lib/influxdb2
-      - ./database/influxdb/config:/etc/influxdb2
+      - ./influxdb:/var/lib/influxdb2
+      - ./influxdb/config:/etc/influxdb2
     env_file:
-      - ./database/influxdb/.env
+      - ./influxdb/.env
     networks:
       se4iot:
         ipv4_address: 172.20.0.101
@@ -31,43 +31,87 @@ services:
     networks:
       se4iot:
         ipv4_address: 172.20.0.102
+  mongodb:
+    image: mongo:latest
+    container_name: mongodb
+    hostname: mongodb
+    restart: always
+    ports:
+      - 27017:27017
+    volumes:
+      - ./mongodb:/data/db
+    networks:
+      se4iot:
+        ipv4_address: 172.20.0.103
+  sensors:
+    build: ./sensors
+    container_name: sensors
+    hostname: sensors
+    restart: always
+    env_file:
+      - ./mosquitto/.env
+    depends_on:
+      mosquitto:
+          condition: service_started
+      central-control-system:
+          condition: service_started
+    networks:
+      se4iot:
+        ipv4_address: 172.20.0.104
   actuators:
-    image: otherlude/se4iot:actuators
+    build: ./actuators
     container_name: actuators
     hostname: actuators
     restart: always
     env_file:
-      - .env
-    depends_on:
-      - mosquitto
-    networks:
-      se4iot:
-        ipv4_address: 172.20.0.103
-  server:
-    image: otherlude/se4iot:server
-    container_name: server
-    hostname: server
-    restart: always
-    env_file:
-      - .env
+      - ./mosquitto/.env
     depends_on:
       - mosquitto
     networks:
       se4iot:
         ipv4_address: 172.20.0.105
+  server:
+    build: ./backend
+    volumes:
+      - ./backend:/usr/src/app
+    container_name: server
+    hostname: server
+    restart: no
+    env_file:
+      - ./mosquitto/.env
+      - ./backend/.env
+      - ./mongodb/.env
+    ports:
+      - 3000:3000
+    depends_on:
+      - mosquitto
+      - mongodb
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://server:3000/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+    networks:
+      se4iot:
+        ipv4_address: 172.20.0.106
   central-control-system:
-    image: otherlude/se4iot:central-control-system
+    build: ./central-control-system
+    volumes:
+      - ./central-control-system:/usr/src/app
     container_name: central-control-system
     hostname: central-control-system
     restart: always
     env_file:
-      - .env
+      - ./backend/.env
+      - ./mosquitto/.env
     depends_on:
-      - server
-      - mosquitto
+      server:
+          condition: service_healthy
+      mosquitto:
+          condition: service_started
     networks:
       se4iot:
-        ipv4_address: 172.20.0.106
+        ipv4_address: 172.20.0.107
   node-red:
     image: nodered/node-red:latest
     container_name: node-red
@@ -78,15 +122,14 @@ services:
     volumes:
       - ./node-red:/data
     env_file:
-      - ./node-red/.env
-      - ./database/influxdb/.env
-      - .env
+      - ./influxdb/.env
+      - ./mosquitto/.env
     depends_on:
       - influxdb
       - mosquitto
     networks:
       se4iot:
-        ipv4_address: 172.20.0.107
+        ipv4_address: 172.20.0.108
 
 networks:
   se4iot:

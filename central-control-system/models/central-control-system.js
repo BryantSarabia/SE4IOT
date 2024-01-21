@@ -21,7 +21,7 @@ export class CentralControlSystem {
   async initialize () {
     try {
       this.userPreferences = await this.getUserPreferences()
-      console.log('User preferences loaded.')
+      if (this.userPreferences) console.log('User preferences loaded.')
       // Subscribe to sensors MQTT topics
       this.subscribeSensorActivation()
       this.subscribeSensorData()

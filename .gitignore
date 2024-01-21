@@ -128,3 +128,14 @@ dist
 .yarn/build-state.yml
 .yarn/install-state.gz
 .pnp.*
+
+# influxdb
+influxdb/config
+influxdb/engine
+
+# mongodb
+mongodb/*
+!mongodb/.env
+
+# mosquitto
+mosquitto/log

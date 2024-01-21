@@ -8,6 +8,8 @@ ARG NODE_VERSION=18.16.1
 
 FROM node:${NODE_VERSION}-alpine
 
+RUN apk update && apk add curl
+
 # Use production node environment by default.
 ENV NODE_ENV production
 
@@ -33,4 +35,4 @@ COPY . .
 EXPOSE 3000
 
 # Run the application.
-CMD node start:mongodb
+CMD npm run start

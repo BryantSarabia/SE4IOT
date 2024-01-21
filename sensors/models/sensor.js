@@ -5,7 +5,7 @@ import { createMqttClient } from '../services/mqtt-client.js'
 export class Sensor {
   interval = null
   intervalTime = 5000
-  mqttClient = createMqttClient(MQTT_CONFIG.brokerUrl)
+  mqttClient = createMqttClient({ brokerUrl: MQTT_CONFIG.brokerUrl })
 
   constructor ({ type, room, id, value, measureUnit }) {
     if (this.constructor === Sensor) {

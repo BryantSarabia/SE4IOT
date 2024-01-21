@@ -1,7 +1,8 @@
 export const MONGODB_CONFIG = {
-  dbUrl: process.env.mongodbURL ?? 'mongodb://127.0.0.1:27017',
-  dbName: 'smart_home',
-  collectionName: 'user_preferences',
+  dbUrl: process.env.MONGODB_URL ?? 'mongodb://127.0.0.1',
+  port: process.env.MONGODB_PORT ?? 27017,
+  dbName: process.env.MONGODB_DB_NAME ?? 'smart_home',
+  collectionName: process.env.MONGODB_COLLECTION_NAME ?? 'user_preferences',
   user_preferences: {
     minimumLightIntensityThreshold: 500,
     maximumLightIntensityThreshold: 1500
@@ -9,14 +10,10 @@ export const MONGODB_CONFIG = {
 }
 
 export const SERVER_CONFIG = {
-  url: process.env.url ?? 'http://localhost',
-  port: process.env.port ?? 3000
+  url: process.env.SERVER_URL ?? 'http://localhost',
+  port: process.env.SERVER_PORT ?? 3000
 }
 
 export const MQTT_CONFIG = {
-  brokerUrl: process.env.mqttBrokerURL ?? 'mqtt://localhost',
-  topics: {
-    lightIntensity: 'light/intensity',
-    lightIntensityThreshold: 'light/intensity/threshold'
-  }
+  brokerUrl: process.env.MQTT_BROKER ?? 'mqtt://localhost'
 }
