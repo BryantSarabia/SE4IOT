@@ -82,12 +82,12 @@ services:
       - ./backend/.env
       - ./mongodb/.env
     ports:
-      - 3000:3000
+      - 3002:3002
     depends_on:
       - mosquitto
       - mongodb
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://server:3000/health"]
+      test: ["CMD", "curl", "-f", "http://server:3002/health"]
       interval: 10s
       timeout: 5s
       retries: 3
@@ -130,7 +130,25 @@ services:
     networks:
       se4iot:
         ipv4_address: 172.20.0.108
-
+  grafana:
+    image: grafana/grafana:latest
+    container_name: grafana
+    hostname: grafana
+    restart: always
+    ports:
+      - 3000:3000
+    volumes:
+      - ./grafana:/var/lib/grafana
+      - ./grafana/grafana.ini:/etc/grafana/grafana.ini
+      - ./grafana/provisioning:/etc/grafana/provisioning
+    env_file:
+      - ./grafana/.env
+      - ./influxdb/.env
+    depends_on:
+      - influxdb
+    networks:
+      se4iot:
+        ipv4_address: 172.20.0.109
 networks:
   se4iot:
     ipam:
