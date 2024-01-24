@@ -1,5 +1,5 @@
+import { mongodbClient } from '../clients/mongodb-client.js'
 import { MONGODB_CONFIG } from '../config.js'
-import { mongodbClient } from '../services/mongodb-client.js'
 
 const mongodbUserPreferencesCollection = MONGODB_CONFIG.collectionName
 const DefaultUserPreferences = MONGODB_CONFIG.user_preferences

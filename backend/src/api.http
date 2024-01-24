@@ -1,8 +1,8 @@
 ### Get user preferences
-GET http://localhost:3000/user-preferences
+GET http://localhost:3002/user-preferences
 
 ### Update user preferences
-PUT http://localhost:3000/user-preferences
+PUT http://localhost:3002/user-preferences
 Content-Type: application/json
 
 {
@@ -10,12 +10,27 @@ Content-Type: application/json
 }
 
 ### Delete user preferences
-DELETE http://localhost:3000/user-preferences
+DELETE http://localhost:3002/user-preferences
 
 ### Insert User Preferences
-POST http://localhost:3000/user-preferences
+POST http://localhost:3002/user-preferences
 Content-Type: application/json
 
 {
     "lightIntensityThreshold": "54"
+}
+
+### Get grafana dashboards
+GET http://localhost:3002/grafana/dashboards
+
+
+### Get grafana dashboard by uid
+GET http://localhost:3002/grafana/dashboards/test
+
+### Create Room dashboard
+POST http://localhost:3002/grafana/dashboards
+Content-Type: application/json
+
+{
+    "room": "test"
 }

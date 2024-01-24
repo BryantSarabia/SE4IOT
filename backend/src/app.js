@@ -1,15 +1,16 @@
 import express, { json } from 'express'
 import { SERVER_CONFIG } from './config.js'
 import { errorHandler } from './middlewares/error-handler.js'
+import { createGrafanaRouter } from './routes/grafana.js'
 import { createHealthRouter } from './routes/health.js'
 import { createUserPreferencesRouter } from './routes/userPreferences.js'
-// const CentralControlSystem = require('./central-control/central-control-system');
 
-export const createApp = ({ userPreferencesModel, healthModel }) => {
+export const createApp = ({ userPreferencesModel, healthModel, grafanaModel }) => {
   const app = express()
   app.use(json())
   app.use('/health', createHealthRouter({ healthModel }))
   app.use('/user-preferences', createUserPreferencesRouter({ userPreferencesModel }))
+  app.use('/grafana/dashboards', createGrafanaRouter({ grafanaModel }))
   // Initialize the Central Control System
   // const centralControlSystem = new CentralControlSystem()
   app.use(errorHandler)

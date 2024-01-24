@@ -5,6 +5,7 @@ datasources:
   - name: se4iot
     type: influxdb
     url: http://${INFLUXDB_HOST}:${INFLUXDB_PORT}
+    uid: ${INFLUXDB_DATASOURCE_UID}
     access: proxy
     isDefault: true
     jsonData:

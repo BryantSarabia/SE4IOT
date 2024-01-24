@@ -81,6 +81,7 @@ services:
       - ./mosquitto/.env
       - ./backend/.env
       - ./mongodb/.env
+      - ./grafana/.env
     ports:
       - 3002:3002
     depends_on:

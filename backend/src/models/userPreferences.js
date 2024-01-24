@@ -1,6 +1,6 @@
+import { mongodbClient } from '../clients/mongodb-client.js'
 import { MONGODB_CONFIG } from '../config.js'
 import { HttpError } from '../error-handling/httpError.js'
-import { mongodbClient } from '../services/mongodb-client.js'
 
 export class UserPreferencesModel {
   static async getUserPreferences () {

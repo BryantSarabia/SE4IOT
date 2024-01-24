@@ -1,4 +1,4 @@
-import { mqttClient } from '../services/mqtt-client.js'
+import { mqttClient } from '../clients/mqtt-client.js'
 export class UserPreferencesController {
   constructor ({ userPreferencesModel }) {
     this.userPreferencesModel = userPreferencesModel
