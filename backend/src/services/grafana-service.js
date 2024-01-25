@@ -54,6 +54,7 @@ export async function updateDashboard ({ dashboard }) {
     if (!response.statusText === STATUS.OK) return null
     return dashboard
   } catch (error) {
+    console.log(error)
     console.error('Error updating dashboard')
     throw error
   }

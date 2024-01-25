@@ -5,8 +5,7 @@ export class Panel {
     this.panel = {
       type: panelType,
       title: this.generateTitle({ deviceType, device }),
-      gridPos: this.calculateGridPos(id),
-      refresh: '5s'
+      gridPos: this.calculateGridPos(id)
     }
     this.dbConfig = {
       datasource: {

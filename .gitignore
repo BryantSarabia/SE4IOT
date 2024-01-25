@@ -139,3 +139,6 @@ mongodb/*
 
 # mosquitto
 mosquitto/log
+
+# postgres
+postgresql/data

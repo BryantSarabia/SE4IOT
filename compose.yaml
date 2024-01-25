@@ -145,11 +145,29 @@ services:
     env_file:
       - ./grafana/.env
       - ./influxdb/.env
+      - ./postgresql/.env
     depends_on:
       - influxdb
+      - postgresql
     networks:
       se4iot:
         ipv4_address: 172.20.0.109
+  postgresql:
+    image: postgres:latest
+    container_name: postgresql
+    hostname: postgresql
+    restart: always
+    ports:
+      - 5432:5432
+    volumes:
+      - ./postgresql/data:/var/lib/postgresql/data
+      - ./postgresql/config:/docker-entrypoint-initdb.d
+      - ./postgresql/.env:/docker-entrypoint-initdb.d/.env
+    env_file:
+      - ./postgresql/.env
+    networks:
+      se4iot:
+        ipv4_address: 172.20.0.110
 networks:
   se4iot:
     ipam:

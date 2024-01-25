@@ -34,3 +34,34 @@ Content-Type: application/json
 {
     "room": "test"
 }
+
+### Add sennsor to room dashboard
+PUT http://localhost:3002/grafana/dashboards/test/sensors
+Content-Type: application/json
+
+{
+    "sensor": {
+        "room": "test",
+        "type": "light",
+        "id": "1"
+    }
+}
+
+### Add dashboard to grafana
+POST http://localhost:3000/api/dashboards/db
+Content-Type: application/json
+Authorization: Bearer glsa_VOgqUeVR4GgbSbKltzcjiuyNAhRzJD4H_0fc0d6e5
+
+{
+    "dashboard":
+    {
+        "title": "test",
+        "uid":"test",
+        "panels":[{"type":"timeseries","title":"sensor-motion-13",
+        "gridPos":{"h":9,"w":12,"x":0,"y":0},
+        "targets":[{"datasource":{"type":"influxdb","uid":"se4iot_influxdb"},
+        "query":"from(bucket:\"iot\")\r\n    |> range(start: -1h)\r\n    |> filter(fn: (r) => r.type == \"motion\" and r.room == \"garden\")","refId":"A"}]}],"timezone":"browser"
+        },
+    "overwrite":true
+}
+

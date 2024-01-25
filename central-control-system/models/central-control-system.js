@@ -10,6 +10,8 @@ export class CentralControlSystem {
   constructor () {
     // Initialize the Central Control System
     this.rooms = new Map()
+    this.sensorActivationQueue = []
+    this.isProcessingQueue = false
     this.rules = {
       [SENSOR_TYPES.LIGHT]: new LightRule(),
       [SENSOR_TYPES.MOTION]: new MotionRule()
@@ -65,7 +67,8 @@ export class CentralControlSystem {
       if (!topic || !topic.includes(subscribedTopic)) return
       const [room, type, id] = topic.split('/').slice(2)
       if (type && room && id) {
-        await this.activateSensor({ type, roomName: room, id })
+        const sensor = { type, roomName: room, id }
+        await this.queueSensorActivation({ sensor })
       }
     }
   }
@@ -90,9 +93,10 @@ export class CentralControlSystem {
       room.addSensor(sensor)
       console.log(`Activated ${type} sensor in ${roomName}.`)
       await addSensorToRoomDashboard({ sensor })
-      console.log(`Added ${type} sensor to room ${roomName}.`)
     } catch (error) {
       console.log(error.message)
+    } finally {
+      this.processQueue()
     }
   }
 
@@ -150,6 +154,25 @@ export class CentralControlSystem {
       throw new Error(`Rule ${ruleType} not found.`)
     }
     return this.rules[ruleType]
+  }
+
+  async processQueue () {
+    if (this.sensorActivationQueue.length === 0) {
+      this.isProcessingQueue = false
+      return
+    }
+
+    this.isProcessingQueue = true
+    const sensor = this.sensorActivationQueue.shift()
+    await this.activateSensor({ ...sensor })
+    this.processQueue()
+  }
+
+  queueSensorActivation ({ sensor }) {
+    this.sensorActivationQueue.push(sensor)
+    if (!this.isProcessingQueue) {
+      this.processQueue()
+    }
   }
 
   async getUserPreferences () {
