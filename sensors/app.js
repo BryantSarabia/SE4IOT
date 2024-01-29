@@ -1,7 +1,9 @@
 import { ROOMS as rooms } from './consts/rooms.js'
 import { SensorFactory } from './factory/sensorFactory.js'
 
-function initSensors () {
+const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms))
+
+async function initSensors () {
   let id = 0
   for (const room of rooms) {
     const { roomName, sensors } = room
@@ -10,6 +12,7 @@ function initSensors () {
       sensorModel.initialize()
       console.log(`Initialized ${sensor.type} in ${roomName} with id ${id}.`)
       id++
+      await delay(300) // Wait 300ms between each sensor initialization to avoid Grafana errors
     }
   }
 }

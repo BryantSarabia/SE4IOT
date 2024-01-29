@@ -77,8 +77,8 @@ export class CentralControlSystem {
     try {
       // If the room doesn't exist in the map, create it
       if (!this.rooms.has(roomName)) {
-        this.rooms.set(roomName, new Room({ name: roomName }))
         await createRoomDashboard({ room: roomName })
+        this.rooms.set(roomName, new Room({ name: roomName }))
       }
       const roomAttribute = ROOM_VALUES[type]
       if (!roomAttribute) {
@@ -90,9 +90,9 @@ export class CentralControlSystem {
         room.addValue(roomAttribute)
       }
       const sensor = { type, room: roomName, id }
+      await addSensorToRoomDashboard({ sensor })
       room.addSensor(sensor)
       console.log(`Activated ${type} sensor in ${roomName}.`)
-      await addSensorToRoomDashboard({ sensor })
     } catch (error) {
       console.log(error.message)
     } finally {
