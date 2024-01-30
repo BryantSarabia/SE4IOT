@@ -1,0 +1,6 @@
+export const ACTIVATE_SENSOR_TOPIC = 'sensors/activate/#'
+export const ACTIVATE_ACTUATOR_TOPIC = 'actuators/activate/#'
+export const DEACTIVATE_SENSOR_TOPIC = 'sensors/deactivate'
+export const DEACTIVATE_ACTUATOR_TOPIC = 'sensors/deactivate'
+export const USER_PREFERENCES_TOPIC = 'user-preferences'
+export const SENSOR_DATA_TOPIC = 'sensors/data/#'

@@ -1,5 +1,5 @@
 import { MQTT_CONFIG } from '../config.js'
-import { ACTUATORS_TOPIC, CONSUMPTION_TOPIC, PUBLISH_TOPIC } from '../consts/topics.js'
+import { ACTIVATE_TOPIC, ACTUATORS_TOPIC, CONSUMPTION_TOPIC, PUBLISH_TOPIC } from '../consts/topics.js'
 import { createMqttClient } from '../services/mqtt-client.js'
 export class Actuator {
   mqttClient = createMqttClient({ brokerUrl: MQTT_CONFIG.brokerUrl })
@@ -18,9 +18,11 @@ export class Actuator {
     // sensors/update/<room>/<type>/<id>
     this.publishTopic = `${PUBLISH_TOPIC}/${room}/${type}/${id}`
     this.consumptionTopic = `${CONSUMPTION_TOPIC}/${room}/${type}/${id}`
+    this.activateTopic = `${ACTIVATE_TOPIC}/${room}/${type}/${id}`
   }
 
-  initialize () {
+  async initialize () {
+    this.mqttClient.publish(this.activateTopic)
     this.mqttClient.subscribe(`${this.topic}/+`)
     this.mqttClient.on('connect', () => { console.log(`Actuator ${this.type}-${this.id} in room:${this.room} connected to MQTT broker succesfully`) })
     this.mqttClient.on('error', (e) => { console.log(`Actuator ${this.type}-${this.id} in room:${this.room} could not connect to the MQTT broker. Reason: ${e}`) })
@@ -33,7 +35,10 @@ export class Actuator {
     const [, room, type, action] = topic.split('/')
     if (room !== this.room) return
     if (type !== this.type) return
-    if (!this[action]) return
+    if (!this[action]) {
+      console.log(`Action ${action} not implemented for ${this.type}-${this.id} in room:${this.room}`)
+      return
+    }
     this[action]({ message })
   }
 

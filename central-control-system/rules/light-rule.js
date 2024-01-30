@@ -23,16 +23,17 @@ export class LightRule extends Rule {
       return action
     }
     const { value, type } = sensorData
+    const averageValue = value / room.getSensorsByType(type).length
     const actuatorType = SENSOR_TO_ACTUATOR[type]
     if (!actuatorType) {
       console.log(`No actuator type found for sensor type ${type}`)
       return action
     }
-    if (value < minimumLightIntensityThreshold) {
+    if (averageValue < minimumLightIntensityThreshold) {
       action = {
         topic: `actuators/${room.name}/${actuatorType}/increase`
       }
-    } else if (value > maximumLightIntensityThreshold) {
+    } else if (averageValue > maximumLightIntensityThreshold) {
       action = {
         topic: `actuators/${room.name}/${actuatorType}/decrease`
       }

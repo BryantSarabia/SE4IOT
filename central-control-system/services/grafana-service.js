@@ -33,3 +33,20 @@ export async function addSensorToRoomDashboard ({ sensor }) {
     throw error
   }
 }
+
+export async function addActuatorToRoomDashboard ({ actuator }) {
+  try {
+    const url = `${SERVER_CONFIG.url}:${SERVER_CONFIG.port}/grafana/dashboards/${actuator.room}/actuators`
+    const response = await fetch(url, {
+      method: 'PUT',
+      body: JSON.stringify({ actuator }),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+    return await response.json()
+  } catch (error) {
+    console.error('Error adding actuator to room')
+    throw error
+  }
+}

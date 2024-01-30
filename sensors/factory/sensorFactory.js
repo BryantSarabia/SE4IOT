@@ -8,10 +8,10 @@ export class SensorFactory {
     [SENSOR_TYPES.MOTION]: MotionSensor
   }
 
-  static create ({ type, room, id }) {
+  static create ({ type, ...args }) {
     if (!SensorFactory.sensors[type]) {
       throw new Error(`Sensor type ${type} is not supported.`)
     }
-    return new SensorFactory.sensors[type]({ room, id })
+    return new SensorFactory.sensors[type](args)
   }
 }

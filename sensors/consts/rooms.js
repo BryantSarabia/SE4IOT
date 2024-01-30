@@ -18,7 +18,8 @@ export const ROOMS = [
       {
         type: SENSOR_TYPES.LIGHT,
         measureUnit: MEASURE_UNITS[SENSOR_TYPES.LIGHT],
-        value: 0
+        value: 0,
+        maxValue: 3000
       },
       {
         type: SENSOR_TYPES.MOTION,
@@ -32,7 +33,8 @@ export const ROOMS = [
     sensors: [{
       type: SENSOR_TYPES.LIGHT,
       measureUnit: MEASURE_UNITS[SENSOR_TYPES.LIGHT],
-      value: 0
+      value: 0,
+      maxValue: 3000
     },
     {
       type: SENSOR_TYPES.MOTION,
@@ -46,7 +48,8 @@ export const ROOMS = [
     sensors: [{
       type: SENSOR_TYPES.LIGHT,
       measureUnit: MEASURE_UNITS[SENSOR_TYPES.LIGHT],
-      value: 0
+      value: 0,
+      maxValue: 3000
     },
     {
       type: SENSOR_TYPES.MOTION,
@@ -60,7 +63,8 @@ export const ROOMS = [
     sensors: [{
       type: SENSOR_TYPES.LIGHT,
       measureUnit: MEASURE_UNITS[SENSOR_TYPES.LIGHT],
-      value: 0
+      value: 0,
+      maxValue: 3000
     },
     {
       type: SENSOR_TYPES.MOTION,
@@ -74,7 +78,8 @@ export const ROOMS = [
     sensors: [{
       type: SENSOR_TYPES.LIGHT,
       measureUnit: MEASURE_UNITS[SENSOR_TYPES.LIGHT],
-      value: 0
+      value: 0,
+      maxValue: 3000
     },
     {
       type: SENSOR_TYPES.MOTION,
@@ -88,7 +93,8 @@ export const ROOMS = [
     sensors: [{
       type: SENSOR_TYPES.LIGHT,
       measureUnit: MEASURE_UNITS[SENSOR_TYPES.LIGHT],
-      value: 0
+      value: 0,
+      maxValue: 3000
     },
     {
       type: SENSOR_TYPES.MOTION,
@@ -102,7 +108,8 @@ export const ROOMS = [
     sensors: [{
       type: SENSOR_TYPES.LIGHT,
       measureUnit: MEASURE_UNITS[SENSOR_TYPES.LIGHT],
-      value: 0
+      value: 0,
+      maxValue: 3000
     },
     {
       type: SENSOR_TYPES.MOTION,

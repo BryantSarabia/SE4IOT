@@ -22,8 +22,8 @@ services:
     hostname: mosquitto
     restart: always
     ports:
-      - 1883:1883
-      - 9001:9001
+      - 1882:1883
+      - 9002:9001
     volumes:
       - ./mosquitto:/mosquitto/data
       - ./mosquitto/config/mosquitto.conf:/mosquitto/config/mosquitto.conf
@@ -51,10 +51,8 @@ services:
     env_file:
       - ./mosquitto/.env
     depends_on:
-      mosquitto:
-          condition: service_started
-      central-control-system:
-          condition: service_started
+      - mosquitto
+      - central-control-system
     networks:
       se4iot:
         ipv4_address: 172.20.0.104
@@ -66,6 +64,7 @@ services:
     env_file:
       - ./mosquitto/.env
     depends_on:
+      - central-control-system
       - mosquitto
     networks:
       se4iot:
@@ -125,6 +124,7 @@ services:
     env_file:
       - ./influxdb/.env
       - ./mosquitto/.env
+      - ./backend/.env
     depends_on:
       - influxdb
       - mosquitto

@@ -1,10 +1,5 @@
 import { ACTUATOR_TYPES } from './consts/actuatorTypes.js'
 
-export const SERVER_CONFIG = {
-  url: process.env.url ?? 'http://localhost',
-  port: process.env.port ?? 3000
-}
-
 export const MQTT_CONFIG = {
   brokerUrl: process.env.MQTT_BROKER ?? 'mqtt://localhost'
 }

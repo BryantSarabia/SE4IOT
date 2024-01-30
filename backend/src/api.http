@@ -6,7 +6,8 @@ PUT http://localhost:3002/user-preferences
 Content-Type: application/json
 
 {
-    "lightIntensityThreshold": "50"
+    "minimumLightIntensityThreshold": 500,
+    "maximumLightIntensityThreshold": 1500
 }
 
 ### Delete user preferences

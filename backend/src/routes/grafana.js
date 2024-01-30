@@ -8,5 +8,6 @@ export const createGrafanaRouter = ({ grafanaModel }) => {
   router.get('/:uid', grafanaController.getDashboardByUid)
   router.post('/', grafanaController.createRoomDashboard)
   router.put('/:uid/sensors', grafanaController.addSensorToRoomDashboard)
+  router.put('/:uid/actuators', grafanaController.addActuatorToRoomDashboard)
   return router
 }

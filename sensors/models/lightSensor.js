@@ -3,10 +3,11 @@ import { SENSOR_TYPES } from '../consts/sensorType.js'
 import { Sensor } from './sensor.js'
 
 export class LightSensor extends Sensor {
-  constructor ({ room, id, value = 0 }) {
+  constructor ({ room, id, value = 0, maxValue }) {
     const type = SENSOR_TYPES.LIGHT
     const measureUnit = MEASURE_UNITS[type]
     super({ type: SENSOR_TYPES.LIGHT, room, id, value, measureUnit })
+    this.maxValue = maxValue
   }
 
   generateData () {
@@ -15,8 +16,9 @@ export class LightSensor extends Sensor {
     if (randomProbability > probability) {
       const by = Math.floor(Math.random() * 100)
       const shouldIncrease = (Math.random() * 100) >= 50
-      if (!shouldIncrease && this.value - by <= 0) return 0
-      return shouldIncrease ? this.value + by : this.value - by
+      this.value = shouldIncrease
+        ? Math.min(this.value + by, this.maxValue)
+        : Math.max(this.value - by, 0)
     }
     return this.value
   }

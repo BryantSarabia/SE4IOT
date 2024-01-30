@@ -1,11 +1,12 @@
 import { GRAFANA_CONFIG } from '../config.js'
-
+import { DEVICE_TYPES } from '../consts/deviceTypes.js'
 export class Panel {
-  constructor ({ id, device, panelType, deviceType }) {
+  constructor ({ id, device, panelType, deviceType, options }) {
     this.panel = {
       type: panelType,
       title: this.generateTitle({ deviceType, device }),
-      gridPos: this.calculateGridPos(id)
+      gridPos: this.calculateGridPos({ id }),
+      options
     }
     this.dbConfig = {
       datasource: {
@@ -20,16 +21,22 @@ export class Panel {
     return `${deviceType ? deviceType + '-' : ''}${device.type}-${device.id}`
   }
 
-  calculateGridPos (id) {
+  calculateGridPos ({ id }) {
     const grid = { h: 9, w: 12, x: (id % 2) * 12, y: Math.floor(id / 2) * 9 }
     return grid
   }
 }
 
 export class SensorPanel extends Panel {
-  constructor ({ id, sensor }) {
-    super({ id, device: sensor, panelType: 'timeseries', deviceType: 'sensor' })
-    this.query = `from(bucket: "${this.dbConfig.bucket}")\r\n    |> range(start: -1h)\r\n    |> filter(fn: (r) => r.type == "${sensor.type}" and r.room == "${sensor.room}")`
+  constructor ({
+    id, sensor, options = {
+      tooltip: {
+        mode: 'multi'
+      }
+    }
+  }) {
+    super({ id, device: sensor, panelType: 'timeseries', deviceType: DEVICE_TYPES.SENSOR, options })
+    this.query = `from(bucket: "${this.dbConfig.bucket}")\r\n    |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n    |> filter(fn: (r) => r.type == "${sensor.type}" and r.room == "${sensor.room}" and r.id == "${sensor.id}")\r\n    |> aggregateWindow(every: v.windowPeriod, fn: last, createEmpty: false)`
     const targets = [
       {
         datasource: this.dbConfig.datasource,
@@ -43,22 +50,22 @@ export class SensorPanel extends Panel {
 
 export class ActuatorPanel extends Panel {
   // eslint-disable-next-line no-useless-constructor
-  constructor ({ id, room, actuator }) {
-    super({ id, room, actuator })
-    // Add specific logic for actuators here
+  constructor ({
+    id, actuator, options = {
+      tooltip: {
+        mode: 'multi'
+      }
+    }
+  }) {
+    super({ id, device: actuator, panelType: 'timeseries', deviceType: DEVICE_TYPES.ACTUATOR, options })
+    this.query = `from(bucket: "${this.dbConfig.bucket}")\r\n    |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n    |> filter(fn: (r) => r.type == "${actuator.type}" and r.room == "${actuator.room}" and r.id == "${actuator.id}")\r\n    |> aggregateWindow(every: v.windowPeriod, fn: last, createEmpty: false)`
+    const targets = [
+      {
+        datasource: this.dbConfig.datasource,
+        query: this.query,
+        refId: 'A'
+      }
+    ]
+    this.panel = { ...this.panel, targets }
   }
 }
-
-// export class RoomPanel extends Panel {
-//   constructor ({ id, room }) {
-//     super({ id, room })
-//     this.query = `from(bucket: \"iot\")\r\n    |> range(start: -1h)\r\n    |> filter(fn: (r) => r.type == \"light\" and r.room == \"living-room\")`
-//     this.targets = [
-//       {
-//         datasource: this.dbConfig.datasource,
-//         query: 'from(bucket: "usgs-earthquakes")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  ',
-//         refId: 'A'
-//       }
-//     ]
-//   }
-// }

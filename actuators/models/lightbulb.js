@@ -45,7 +45,7 @@ export class Lightbulb extends Actuator {
 
   on () {
     this.isOn = true
-    this.consumptionInterval = setInterval(() => this.updateComsuption(), 1000)
+    this.consumptionInterval = setInterval(() => this.updateConsumption(), 1000)
     const payload = JSON.stringify({ value: this.currentLux })
     this.mqttClient.publish(`${this.publishTopic}/on`, payload)
   }
@@ -54,15 +54,17 @@ export class Lightbulb extends Actuator {
     clearInterval(this.consumptionInterval)
     this.isOn = false
     const payload = JSON.stringify({ value: this.currentLux * -1 })
+    this.currentLux = 0
     this.mqttClient.publish(`${this.publishTopic}/off`, payload)
   }
 
-  updateComsuption () {
+  updateConsumption () {
     if (!this.isOn) return
     this.totalConsumption += this.currentLux * this.consumptionPerLux
     const payload = JSON.stringify({
       totalConsumption: this.totalConsumption,
-      consumptionPerSecond: this.currentLux * this.consumptionPerLux
+      consumptionPerSecond: this.currentLux * this.consumptionPerLux,
+      currentLux: this.currentLux
     })
     this.mqttClient.publish(`${this.consumptionTopic}`, payload)
   }

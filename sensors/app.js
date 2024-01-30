@@ -8,21 +8,22 @@ async function initSensors () {
   for (const room of rooms) {
     const { roomName, sensors } = room
     for (const sensor of sensors) {
-      const sensorModel = SensorFactory.create({ type: sensor.type, room: roomName, id })
+      const sensorModel = SensorFactory.create({ room: roomName, id, ...sensor })
       sensorModel.initialize()
       console.log(`Initialized ${sensor.type} in ${roomName} with id ${id}.`)
       id++
-      await delay(300) // Wait 300ms between each sensor initialization to avoid Grafana errors
+      await delay(100) // Wait 300ms between each sensor initialization to avoid Grafana errors
     }
   }
 }
 
-function initialize () {
-  initSensors()
-}
 /**
  * TODO: Remove this timeout and wait for the central control system to be initialized and listen to the sensors/activate topic
  *
  * */
-setTimeout(() => initialize(), 5000)
-// initialize()
+async function initialize () {
+  await delay(5000) // Wait 5 seconds for the central control system to be initialized
+  initSensors()
+}
+
+initialize()

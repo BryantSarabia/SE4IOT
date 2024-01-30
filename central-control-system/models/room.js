@@ -3,22 +3,39 @@ export class Room {
     this.name = name
     this.values = {}
     this.sensors = []
+    this.actuators = []
   }
 
   addSensor (sensor) {
     this.sensors.push(sensor)
   }
 
+  addActuator (actuator) {
+    this.actuators.push(actuator)
+  }
+
   getSensorById (id) {
     return this.sensors.find(sensor => sensor.id === id)
+  }
+
+  getActuatorById (id) {
+    return this.actuators.find(actuator => actuator.id === id)
   }
 
   getSensorsByType (type) {
     return this.sensors.filter(sensor => sensor.type === type)
   }
 
+  getActuatorsByType (type) {
+    return this.actuators.filter(actuator => actuator.type === type)
+  }
+
   removeSensorById (id) {
     this.sensors = this.sensors.filter(sensor => sensor.id !== id)
+  }
+
+  removeActuatorById (id) {
+    this.actuators = this.actuators.filter(actuator => actuator.id !== id)
   }
 
   addValue (key, value = null) {
