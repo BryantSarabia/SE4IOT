@@ -4,7 +4,7 @@ import { ActuatorFactory } from './factory/actuatorFactory.js'
 const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms))
 
 async function initializeActuators () {
-  let id = 0
+  let id = 1
   for (const room of rooms) {
     const { roomName, actuators } = room
     for (const actuator of actuators) {
@@ -14,7 +14,7 @@ async function initializeActuators () {
         actuatorInstance.initialize()
         console.log(`Initialized ${type} in ${roomName}.`)
         id++
-        await delay(100) // Wait 300ms between each actuator initialization to avoid Grafana errors
+        await delay(300) // Wait 300ms between each actuator initialization to avoid Grafana errors
       } catch (error) {
         console.log(error.message)
       }

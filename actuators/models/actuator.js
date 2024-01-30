@@ -39,7 +39,14 @@ export class Actuator {
       console.log(`Action ${action} not implemented for ${this.type}-${this.id} in room:${this.room}`)
       return
     }
-    this[action]({ message })
+    let payload = null
+    try {
+      if (message) payload = JSON.parse(message.toString())
+    } catch (error) {
+
+    } finally {
+      this[action]({ message: payload })
+    }
   }
 
   increase ({ message }) {

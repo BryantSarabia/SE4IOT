@@ -12,7 +12,10 @@ export class Lightbulb extends Actuator {
   }
 
   increase () {
-    if (this.currentLux === this.maxLux) return console.log(`${ACTUATOR_TYPES.LIGHTBULB} in ${this.room} reached max value.`)
+    if (this.currentLux === this.maxLux) {
+      console.log(`${ACTUATOR_TYPES.LIGHTBULB} in ${this.room} reached max value.`)
+      return
+    }
     let payload = null
     let increaseBy = null
     if (this.currentLux + this.increaseBy > this.maxLux) {
@@ -28,7 +31,10 @@ export class Lightbulb extends Actuator {
   }
 
   decrease () {
-    if (this.currentLux === 0) return console.log(`${ACTUATOR_TYPES.LIGHTBULB} in ${this.room} reached min value.`)
+    if (this.currentLux === 0) {
+      console.log(`${ACTUATOR_TYPES.LIGHTBULB} in ${this.room} reached min value.`)
+      return
+    }
     let payload = null
     let decreaseBy = null
     if (this.currentLux - this.increaseBy <= 0) {

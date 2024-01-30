@@ -455,7 +455,7 @@
         ],
         "repeat": "",
         "crontab": "",
-        "once": false,
+        "once": true,
         "onceDelay": 0.1,
         "topic": "",
         "x": 250,
@@ -784,19 +784,20 @@
         "id": "5430de25f0058e2d",
         "type": "function",
         "z": "6127eaeadf941c69",
-        "name": "function 1",
-        "func": "const hasInit = flow.get('hasInit')\nif(!hasInit) {\n    flow.set('hasInit', true)\n    return\n}\nmsg.payload = flow.get('userSettings')\nreturn msg;",
+        "name": "Set payload",
+        "func": "const hasInit = flow.get('hasInit')\nif(!hasInit) {\n    flow.set('hasInit', true)\n    return\n}\nconst SERVER_URL = env.get('SERVER_URL')\nconst SERVER_PORT = env.get('SERVER_PORT')\nconst url = `${SERVER_PORT}:${SERVER_URL}/user-preferences`\nmsg.url = url\nmsg.payload = flow.get('userSettings')\nreturn msg;",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 1480,
+        "x": 1490,
         "y": 280,
         "wires": [
             [
-                "ce2e358614f0bb51"
+                "ce2e358614f0bb51",
+                "667f4aad66d2a33d"
             ]
         ]
     },
@@ -812,8 +813,8 @@
         "complete": "false",
         "statusVal": "",
         "statusType": "auto",
-        "x": 1660,
-        "y": 280,
+        "x": 1680,
+        "y": 340,
         "wires": []
     },
     {
@@ -918,6 +919,28 @@
         "reg": false,
         "x": 320,
         "y": 360,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "667f4aad66d2a33d",
+        "type": "http request",
+        "z": "6127eaeadf941c69",
+        "name": "Update User Preferences",
+        "method": "PUT",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 1730,
+        "y": 280,
         "wires": [
             []
         ]

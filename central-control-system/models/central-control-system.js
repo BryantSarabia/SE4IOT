@@ -184,7 +184,6 @@ export class CentralControlSystem {
       const rule = this.getRule(type)
       const action = rule.evaluate({ sensorData: message, userPreferences: this.userPreferences, room })
       if (!action) return
-      // this.logger.log('Action to perform', action)
       mqttClient.publish(action.topic, JSON.stringify(action.message))
     } catch (error) {
       this.logger.log(error.message)

@@ -1,5 +1,7 @@
 {
   "conventionalCommits.scopes": [
-    "grafana"
+    "grafana",
+    "actuators",
+    "sensors"
   ]
 }

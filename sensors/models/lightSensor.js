@@ -26,12 +26,18 @@ export class LightSensor extends Sensor {
   onActuatorMessage (topic, message) {
     const shouldProceed = super.onActuatorMessage(topic, message)
     if (!shouldProceed) return
-    const { value } = JSON.parse(message.toString())
-    if (this.value + Number(value) < 0) {
-      this.value = 0
-    } else {
-      this.value += Number(value)
+    let payload = null
+    try {
+      if (message) payload = JSON.parse(message.toString())
+    } catch (error) {
+
+    } finally {
+      let { value } = payload
+      value = Number(value)
+      this.value += value
+      if (this.value < 0) this.value = 0
+      if (this.value > this.maxValue) this.value = this.maxValue
+      this.publishData()
     }
-    this.publishData()
   }
 }
