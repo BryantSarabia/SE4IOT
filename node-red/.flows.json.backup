@@ -412,7 +412,7 @@
         "precision": "",
         "retentionPolicy": "",
         "database": "database",
-        "precisionV18FluxV20": "ms",
+        "precisionV18FluxV20": "s",
         "retentionPolicyV18Flux": "",
         "org": "${DOCKER_INFLUXDB_INIT_ORG}",
         "bucket": "${DOCKER_INFLUXDB_INIT_BUCKET}",
@@ -534,12 +534,298 @@
         "precision": "",
         "retentionPolicy": "",
         "database": "database",
-        "precisionV18FluxV20": "ms",
+        "precisionV18FluxV20": "s",
         "retentionPolicyV18Flux": "",
         "org": "${DOCKER_INFLUXDB_INIT_ORG}",
         "bucket": "${DOCKER_INFLUXDB_INIT_BUCKET}",
         "x": 980,
         "y": 460,
+        "wires": []
+    },
+    {
+        "id": "36b1016cafd8a2e8",
+        "type": "http request",
+        "z": "cc4603ebcf2608d1",
+        "name": "",
+        "method": "GET",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "grafana:3000/api/search",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "bearer",
+        "senderr": false,
+        "headers": [],
+        "x": 330,
+        "y": 280,
+        "wires": [
+            [
+                "e87e35682906e1b0"
+            ]
+        ]
+    },
+    {
+        "id": "cbee99851ad29dbf",
+        "type": "inject",
+        "z": "cc4603ebcf2608d1",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 160,
+        "y": 380,
+        "wires": [
+            [
+                "36b1016cafd8a2e8"
+            ]
+        ]
+    },
+    {
+        "id": "451b674904f5a25b",
+        "type": "debug",
+        "z": "cc4603ebcf2608d1",
+        "name": "debug 8",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 840,
+        "y": 500,
+        "wires": []
+    },
+    {
+        "id": "e87e35682906e1b0",
+        "type": "function",
+        "z": "cc4603ebcf2608d1",
+        "name": "function 1",
+        "func": "const dashboards = msg.payload\n\nfor (let i = 0; i < dashboards.length; i++){\n    const url = `grafana:3000/api/dashboards/uid/${dashboards[i].uid}`\n    msg.url = url\n    if( i + 1 === dashboards.length) msg.complete = true\n    node.send(msg)\n}\nreturn null;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 520,
+        "y": 280,
+        "wires": [
+            [
+                "f66519839886e3e9"
+            ]
+        ]
+    },
+    {
+        "id": "f66519839886e3e9",
+        "type": "http request",
+        "z": "cc4603ebcf2608d1",
+        "name": "",
+        "method": "GET",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "bearer",
+        "senderr": false,
+        "headers": [],
+        "x": 390,
+        "y": 420,
+        "wires": [
+            [
+                "faf15f6e5517884d"
+            ]
+        ]
+    },
+    {
+        "id": "3024cddabcdbe2d5",
+        "type": "function",
+        "z": "cc4603ebcf2608d1",
+        "name": "function 2",
+        "func": "// const {dashboard} = msg.payload\n// const orgId = 1\n// const iframeUrls = []\n// let id = 1\n// for(const panel of dashboard.panels){\n// const iframeUrl = `http://localhost:3000/d-solo/${dashboard.uid}/${dashboard.title}?orgId=${orgId}&panelId=${id}`;\n// iframeUrls.push(iframeUrl)\n// id++\n// }\n// msg.payload = iframeUrls\n// return msg;\n\nconst dashboards = msg.payload\nmsg.payload = dashboards\nreturn msg",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 720,
+        "y": 340,
+        "wires": [
+            [
+                "2cbe74f39a17550b"
+            ]
+        ]
+    },
+    {
+        "id": "0abc7d2f22998db3",
+        "type": "ui_template",
+        "z": "cc4603ebcf2608d1",
+        "group": "3f8c48cfaa40525a",
+        "name": "",
+        "order": 3,
+        "width": 0,
+        "height": 0,
+        "format": "",
+        "storeOutMessages": true,
+        "fwdInMessages": true,
+        "resendOnRefresh": true,
+        "templateScope": "local",
+        "className": "",
+        "x": 980,
+        "y": 420,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "a29a8e366d1be74b",
+        "type": "template",
+        "z": "cc4603ebcf2608d1",
+        "name": "",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "html",
+        "syntax": "mustache",
+        "template": "<iframe width=\"100%\" height=\"300\" frameborder=\"0\" src=\"{{payload}}\"></iframe>",
+        "output": "str",
+        "x": 820,
+        "y": 420,
+        "wires": [
+            [
+                "0abc7d2f22998db3"
+            ]
+        ]
+    },
+    {
+        "id": "ead7c9c8f7946cbb",
+        "type": "join",
+        "z": "cc4603ebcf2608d1",
+        "name": "",
+        "mode": "custom",
+        "build": "array",
+        "property": "payload",
+        "propertyType": "msg",
+        "key": "topic",
+        "joiner": "\\n",
+        "joinerType": "str",
+        "accumulate": false,
+        "timeout": "5",
+        "count": "",
+        "reduceRight": false,
+        "reduceExp": "",
+        "reduceInit": "",
+        "reduceInitType": "flow",
+        "reduceFixup": "",
+        "x": 610,
+        "y": 520,
+        "wires": [
+            [
+                "b0abb5dbede444be",
+                "451b674904f5a25b"
+            ]
+        ]
+    },
+    {
+        "id": "b0abb5dbede444be",
+        "type": "function",
+        "z": "cc4603ebcf2608d1",
+        "name": "function 3",
+        "func": "function createIframe(url){\n    return `<iframe width=\"100%\" height=\"300\" frameborder=\"0\" src=\"${url}\"></iframe>`\n}\n\nlet urls = msg.payload\nurls = urls.reduce((prev, curr) => [...prev, ...curr], [])\nmsg.payload = urls\nmsg.template = urls.reduce((prev, curr) => prev + createIframe(curr), \"\")\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 740,
+        "y": 580,
+        "wires": [
+            [
+                "451b674904f5a25b",
+                "552ce715e08a117a"
+            ]
+        ]
+    },
+    {
+        "id": "552ce715e08a117a",
+        "type": "ui_template",
+        "z": "cc4603ebcf2608d1",
+        "group": "3f8c48cfaa40525a",
+        "name": "",
+        "order": 4,
+        "width": 0,
+        "height": 0,
+        "format": "",
+        "storeOutMessages": true,
+        "fwdInMessages": true,
+        "resendOnRefresh": true,
+        "templateScope": "local",
+        "className": "",
+        "x": 920,
+        "y": 580,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "faf15f6e5517884d",
+        "type": "join",
+        "z": "cc4603ebcf2608d1",
+        "name": "",
+        "mode": "custom",
+        "build": "array",
+        "property": "payload",
+        "propertyType": "msg",
+        "key": "topic",
+        "joiner": "\\n",
+        "joinerType": "str",
+        "accumulate": false,
+        "timeout": "",
+        "count": "",
+        "reduceRight": false,
+        "reduceExp": "",
+        "reduceInit": "",
+        "reduceInitType": "",
+        "reduceFixup": "",
+        "x": 550,
+        "y": 400,
+        "wires": [
+            [
+                "3024cddabcdbe2d5"
+            ]
+        ]
+    },
+    {
+        "id": "2cbe74f39a17550b",
+        "type": "debug",
+        "z": "cc4603ebcf2608d1",
+        "name": "debug 9",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "complete",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 960,
+        "y": 300,
         "wires": []
     },
     {
