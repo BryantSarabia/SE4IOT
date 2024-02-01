@@ -16,14 +16,6 @@
         "env": []
     },
     {
-        "id": "cc4603ebcf2608d1",
-        "type": "tab",
-        "label": "Home page",
-        "disabled": false,
-        "info": "",
-        "env": []
-    },
-    {
         "id": "6127eaeadf941c69",
         "type": "tab",
         "label": "Settings",
@@ -32,7 +24,7 @@
         "env": []
     },
     {
-        "id": "6c4cc1ac25550a55",
+        "id": "cc4603ebcf2608d1",
         "type": "tab",
         "label": "Rooms",
         "disabled": false,
@@ -105,7 +97,7 @@
         "id": "af0b1d9cea7d5bd4",
         "type": "ui_base",
         "theme": {
-            "name": "theme-light",
+            "name": "theme-dark",
             "lightTheme": {
                 "default": "#0094CE",
                 "baseColor": "#0094CE",
@@ -117,7 +109,8 @@
                 "default": "#097479",
                 "baseColor": "#097479",
                 "baseFont": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif",
-                "edited": false
+                "edited": true,
+                "reset": false
             },
             "customTheme": {
                 "name": "Untitled Theme 1",
@@ -127,44 +120,44 @@
             },
             "themeState": {
                 "base-color": {
-                    "default": "#0094CE",
-                    "value": "#0094CE",
+                    "default": "#097479",
+                    "value": "#097479",
                     "edited": false
                 },
                 "page-titlebar-backgroundColor": {
-                    "value": "#0094CE",
+                    "value": "#097479",
                     "edited": false
                 },
                 "page-backgroundColor": {
-                    "value": "#fafafa",
-                    "edited": false
-                },
-                "page-sidebar-backgroundColor": {
-                    "value": "#ffffff",
-                    "edited": false
-                },
-                "group-textColor": {
-                    "value": "#1bbfff",
-                    "edited": false
-                },
-                "group-borderColor": {
-                    "value": "#ffffff",
-                    "edited": false
-                },
-                "group-backgroundColor": {
-                    "value": "#ffffff",
-                    "edited": false
-                },
-                "widget-textColor": {
                     "value": "#111111",
                     "edited": false
                 },
+                "page-sidebar-backgroundColor": {
+                    "value": "#333333",
+                    "edited": false
+                },
+                "group-textColor": {
+                    "value": "#0eb8c0",
+                    "edited": false
+                },
+                "group-borderColor": {
+                    "value": "#555555",
+                    "edited": false
+                },
+                "group-backgroundColor": {
+                    "value": "#333333",
+                    "edited": false
+                },
+                "widget-textColor": {
+                    "value": "#eeeeee",
+                    "edited": false
+                },
                 "widget-backgroundColor": {
-                    "value": "#0094ce",
+                    "value": "#097479",
                     "edited": false
                 },
                 "widget-borderColor": {
-                    "value": "#ffffff",
+                    "value": "#333333",
                     "edited": false
                 },
                 "base-font": {
@@ -206,25 +199,25 @@
         "order": 1,
         "disp": true,
         "width": "12",
-        "collapse": true,
+        "collapse": false,
         "className": ""
     },
     {
-        "id": "270c3083d3c5215d",
+        "id": "ff724d16a36f0fe7",
         "type": "ui_tab",
-        "name": "Home",
+        "name": "Rooms",
         "icon": "dashboard",
         "disabled": false,
         "hidden": false
     },
     {
-        "id": "7f9982b1ef263a47",
+        "id": "ca7de9296fb2277a",
         "type": "ui_group",
-        "name": "Home",
-        "tab": "270c3083d3c5215d",
-        "order": 1,
-        "disp": true,
-        "width": "24",
+        "name": "Graphics",
+        "tab": "ff724d16a36f0fe7",
+        "order": 2,
+        "disp": false,
+        "width": "34",
         "collapse": false,
         "className": ""
     },
@@ -543,292 +536,6 @@
         "wires": []
     },
     {
-        "id": "36b1016cafd8a2e8",
-        "type": "http request",
-        "z": "cc4603ebcf2608d1",
-        "name": "",
-        "method": "GET",
-        "ret": "obj",
-        "paytoqs": "ignore",
-        "url": "grafana:3000/api/search",
-        "tls": "",
-        "persist": false,
-        "proxy": "",
-        "insecureHTTPParser": false,
-        "authType": "bearer",
-        "senderr": false,
-        "headers": [],
-        "x": 330,
-        "y": 280,
-        "wires": [
-            [
-                "e87e35682906e1b0"
-            ]
-        ]
-    },
-    {
-        "id": "cbee99851ad29dbf",
-        "type": "inject",
-        "z": "cc4603ebcf2608d1",
-        "name": "",
-        "props": [
-            {
-                "p": "payload"
-            }
-        ],
-        "repeat": "",
-        "crontab": "",
-        "once": false,
-        "onceDelay": 0.1,
-        "topic": "",
-        "payload": "",
-        "payloadType": "date",
-        "x": 160,
-        "y": 380,
-        "wires": [
-            [
-                "36b1016cafd8a2e8"
-            ]
-        ]
-    },
-    {
-        "id": "451b674904f5a25b",
-        "type": "debug",
-        "z": "cc4603ebcf2608d1",
-        "name": "debug 8",
-        "active": false,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "payload",
-        "targetType": "msg",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 840,
-        "y": 500,
-        "wires": []
-    },
-    {
-        "id": "e87e35682906e1b0",
-        "type": "function",
-        "z": "cc4603ebcf2608d1",
-        "name": "function 1",
-        "func": "const dashboards = msg.payload\n\nfor (let i = 0; i < dashboards.length; i++){\n    const url = `grafana:3000/api/dashboards/uid/${dashboards[i].uid}`\n    msg.url = url\n    if( i + 1 === dashboards.length) msg.complete = true\n    node.send(msg)\n}\nreturn null;",
-        "outputs": 1,
-        "timeout": 0,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 520,
-        "y": 280,
-        "wires": [
-            [
-                "f66519839886e3e9"
-            ]
-        ]
-    },
-    {
-        "id": "f66519839886e3e9",
-        "type": "http request",
-        "z": "cc4603ebcf2608d1",
-        "name": "",
-        "method": "GET",
-        "ret": "obj",
-        "paytoqs": "ignore",
-        "url": "",
-        "tls": "",
-        "persist": false,
-        "proxy": "",
-        "insecureHTTPParser": false,
-        "authType": "bearer",
-        "senderr": false,
-        "headers": [],
-        "x": 390,
-        "y": 420,
-        "wires": [
-            [
-                "faf15f6e5517884d"
-            ]
-        ]
-    },
-    {
-        "id": "3024cddabcdbe2d5",
-        "type": "function",
-        "z": "cc4603ebcf2608d1",
-        "name": "function 2",
-        "func": "// const {dashboard} = msg.payload\n// const orgId = 1\n// const iframeUrls = []\n// let id = 1\n// for(const panel of dashboard.panels){\n// const iframeUrl = `http://localhost:3000/d-solo/${dashboard.uid}/${dashboard.title}?orgId=${orgId}&panelId=${id}`;\n// iframeUrls.push(iframeUrl)\n// id++\n// }\n// msg.payload = iframeUrls\n// return msg;\n\nconst dashboards = msg.payload\nmsg.payload = dashboards\nreturn msg",
-        "outputs": 1,
-        "timeout": 0,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 720,
-        "y": 340,
-        "wires": [
-            [
-                "2cbe74f39a17550b"
-            ]
-        ]
-    },
-    {
-        "id": "0abc7d2f22998db3",
-        "type": "ui_template",
-        "z": "cc4603ebcf2608d1",
-        "group": "3f8c48cfaa40525a",
-        "name": "",
-        "order": 3,
-        "width": 0,
-        "height": 0,
-        "format": "",
-        "storeOutMessages": true,
-        "fwdInMessages": true,
-        "resendOnRefresh": true,
-        "templateScope": "local",
-        "className": "",
-        "x": 980,
-        "y": 420,
-        "wires": [
-            []
-        ]
-    },
-    {
-        "id": "a29a8e366d1be74b",
-        "type": "template",
-        "z": "cc4603ebcf2608d1",
-        "name": "",
-        "field": "payload",
-        "fieldType": "msg",
-        "format": "html",
-        "syntax": "mustache",
-        "template": "<iframe width=\"100%\" height=\"300\" frameborder=\"0\" src=\"{{payload}}\"></iframe>",
-        "output": "str",
-        "x": 820,
-        "y": 420,
-        "wires": [
-            [
-                "0abc7d2f22998db3"
-            ]
-        ]
-    },
-    {
-        "id": "ead7c9c8f7946cbb",
-        "type": "join",
-        "z": "cc4603ebcf2608d1",
-        "name": "",
-        "mode": "custom",
-        "build": "array",
-        "property": "payload",
-        "propertyType": "msg",
-        "key": "topic",
-        "joiner": "\\n",
-        "joinerType": "str",
-        "accumulate": false,
-        "timeout": "5",
-        "count": "",
-        "reduceRight": false,
-        "reduceExp": "",
-        "reduceInit": "",
-        "reduceInitType": "flow",
-        "reduceFixup": "",
-        "x": 610,
-        "y": 520,
-        "wires": [
-            [
-                "b0abb5dbede444be",
-                "451b674904f5a25b"
-            ]
-        ]
-    },
-    {
-        "id": "b0abb5dbede444be",
-        "type": "function",
-        "z": "cc4603ebcf2608d1",
-        "name": "function 3",
-        "func": "function createIframe(url){\n    return `<iframe width=\"100%\" height=\"300\" frameborder=\"0\" src=\"${url}\"></iframe>`\n}\n\nlet urls = msg.payload\nurls = urls.reduce((prev, curr) => [...prev, ...curr], [])\nmsg.payload = urls\nmsg.template = urls.reduce((prev, curr) => prev + createIframe(curr), \"\")\nreturn msg;\n",
-        "outputs": 1,
-        "timeout": 0,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 740,
-        "y": 580,
-        "wires": [
-            [
-                "451b674904f5a25b",
-                "552ce715e08a117a"
-            ]
-        ]
-    },
-    {
-        "id": "552ce715e08a117a",
-        "type": "ui_template",
-        "z": "cc4603ebcf2608d1",
-        "group": "3f8c48cfaa40525a",
-        "name": "",
-        "order": 4,
-        "width": 0,
-        "height": 0,
-        "format": "",
-        "storeOutMessages": true,
-        "fwdInMessages": true,
-        "resendOnRefresh": true,
-        "templateScope": "local",
-        "className": "",
-        "x": 920,
-        "y": 580,
-        "wires": [
-            []
-        ]
-    },
-    {
-        "id": "faf15f6e5517884d",
-        "type": "join",
-        "z": "cc4603ebcf2608d1",
-        "name": "",
-        "mode": "custom",
-        "build": "array",
-        "property": "payload",
-        "propertyType": "msg",
-        "key": "topic",
-        "joiner": "\\n",
-        "joinerType": "str",
-        "accumulate": false,
-        "timeout": "",
-        "count": "",
-        "reduceRight": false,
-        "reduceExp": "",
-        "reduceInit": "",
-        "reduceInitType": "",
-        "reduceFixup": "",
-        "x": 550,
-        "y": 400,
-        "wires": [
-            [
-                "3024cddabcdbe2d5"
-            ]
-        ]
-    },
-    {
-        "id": "2cbe74f39a17550b",
-        "type": "debug",
-        "z": "cc4603ebcf2608d1",
-        "name": "debug 9",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "payload",
-        "targetType": "msg",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 960,
-        "y": 300,
-        "wires": []
-    },
-    {
         "id": "28e2b663fc3c5bbf",
         "type": "ui_switch",
         "z": "6127eaeadf941c69",
@@ -836,7 +543,7 @@
         "label": "Light Switcher",
         "tooltip": "",
         "group": "3f8c48cfaa40525a",
-        "order": 2,
+        "order": 1,
         "width": 0,
         "height": 0,
         "passthru": true,
@@ -859,33 +566,6 @@
         "wires": [
             [
                 "cb534bf069e7f480"
-            ]
-        ]
-    },
-    {
-        "id": "f2c5a240a0bb913f",
-        "type": "ui_slider",
-        "z": "6127eaeadf941c69",
-        "name": "",
-        "label": "Minimum Light Intensity Threshold",
-        "tooltip": "",
-        "group": "3f8c48cfaa40525a",
-        "order": 3,
-        "width": 0,
-        "height": 0,
-        "passthru": true,
-        "outs": "end",
-        "topic": "payload",
-        "topicType": "msg",
-        "min": 0,
-        "max": "2000",
-        "step": "10",
-        "className": "",
-        "x": 980,
-        "y": 200,
-        "wires": [
-            [
-                "3a32e5e1fb1ec791"
             ]
         ]
     },
@@ -1230,6 +910,306 @@
         "wires": [
             []
         ]
+    },
+    {
+        "id": "f2c5a240a0bb913f",
+        "type": "ui_slider",
+        "z": "6127eaeadf941c69",
+        "name": "",
+        "label": "Minimum Light Intensity Threshold",
+        "tooltip": "",
+        "group": "3f8c48cfaa40525a",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "outs": "end",
+        "topic": "payload",
+        "topicType": "msg",
+        "min": 0,
+        "max": "2000",
+        "step": "10",
+        "className": "",
+        "x": 980,
+        "y": 200,
+        "wires": [
+            [
+                "3a32e5e1fb1ec791"
+            ]
+        ]
+    },
+    {
+        "id": "36b1016cafd8a2e8",
+        "type": "http request",
+        "z": "cc4603ebcf2608d1",
+        "name": "",
+        "method": "GET",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "grafana:3000/api/search",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "bearer",
+        "senderr": false,
+        "headers": [],
+        "x": 370,
+        "y": 280,
+        "wires": [
+            [
+                "e87e35682906e1b0"
+            ]
+        ]
+    },
+    {
+        "id": "cbee99851ad29dbf",
+        "type": "inject",
+        "z": "cc4603ebcf2608d1",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 150,
+        "y": 320,
+        "wires": [
+            [
+                "f006755cc99035f0"
+            ]
+        ]
+    },
+    {
+        "id": "e87e35682906e1b0",
+        "type": "function",
+        "z": "cc4603ebcf2608d1",
+        "name": "function 1",
+        "func": "const dashboards = msg.payload\n\nfor (let i = 0; i < dashboards.length; i++){\n    const url = `grafana:3000/api/dashboards/uid/${dashboards[i].uid}`\n    msg.url = url\n    // if( i + 1 === dashboards.length) msg.complete = true\n    node.send(msg)\n}\nreturn null;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 520,
+        "y": 280,
+        "wires": [
+            [
+                "f66519839886e3e9"
+            ]
+        ]
+    },
+    {
+        "id": "f66519839886e3e9",
+        "type": "http request",
+        "z": "cc4603ebcf2608d1",
+        "name": "",
+        "method": "GET",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "bearer",
+        "senderr": false,
+        "headers": [],
+        "x": 390,
+        "y": 420,
+        "wires": [
+            [
+                "faf15f6e5517884d"
+            ]
+        ]
+    },
+    {
+        "id": "3024cddabcdbe2d5",
+        "type": "function",
+        "z": "cc4603ebcf2608d1",
+        "name": "function 2",
+        "func": "const response = msg.payload\nconst orgId = 1\nconst iframeUrls = []\n\nfor (const data of response) {\n    const { dashboard } = data\n    let id = 1\n    for (const panel of dashboard.panels) {\n        const iframeUrl = `http://localhost:3000/d-solo/${dashboard.uid}/${dashboard.title}?orgId=${orgId}&panelId=${id}`;\n        iframeUrls.push(iframeUrl)\n        id++\n    }\n}\n\nmsg.payload = iframeUrls\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 780,
+        "y": 400,
+        "wires": [
+            [
+                "b0abb5dbede444be"
+            ]
+        ]
+    },
+    {
+        "id": "b0abb5dbede444be",
+        "type": "function",
+        "z": "cc4603ebcf2608d1",
+        "name": "function 3",
+        "func": "function createIframe(url){\n    return `<iframe style='flex: 1 0 31%' height=\"400\" frameborder=\"0\" src=\"${url}\"></iframe>`\n}\n\nlet urls = msg.payload\nmsg.template = urls.reduce((prev, curr) => prev + createIframe(curr), '<div style=\"display:flex; flex-direction:row; flex-wrap:wrap; gap:2px 3px; justify-content: space-between\">')\nmsg.template = msg.template + \"</div>\"\nmsg.payload = true\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 980,
+        "y": 460,
+        "wires": [
+            [
+                "f50ff9422519fd74"
+            ]
+        ]
+    },
+    {
+        "id": "552ce715e08a117a",
+        "type": "ui_template",
+        "z": "cc4603ebcf2608d1",
+        "group": "ca7de9296fb2277a",
+        "name": "",
+        "order": 3,
+        "width": 0,
+        "height": 0,
+        "format": "",
+        "storeOutMessages": true,
+        "fwdInMessages": true,
+        "resendOnRefresh": true,
+        "templateScope": "local",
+        "className": "",
+        "x": 1300,
+        "y": 460,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "faf15f6e5517884d",
+        "type": "join",
+        "z": "cc4603ebcf2608d1",
+        "name": "",
+        "mode": "custom",
+        "build": "array",
+        "property": "payload",
+        "propertyType": "msg",
+        "key": "topic",
+        "joiner": "\\n",
+        "joinerType": "str",
+        "accumulate": false,
+        "timeout": "3",
+        "count": "",
+        "reduceRight": false,
+        "reduceExp": "",
+        "reduceInit": "",
+        "reduceInitType": "",
+        "reduceFixup": "",
+        "x": 590,
+        "y": 400,
+        "wires": [
+            [
+                "3024cddabcdbe2d5"
+            ]
+        ]
+    },
+    {
+        "id": "f50ff9422519fd74",
+        "type": "template",
+        "z": "cc4603ebcf2608d1",
+        "name": "",
+        "field": "template",
+        "fieldType": "msg",
+        "format": "html",
+        "syntax": "mustache",
+        "template": "",
+        "output": "str",
+        "x": 1140,
+        "y": 460,
+        "wires": [
+            [
+                "552ce715e08a117a",
+                "1016f46ae59bb4ab"
+            ]
+        ]
+    },
+    {
+        "id": "f006755cc99035f0",
+        "type": "ui_button",
+        "z": "cc4603ebcf2608d1",
+        "name": "",
+        "group": "ca7de9296fb2277a",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "label": "Refresh",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "className": "",
+        "icon": "",
+        "payload": "grafana:3000/api/search",
+        "payloadType": "str",
+        "topic": "url",
+        "topicType": "msg",
+        "x": 140,
+        "y": 200,
+        "wires": [
+            [
+                "36b1016cafd8a2e8",
+                "344de3f1824f71be"
+            ]
+        ]
+    },
+    {
+        "id": "344de3f1824f71be",
+        "type": "change",
+        "z": "cc4603ebcf2608d1",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "true",
+                "tot": "bool"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 480,
+        "y": 200,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "1016f46ae59bb4ab",
+        "type": "debug",
+        "z": "cc4603ebcf2608d1",
+        "name": "debug 8",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "template",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1180,
+        "y": 340,
+        "wires": []
     },
     {
         "id": "b5678455cca2a097",

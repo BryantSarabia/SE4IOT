@@ -18,7 +18,7 @@ export class Panel {
   }
 
   generateTitle ({ deviceType, device }) {
-    return `${deviceType ? deviceType + '-' : ''}${device.type}-${device.id}`
+    return `${device.room}-${deviceType ? deviceType + '-' : ''}${device.type}-${device.id}`
   }
 
   calculateGridPos ({ id }) {
