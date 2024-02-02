@@ -4,22 +4,16 @@ import { SENSOR_TYPES } from '../consts/sensorType.js'
 import { Rule } from './rule.js'
 
 export class LightRule extends Rule {
-  constructor () {
+  constructor ({ logger }) {
     super({ type: SENSOR_TYPES.LIGHT })
+    this.logger = logger
   }
 
   evaluate ({ sensorData, userPreferences, room }) {
     let action = null
-    if (!room.getValue(ROOM_VALUES_KEYS.IS_LIGHT_ON)) {
-      console.log(`Lights are OFF on room ${room.name}, no need to evaluate light rule.`)
-      return action
-    }
-
-    const minimumLightIntensityThreshold = Number(userPreferences.minimumLightIntensityThreshold)
-    const maximumLightIntensityThreshold = Number(userPreferences.maximumLightIntensityThreshold)
-    const isMotionDetected = room.getValue(ROOM_VALUES_KEYS.IS_MOTION_DETECTED)
-    if (isMotionDetected === undefined || isMotionDetected === null || isMotionDetected === false) {
-      console.log(`No motion detected in ${room.name}, no need to evaluate light rule.`)
+    const { lightsEnabled } = userPreferences
+    if (!lightsEnabled) {
+      console.log('Lights are disabled, no need to evaluate light rule.')
       return action
     }
     const { value, type } = sensorData
@@ -28,6 +22,17 @@ export class LightRule extends Rule {
       console.log(`No actuator type found for sensor type ${type}`)
       return action
     }
+    if (!room.getValue(ROOM_VALUES_KEYS.IS_LIGHT_ON)) {
+      console.log(`Lights are OFF on room ${room.name}, no need to evaluate light rule.`)
+      return action
+    }
+    const isMotionDetected = room.getValue(ROOM_VALUES_KEYS.IS_MOTION_DETECTED)
+    if (isMotionDetected === undefined || isMotionDetected === null || isMotionDetected === false) {
+      console.log(`No motion detected in ${room.name}, no need to evaluate light rule.`)
+      return action
+    }
+    const minimumLightIntensityThreshold = Number(userPreferences.minimumLightIntensityThreshold)
+    const maximumLightIntensityThreshold = Number(userPreferences.maximumLightIntensityThreshold)
     if (value < minimumLightIntensityThreshold) {
       action = {
         topic: `actuators/${room.name}/${actuatorType}/increase`

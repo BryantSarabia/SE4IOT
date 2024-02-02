@@ -687,24 +687,5 @@
                 "file": "/data/node_modules/node-red-dashboard/nodes/ui_spacer.js"
             }
         }
-    },
-    "node-red-contrib-ui-spinner": {
-        "name": "node-red-contrib-ui-spinner",
-        "version": "0.0.2",
-        "local": true,
-        "user": true,
-        "nodes": {
-            "ui_spinner": {
-                "name": "ui_spinner",
-                "types": [
-                    "ui_spinner"
-                ],
-                "enabled": true,
-                "local": true,
-                "user": false,
-                "module": "node-red-contrib-ui-spinner",
-                "file": "/data/node_modules/node-red-contrib-ui-spinner/spinner.js"
-            }
-        }
     }
 }

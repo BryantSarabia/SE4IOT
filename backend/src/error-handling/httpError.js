@@ -6,3 +6,10 @@ export class HttpError extends Error {
     Error.captureStackTrace(this, this.constructor)
   }
 }
+
+export class ValidationError extends HttpError {
+  constructor (message) {
+    super(message, 400)
+    this.message = JSON.parse(message)
+  }
+}

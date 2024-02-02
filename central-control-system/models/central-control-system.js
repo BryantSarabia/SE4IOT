@@ -1,8 +1,8 @@
 import { ACTIVATION_TYPE } from '../consts/activationType.js'
+import { ACTUATOR_TYPES } from '../consts/actuatorTypes.js'
 import { ROOM_VALUES } from '../consts/roomValues.js'
 import { SENSOR_TYPES } from '../consts/sensorType.js'
 import { ACTIVATE_ACTUATOR_TOPIC, ACTIVATE_SENSOR_TOPIC, SENSOR_DATA_TOPIC, USER_PREFERENCES_TOPIC } from '../consts/topics.js'
-import { LoggerFactory } from '../factory/loggerFactory.js'
 import { LightRule } from '../rules/light-rule.js'
 import { MotionRule } from '../rules/motion-rule.js'
 import { addActuatorToRoomDashboard, addSensorToRoomDashboard, createRoomDashboard } from '../services/grafana-service.js'
@@ -11,18 +11,18 @@ import { getUserPreferencesService } from '../services/user-preferences-service.
 import { Room } from './room.js'
 
 export class CentralControlSystem {
-  constructor () {
+  constructor ({ logger }) {
     // Initialize the Central Control System
     this.rooms = new Map()
     this.activationQueue = []
     this.isProcessingQueue = false
     this.rules = {
-      [SENSOR_TYPES.LIGHT]: new LightRule(),
-      [SENSOR_TYPES.MOTION]: new MotionRule()
+      [SENSOR_TYPES.LIGHT]: new LightRule({ logger }),
+      [SENSOR_TYPES.MOTION]: new MotionRule({ logger })
     }
     this.userPreferences = null
     this.initialize()
-    this.logger = LoggerFactory.create()
+    this.logger = logger
   }
 
   async initialize () {
@@ -53,6 +53,8 @@ export class CentralControlSystem {
       try {
         this.userPreferences = JSON.parse(message.toString())
         this.logger.log('Updated user preferences.')
+        const { lightsEnabled } = this.userPreferences
+        if (!lightsEnabled) this.turnOffLights()
       } catch (error) {
         this.logger.log(error)
       }
@@ -227,5 +229,13 @@ export class CentralControlSystem {
         this.logger.log('Error connecting to the server. Please make sure the server is running.')
       }
     }
+  }
+
+  turnOffLights () {
+    this.rooms.forEach(room => {
+      const topic = `actuators/${room.name}/${ACTUATOR_TYPES.LIGHTBULB}/off`
+      mqttClient.publish(topic)
+    })
+    this.logger.log('Turned off all lights.')
   }
 }

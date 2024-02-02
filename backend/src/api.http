@@ -6,8 +6,9 @@ PUT http://localhost:3002/user-preferences
 Content-Type: application/json
 
 {
-    "minimumLightIntensityThreshold": 1800,
-    "maximumLightIntensityThreshold": 2000
+    "minimumLightIntensityThreshold": 500,
+    "maximumLightIntensityThreshold": 2322,
+    "lightsEnabled": true
 }
 
 ### Delete user preferences
@@ -18,7 +19,9 @@ POST http://localhost:3002/user-preferences
 Content-Type: application/json
 
 {
-    "lightIntensityThreshold": "54"
+    "minimumLightIntensityThreshold": 500,
+    "maximumLightIntensityThreshold": 1001,
+    "lightsEnabled": true
 }
 
 ### Get grafana dashboards

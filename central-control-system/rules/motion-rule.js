@@ -4,12 +4,18 @@ import { SENSOR_TYPES } from '../consts/sensorType.js'
 import { Rule } from './rule.js'
 
 export class MotionRule extends Rule {
-  constructor () {
+  constructor ({ logger }) {
     super({ type: SENSOR_TYPES.LIGHT })
+    this.logger = logger
   }
 
   evaluate ({ sensorData, userPreferences, room }) {
     let action = null
+    const { lightsEnabled } = userPreferences
+    if (!lightsEnabled) {
+      console.log('Lights are disabled, no need to evaluate motion rule.')
+      return action
+    }
     const { value, type } = sensorData
     if (value === null || value === undefined) return
     const isLightOn = room.getValue(ROOM_VALUES_KEYS.IS_LIGHT_ON)

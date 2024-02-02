@@ -2,6 +2,7 @@
   "conventionalCommits.scopes": [
     "grafana",
     "actuators",
-    "sensors"
+    "sensors",
+    "nodered"
   ]
 }

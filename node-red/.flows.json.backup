@@ -536,83 +536,6 @@
         "wires": []
     },
     {
-        "id": "28e2b663fc3c5bbf",
-        "type": "ui_switch",
-        "z": "6127eaeadf941c69",
-        "name": "",
-        "label": "Light Switcher",
-        "tooltip": "",
-        "group": "3f8c48cfaa40525a",
-        "order": 1,
-        "width": 0,
-        "height": 0,
-        "passthru": true,
-        "decouple": "false",
-        "topic": "payload",
-        "topicType": "msg",
-        "style": "",
-        "onvalue": "true",
-        "onvalueType": "bool",
-        "onicon": "",
-        "oncolor": "",
-        "offvalue": "false",
-        "offvalueType": "bool",
-        "officon": "",
-        "offcolor": "",
-        "animate": false,
-        "className": "",
-        "x": 920,
-        "y": 360,
-        "wires": [
-            [
-                "cb534bf069e7f480"
-            ]
-        ]
-    },
-    {
-        "id": "bf9355ac51c606ed",
-        "type": "ui_slider",
-        "z": "6127eaeadf941c69",
-        "name": "",
-        "label": "Maximum Light Intensity Threshold",
-        "tooltip": "",
-        "group": "3f8c48cfaa40525a",
-        "order": 3,
-        "width": 0,
-        "height": 0,
-        "passthru": true,
-        "outs": "end",
-        "topic": "payload",
-        "topicType": "msg",
-        "min": 0,
-        "max": "5000",
-        "step": "10",
-        "className": "",
-        "x": 980,
-        "y": 280,
-        "wires": [
-            [
-                "8c20390b217a6dc3"
-            ]
-        ]
-    },
-    {
-        "id": "dabd166faa4759df",
-        "type": "debug",
-        "z": "6127eaeadf941c69",
-        "name": "debug 6",
-        "active": false,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "false",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 580,
-        "y": 440,
-        "wires": []
-    },
-    {
         "id": "a47911ec1ade51f0",
         "type": "http request",
         "z": "6127eaeadf941c69",
@@ -628,14 +551,11 @@
         "authType": "",
         "senderr": false,
         "headers": [],
-        "x": 340,
+        "x": 360,
         "y": 260,
         "wires": [
             [
-                "97ceffb804840cf8",
-                "f7ba98d7d6b23b86",
-                "999e0f69afe750ee",
-                "dabd166faa4759df"
+                "9a195ae6cbba0146"
             ]
         ]
     },
@@ -656,237 +576,12 @@
         "once": true,
         "onceDelay": 0.1,
         "topic": "",
-        "x": 110,
+        "x": 150,
         "y": 260,
         "wires": [
             [
-                "a47911ec1ade51f0",
-                "0de9b4c1b7f85f51"
+                "a47911ec1ade51f0"
             ]
-        ]
-    },
-    {
-        "id": "97ceffb804840cf8",
-        "type": "change",
-        "z": "6127eaeadf941c69",
-        "name": "Set Minimum Threshold",
-        "rules": [
-            {
-                "t": "set",
-                "p": "payload",
-                "pt": "msg",
-                "to": "payload.minimumLightIntensityThreshold",
-                "tot": "msg"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 650,
-        "y": 200,
-        "wires": [
-            [
-                "f2c5a240a0bb913f"
-            ]
-        ]
-    },
-    {
-        "id": "f7ba98d7d6b23b86",
-        "type": "change",
-        "z": "6127eaeadf941c69",
-        "name": "Set Maximum Threshold",
-        "rules": [
-            {
-                "t": "set",
-                "p": "payload",
-                "pt": "msg",
-                "to": "payload.maximumLightIntensityThreshold",
-                "tot": "msg"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 650,
-        "y": 280,
-        "wires": [
-            [
-                "bf9355ac51c606ed"
-            ]
-        ]
-    },
-    {
-        "id": "999e0f69afe750ee",
-        "type": "change",
-        "z": "6127eaeadf941c69",
-        "name": "Set Switcher",
-        "rules": [
-            {
-                "t": "set",
-                "p": "payload",
-                "pt": "msg",
-                "to": "true",
-                "tot": "bool"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 610,
-        "y": 360,
-        "wires": [
-            [
-                "28e2b663fc3c5bbf"
-            ]
-        ]
-    },
-    {
-        "id": "5430de25f0058e2d",
-        "type": "function",
-        "z": "6127eaeadf941c69",
-        "name": "Set payload",
-        "func": "const hasInit = flow.get('hasInit')\nif(!hasInit) {\n    flow.set('hasInit', true)\n    return\n}\nconst SERVER_URL = env.get('SERVER_URL')\nconst SERVER_PORT = env.get('SERVER_PORT')\nconst url = `${SERVER_PORT}:${SERVER_URL}/user-preferences`\nmsg.url = url\nmsg.payload = flow.get('userSettings')\nreturn msg;",
-        "outputs": 1,
-        "timeout": 0,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 1490,
-        "y": 280,
-        "wires": [
-            [
-                "ce2e358614f0bb51",
-                "667f4aad66d2a33d"
-            ]
-        ]
-    },
-    {
-        "id": "ce2e358614f0bb51",
-        "type": "debug",
-        "z": "6127eaeadf941c69",
-        "name": "debug 7",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "false",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 1680,
-        "y": 340,
-        "wires": []
-    },
-    {
-        "id": "3a32e5e1fb1ec791",
-        "type": "change",
-        "z": "6127eaeadf941c69",
-        "name": "Set min",
-        "rules": [
-            {
-                "t": "set",
-                "p": "userSettings.minimumLightIntensityThreshold",
-                "pt": "flow",
-                "to": "payload",
-                "tot": "msg"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 1240,
-        "y": 200,
-        "wires": [
-            [
-                "5430de25f0058e2d"
-            ]
-        ]
-    },
-    {
-        "id": "8c20390b217a6dc3",
-        "type": "change",
-        "z": "6127eaeadf941c69",
-        "name": "Set max",
-        "rules": [
-            {
-                "t": "set",
-                "p": "userSettings.maximumLightIntensityThreshold",
-                "pt": "flow",
-                "to": "payload",
-                "tot": "msg"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 1240,
-        "y": 280,
-        "wires": [
-            [
-                "5430de25f0058e2d"
-            ]
-        ]
-    },
-    {
-        "id": "cb534bf069e7f480",
-        "type": "change",
-        "z": "6127eaeadf941c69",
-        "name": "Set lights",
-        "rules": [
-            {
-                "t": "set",
-                "p": "userSettings.lightsEnabled",
-                "pt": "flow",
-                "to": "payload",
-                "tot": "msg"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 1240,
-        "y": 360,
-        "wires": [
-            [
-                "5430de25f0058e2d"
-            ]
-        ]
-    },
-    {
-        "id": "0de9b4c1b7f85f51",
-        "type": "change",
-        "z": "6127eaeadf941c69",
-        "name": "",
-        "rules": [
-            {
-                "t": "set",
-                "p": "hasInit",
-                "pt": "flow",
-                "to": "false",
-                "tot": "bool"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 320,
-        "y": 360,
-        "wires": [
-            []
         ]
     },
     {
@@ -905,36 +600,415 @@
         "authType": "",
         "senderr": false,
         "headers": [],
-        "x": 1730,
-        "y": 280,
+        "x": 290,
+        "y": 520,
         "wires": [
-            []
+            [
+                "1b43734addaf2068"
+            ]
         ]
     },
     {
-        "id": "f2c5a240a0bb913f",
-        "type": "ui_slider",
+        "id": "c1c89e67773cc3ad",
+        "type": "debug",
+        "z": "6127eaeadf941c69",
+        "name": "debug 9",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 500,
+        "y": 620,
+        "wires": []
+    },
+    {
+        "id": "3f5a1c14adbc6a6f",
+        "type": "ui_toast",
+        "z": "6127eaeadf941c69",
+        "position": "bottom right",
+        "displayTime": "3",
+        "highlight": "",
+        "sendall": true,
+        "outputs": 0,
+        "ok": "OK",
+        "cancel": "",
+        "raw": true,
+        "className": "",
+        "topic": "",
+        "name": "",
+        "x": 1350,
+        "y": 440,
+        "wires": []
+    },
+    {
+        "id": "62a6550bfdeb9374",
+        "type": "split",
         "z": "6127eaeadf941c69",
         "name": "",
-        "label": "Minimum Light Intensity Threshold",
-        "tooltip": "",
-        "group": "3f8c48cfaa40525a",
-        "order": 2,
-        "width": 0,
-        "height": 0,
-        "passthru": true,
-        "outs": "end",
-        "topic": "payload",
-        "topicType": "msg",
-        "min": 0,
-        "max": "2000",
-        "step": "10",
-        "className": "",
-        "x": 980,
-        "y": 200,
+        "splt": "\\n",
+        "spltType": "str",
+        "arraySplt": 1,
+        "arraySpltType": "len",
+        "stream": false,
+        "addname": "",
+        "x": 890,
+        "y": 440,
         "wires": [
             [
-                "3a32e5e1fb1ec791"
+                "922d53c2f349b642"
+            ]
+        ]
+    },
+    {
+        "id": "c9230acd5c3e340c",
+        "type": "change",
+        "z": "6127eaeadf941c69",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "payload.error",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 720,
+        "y": 440,
+        "wires": [
+            [
+                "62a6550bfdeb9374"
+            ]
+        ]
+    },
+    {
+        "id": "922d53c2f349b642",
+        "type": "change",
+        "z": "6127eaeadf941c69",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "payload.message",
+                "tot": "msg"
+            },
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1040,
+        "y": 440,
+        "wires": [
+            [
+                "8c3e84dc8ef824bb"
+            ]
+        ]
+    },
+    {
+        "id": "8c3e84dc8ef824bb",
+        "type": "join",
+        "z": "6127eaeadf941c69",
+        "name": "",
+        "mode": "custom",
+        "build": "string",
+        "property": "payload",
+        "propertyType": "msg",
+        "key": "topic",
+        "joiner": "<br>",
+        "joinerType": "str",
+        "accumulate": false,
+        "timeout": "1",
+        "count": "",
+        "reduceRight": false,
+        "reduceExp": "",
+        "reduceInit": "",
+        "reduceInitType": "",
+        "reduceFixup": "",
+        "x": 1190,
+        "y": 440,
+        "wires": [
+            [
+                "3f5a1c14adbc6a6f"
+            ]
+        ]
+    },
+    {
+        "id": "ced9bbc8682f193f",
+        "type": "link in",
+        "z": "6127eaeadf941c69",
+        "name": "link in 1",
+        "links": [
+            "04d539de55b04d2b"
+        ],
+        "x": 105,
+        "y": 520,
+        "wires": [
+            [
+                "667f4aad66d2a33d"
+            ]
+        ]
+    },
+    {
+        "id": "04d539de55b04d2b",
+        "type": "link out",
+        "z": "6127eaeadf941c69",
+        "name": "link out 1",
+        "mode": "link",
+        "links": [
+            "ced9bbc8682f193f"
+        ],
+        "x": 905,
+        "y": 260,
+        "wires": []
+    },
+    {
+        "id": "1b43734addaf2068",
+        "type": "switch",
+        "z": "6127eaeadf941c69",
+        "name": "",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "hask",
+                "v": "error",
+                "vt": "str"
+            },
+            {
+                "t": "else"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 530,
+        "y": 520,
+        "wires": [
+            [
+                "c9230acd5c3e340c",
+                "0e05b2c94ecf1fcb"
+            ],
+            [
+                "d249db5d41f1a689",
+                "eec7c8eaf3e4a887",
+                "c1c89e67773cc3ad"
+            ]
+        ]
+    },
+    {
+        "id": "20679cdba0d2340d",
+        "type": "ui_toast",
+        "z": "6127eaeadf941c69",
+        "position": "bottom right",
+        "displayTime": "3",
+        "highlight": "",
+        "sendall": true,
+        "outputs": 0,
+        "ok": "OK",
+        "cancel": "",
+        "raw": false,
+        "className": "",
+        "topic": "",
+        "name": "",
+        "x": 1030,
+        "y": 520,
+        "wires": []
+    },
+    {
+        "id": "d249db5d41f1a689",
+        "type": "change",
+        "z": "6127eaeadf941c69",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "Settings updated successfuly!",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 760,
+        "y": 520,
+        "wires": [
+            [
+                "20679cdba0d2340d"
+            ]
+        ]
+    },
+    {
+        "id": "0e05b2c94ecf1fcb",
+        "type": "change",
+        "z": "6127eaeadf941c69",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "url",
+                "pt": "msg",
+                "to": "$env(\"SERVER_URL\") & \":\" & $env(\"SERVER_PORT\") & \"/user-preferences\"\t",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 470,
+        "y": 420,
+        "wires": [
+            [
+                "a47911ec1ade51f0"
+            ]
+        ]
+    },
+    {
+        "id": "9a195ae6cbba0146",
+        "type": "ui_form",
+        "z": "6127eaeadf941c69",
+        "name": "",
+        "label": "",
+        "group": "3f8c48cfaa40525a",
+        "order": 3,
+        "width": 0,
+        "height": 0,
+        "options": [
+            {
+                "label": "Lights Enabled",
+                "value": "lightsEnabled",
+                "type": "switch",
+                "required": true,
+                "rows": null
+            },
+            {
+                "label": "Minimum Light Intensity Threshold",
+                "value": "minimumLightIntensityThreshold",
+                "type": "number",
+                "required": true,
+                "rows": null
+            },
+            {
+                "label": "Maximum Light Intensity Threshold",
+                "value": "maximumLightIntensityThreshold",
+                "type": "number",
+                "required": true,
+                "rows": null
+            }
+        ],
+        "formValue": {
+            "lightsEnabled": false,
+            "minimumLightIntensityThreshold": "",
+            "maximumLightIntensityThreshold": ""
+        },
+        "payload": "",
+        "submit": "Update",
+        "cancel": "cancel",
+        "topic": "topic",
+        "topicType": "msg",
+        "splitLayout": "",
+        "className": "",
+        "x": 590,
+        "y": 260,
+        "wires": [
+            [
+                "a989fc750982ec19"
+            ]
+        ]
+    },
+    {
+        "id": "a989fc750982ec19",
+        "type": "change",
+        "z": "6127eaeadf941c69",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "payload",
+                "tot": "msg",
+                "dc": true
+            },
+            {
+                "t": "set",
+                "p": "url",
+                "pt": "msg",
+                "to": "$env(\"SERVER_URL\") & \":\" & $env(\"SERVER_PORT\") & \"/user-preferences\"",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 780,
+        "y": 260,
+        "wires": [
+            [
+                "04d539de55b04d2b"
+            ]
+        ]
+    },
+    {
+        "id": "eec7c8eaf3e4a887",
+        "type": "link out",
+        "z": "6127eaeadf941c69",
+        "name": "link out 2",
+        "mode": "link",
+        "links": [
+            "139105f6a651c339"
+        ],
+        "x": 695,
+        "y": 560,
+        "wires": []
+    },
+    {
+        "id": "139105f6a651c339",
+        "type": "link in",
+        "z": "6127eaeadf941c69",
+        "name": "link in 2",
+        "links": [
+            "eec7c8eaf3e4a887"
+        ],
+        "x": 795,
+        "y": 340,
+        "wires": [
+            [
+                "9a195ae6cbba0146"
             ]
         ]
     },
@@ -974,12 +1048,12 @@
         ],
         "repeat": "",
         "crontab": "",
-        "once": false,
+        "once": true,
         "onceDelay": 0.1,
         "topic": "",
         "payload": "",
         "payloadType": "date",
-        "x": 140,
+        "x": 150,
         "y": 320,
         "wires": [
             [
@@ -1199,7 +1273,7 @@
         "type": "debug",
         "z": "cc4603ebcf2608d1",
         "name": "debug 8",
-        "active": true,
+        "active": false,
         "tosidebar": true,
         "console": false,
         "tostatus": false,
