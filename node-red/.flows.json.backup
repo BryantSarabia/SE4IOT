@@ -24,10 +24,18 @@
         "env": []
     },
     {
+        "id": "41f8c2b710ddca0a",
+        "type": "tab",
+        "label": "Room selector",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
         "id": "cc4603ebcf2608d1",
         "type": "tab",
         "label": "Rooms",
-        "disabled": false,
+        "disabled": true,
         "info": "",
         "env": []
     },
@@ -38,6 +46,113 @@
         "disabled": true,
         "info": "",
         "env": []
+    },
+    {
+        "id": "bf43cffc3a2be301",
+        "type": "group",
+        "z": "6127eaeadf941c69",
+        "name": "Settings",
+        "style": {
+            "label": true,
+            "stroke": "#6f2fa0"
+        },
+        "nodes": [
+            "a47911ec1ade51f0",
+            "20876a078e0d7fc3",
+            "667f4aad66d2a33d",
+            "3f5a1c14adbc6a6f",
+            "62a6550bfdeb9374",
+            "c9230acd5c3e340c",
+            "922d53c2f349b642",
+            "8c3e84dc8ef824bb",
+            "ced9bbc8682f193f",
+            "04d539de55b04d2b",
+            "1b43734addaf2068",
+            "20679cdba0d2340d",
+            "d249db5d41f1a689",
+            "0e05b2c94ecf1fcb",
+            "9a195ae6cbba0146",
+            "a989fc750982ec19",
+            "eec7c8eaf3e4a887",
+            "139105f6a651c339",
+            "c78a541774da3274"
+        ],
+        "x": 54,
+        "y": 219,
+        "w": 1412,
+        "h": 402
+    },
+    {
+        "id": "52d1425e510d0bee",
+        "type": "group",
+        "z": "6127eaeadf941c69",
+        "name": "Total Consumption",
+        "style": {
+            "label": true,
+            "stroke": "#92d04f"
+        },
+        "nodes": [
+            "93c41afcb4ac3710",
+            "bb87bea795c40718",
+            "cc328b61b262a0b0",
+            "c3b337e32961dbc4",
+            "149af53453b77c06",
+            "5dbb02e63ab881ed"
+        ],
+        "x": 54,
+        "y": 659,
+        "w": 1092,
+        "h": 162
+    },
+    {
+        "id": "443f62182e0eaacd",
+        "type": "group",
+        "z": "6127eaeadf941c69",
+        "name": "Current Consumption",
+        "style": {
+            "label": true,
+            "stroke": "#92d04f"
+        },
+        "nodes": [
+            "0a5d8812c21d5bfd",
+            "d4bc9e406791255a",
+            "db34839e24fa534c",
+            "9fd1e1bd0383a7d7",
+            "575faf7714bcc57d",
+            "b2edd8ef35f797e4"
+        ],
+        "x": 54,
+        "y": 859,
+        "w": 1052,
+        "h": 162
+    },
+    {
+        "id": "9cd83b71e925ce2c",
+        "type": "group",
+        "z": "41f8c2b710ddca0a",
+        "name": "Select room",
+        "style": {
+            "label": true
+        },
+        "nodes": [
+            "a3a996ed79502ea4",
+            "a6cc92e90d1bed09",
+            "467c1c21e8a027ac",
+            "3bdf07b8ddea81d1",
+            "9ff94f56f58b8351",
+            "0e0189a340ec3144",
+            "71eff3b7c67cf372",
+            "adb2af0461604686",
+            "b656fce925a04029",
+            "7b63df752c36ba6f",
+            "9a7c0ce63d4c336f",
+            "ef543c086902d527",
+            "64cb8d94f3d6dca7"
+        ],
+        "x": 134,
+        "y": 179,
+        "w": 1182,
+        "h": 242
     },
     {
         "id": "e08a334d8688ae84",
@@ -222,6 +337,47 @@
         "className": ""
     },
     {
+        "id": "3bba53499f695836",
+        "type": "ui_group",
+        "name": "Total Consumption",
+        "tab": "c1dbac1a29cb8513",
+        "order": 2,
+        "disp": true,
+        "width": "10",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "a912e959f4cc6ec9",
+        "type": "ui_group",
+        "name": "Current Consumption",
+        "tab": "c1dbac1a29cb8513",
+        "order": 3,
+        "disp": true,
+        "width": "10",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "0ad1771c70dc1d60",
+        "type": "ui_tab",
+        "name": "Select room",
+        "icon": "dashboard",
+        "disabled": false,
+        "hidden": false
+    },
+    {
+        "id": "88bdb19be1806be2",
+        "type": "ui_group",
+        "name": "Select room",
+        "tab": "0ad1771c70dc1d60",
+        "order": 1,
+        "disp": true,
+        "width": "34",
+        "collapse": false,
+        "className": ""
+    },
+    {
         "id": "fc03d7aeb9681b90",
         "type": "inject",
         "z": "916b9dbcf5ad3e00",
@@ -292,6 +448,13 @@
                 "pt": "global",
                 "to": "payload.activateSensorTopic",
                 "tot": "msg"
+            },
+            {
+                "t": "set",
+                "p": "grafanaUrl",
+                "pt": "global",
+                "to": "$env(\"SERVER_URL\") & \":\" & $env(\"SERVER_PORT\") & \"/user-preferences\"\t",
+                "tot": "jsonata"
             }
         ],
         "action": "",
@@ -539,6 +702,7 @@
         "id": "a47911ec1ade51f0",
         "type": "http request",
         "z": "6127eaeadf941c69",
+        "g": "bf43cffc3a2be301",
         "name": "Get User Preferences",
         "method": "GET",
         "ret": "obj",
@@ -563,6 +727,7 @@
         "id": "20876a078e0d7fc3",
         "type": "inject",
         "z": "6127eaeadf941c69",
+        "g": "bf43cffc3a2be301",
         "name": "",
         "props": [
             {
@@ -588,6 +753,7 @@
         "id": "667f4aad66d2a33d",
         "type": "http request",
         "z": "6127eaeadf941c69",
+        "g": "bf43cffc3a2be301",
         "name": "Update User Preferences",
         "method": "PUT",
         "ret": "obj",
@@ -609,26 +775,10 @@
         ]
     },
     {
-        "id": "c1c89e67773cc3ad",
-        "type": "debug",
-        "z": "6127eaeadf941c69",
-        "name": "debug 9",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "payload",
-        "targetType": "msg",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 500,
-        "y": 620,
-        "wires": []
-    },
-    {
         "id": "3f5a1c14adbc6a6f",
         "type": "ui_toast",
         "z": "6127eaeadf941c69",
+        "g": "bf43cffc3a2be301",
         "position": "bottom right",
         "displayTime": "3",
         "highlight": "",
@@ -648,6 +798,7 @@
         "id": "62a6550bfdeb9374",
         "type": "split",
         "z": "6127eaeadf941c69",
+        "g": "bf43cffc3a2be301",
         "name": "",
         "splt": "\\n",
         "spltType": "str",
@@ -667,6 +818,7 @@
         "id": "c9230acd5c3e340c",
         "type": "change",
         "z": "6127eaeadf941c69",
+        "g": "bf43cffc3a2be301",
         "name": "",
         "rules": [
             {
@@ -694,6 +846,7 @@
         "id": "922d53c2f349b642",
         "type": "change",
         "z": "6127eaeadf941c69",
+        "g": "bf43cffc3a2be301",
         "name": "",
         "rules": [
             {
@@ -728,6 +881,7 @@
         "id": "8c3e84dc8ef824bb",
         "type": "join",
         "z": "6127eaeadf941c69",
+        "g": "bf43cffc3a2be301",
         "name": "",
         "mode": "custom",
         "build": "string",
@@ -756,6 +910,7 @@
         "id": "ced9bbc8682f193f",
         "type": "link in",
         "z": "6127eaeadf941c69",
+        "g": "bf43cffc3a2be301",
         "name": "link in 1",
         "links": [
             "04d539de55b04d2b"
@@ -772,6 +927,7 @@
         "id": "04d539de55b04d2b",
         "type": "link out",
         "z": "6127eaeadf941c69",
+        "g": "bf43cffc3a2be301",
         "name": "link out 1",
         "mode": "link",
         "links": [
@@ -785,6 +941,7 @@
         "id": "1b43734addaf2068",
         "type": "switch",
         "z": "6127eaeadf941c69",
+        "g": "bf43cffc3a2be301",
         "name": "",
         "property": "payload",
         "propertyType": "msg",
@@ -810,8 +967,7 @@
             ],
             [
                 "d249db5d41f1a689",
-                "eec7c8eaf3e4a887",
-                "c1c89e67773cc3ad"
+                "c78a541774da3274"
             ]
         ]
     },
@@ -819,6 +975,7 @@
         "id": "20679cdba0d2340d",
         "type": "ui_toast",
         "z": "6127eaeadf941c69",
+        "g": "bf43cffc3a2be301",
         "position": "bottom right",
         "displayTime": "3",
         "highlight": "",
@@ -838,6 +995,7 @@
         "id": "d249db5d41f1a689",
         "type": "change",
         "z": "6127eaeadf941c69",
+        "g": "bf43cffc3a2be301",
         "name": "",
         "rules": [
             {
@@ -872,6 +1030,7 @@
         "id": "0e05b2c94ecf1fcb",
         "type": "change",
         "z": "6127eaeadf941c69",
+        "g": "bf43cffc3a2be301",
         "name": "",
         "rules": [
             {
@@ -899,6 +1058,7 @@
         "id": "9a195ae6cbba0146",
         "type": "ui_form",
         "z": "6127eaeadf941c69",
+        "g": "bf43cffc3a2be301",
         "name": "",
         "label": "",
         "group": "3f8c48cfaa40525a",
@@ -952,6 +1112,7 @@
         "id": "a989fc750982ec19",
         "type": "change",
         "z": "6127eaeadf941c69",
+        "g": "bf43cffc3a2be301",
         "name": "",
         "rules": [
             {
@@ -987,19 +1148,21 @@
         "id": "eec7c8eaf3e4a887",
         "type": "link out",
         "z": "6127eaeadf941c69",
+        "g": "bf43cffc3a2be301",
         "name": "link out 2",
         "mode": "link",
         "links": [
             "139105f6a651c339"
         ],
-        "x": 695,
-        "y": 560,
+        "x": 945,
+        "y": 580,
         "wires": []
     },
     {
         "id": "139105f6a651c339",
         "type": "link in",
         "z": "6127eaeadf941c69",
+        "g": "bf43cffc3a2be301",
         "name": "link in 2",
         "links": [
             "eec7c8eaf3e4a887"
@@ -1009,6 +1172,612 @@
         "wires": [
             [
                 "9a195ae6cbba0146"
+            ]
+        ]
+    },
+    {
+        "id": "c78a541774da3274",
+        "type": "change",
+        "z": "6127eaeadf941c69",
+        "g": "bf43cffc3a2be301",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "payload.userPreferences",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 780,
+        "y": 580,
+        "wires": [
+            [
+                "eec7c8eaf3e4a887"
+            ]
+        ]
+    },
+    {
+        "id": "93c41afcb4ac3710",
+        "type": "influxdb in",
+        "z": "6127eaeadf941c69",
+        "g": "52d1425e510d0bee",
+        "influxdb": "0e8f129c76ace03a",
+        "name": "Total Consumption last 30 days",
+        "query": "from(bucket: \"iot\")\n  |> range(start: -30d)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"actuators\")\n  |> filter(fn: (r) => r[\"_field\"] == \"totalConsumption\")\n  |> group(columns: [\"_field\"], mode:\"by\")\n  |> sum()\n",
+        "rawOutput": false,
+        "precision": "",
+        "retentionPolicy": "",
+        "org": "univaq",
+        "x": 470,
+        "y": 760,
+        "wires": [
+            [
+                "5dbb02e63ab881ed"
+            ]
+        ]
+    },
+    {
+        "id": "bb87bea795c40718",
+        "type": "inject",
+        "z": "6127eaeadf941c69",
+        "g": "52d1425e510d0bee",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "60",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 170,
+        "y": 760,
+        "wires": [
+            [
+                "93c41afcb4ac3710"
+            ]
+        ]
+    },
+    {
+        "id": "cc328b61b262a0b0",
+        "type": "debug",
+        "z": "6127eaeadf941c69",
+        "g": "52d1425e510d0bee",
+        "name": "debug 9",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 960,
+        "y": 720,
+        "wires": []
+    },
+    {
+        "id": "c3b337e32961dbc4",
+        "type": "ui_text",
+        "z": "6127eaeadf941c69",
+        "g": "52d1425e510d0bee",
+        "group": "3bba53499f695836",
+        "order": 1,
+        "width": "0",
+        "height": "0",
+        "name": "",
+        "label": "Total Consumption (last 30 days)",
+        "format": "{{msg.payload / 1000 | number:3}} kW",
+        "layout": "row-spread",
+        "className": "",
+        "style": false,
+        "font": "",
+        "fontSize": 16,
+        "color": "#000000",
+        "x": 980,
+        "y": 780,
+        "wires": []
+    },
+    {
+        "id": "d4bc9e406791255a",
+        "type": "influxdb in",
+        "z": "6127eaeadf941c69",
+        "g": "443f62182e0eaacd",
+        "influxdb": "0e8f129c76ace03a",
+        "name": "Total Consumption last 30 days",
+        "query": "from(bucket: \"iot\")\n  |> range(start: -5s)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"actuators\")\n  |> filter(fn: (r) => r[\"_field\"] == \"consumptionPerSecond\")\n  |> group(columns: [\"_field\"], mode:\"by\")\n  |> sum()\n",
+        "rawOutput": false,
+        "precision": "",
+        "retentionPolicy": "",
+        "org": "univaq",
+        "x": 470,
+        "y": 960,
+        "wires": [
+            [
+                "b2edd8ef35f797e4"
+            ]
+        ]
+    },
+    {
+        "id": "db34839e24fa534c",
+        "type": "inject",
+        "z": "6127eaeadf941c69",
+        "g": "443f62182e0eaacd",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "5",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 170,
+        "y": 960,
+        "wires": [
+            [
+                "d4bc9e406791255a"
+            ]
+        ]
+    },
+    {
+        "id": "9fd1e1bd0383a7d7",
+        "type": "debug",
+        "z": "6127eaeadf941c69",
+        "g": "443f62182e0eaacd",
+        "name": "debug 10",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 960,
+        "y": 920,
+        "wires": []
+    },
+    {
+        "id": "575faf7714bcc57d",
+        "type": "ui_text",
+        "z": "6127eaeadf941c69",
+        "g": "443f62182e0eaacd",
+        "group": "a912e959f4cc6ec9",
+        "order": 1,
+        "width": "0",
+        "height": "0",
+        "name": "",
+        "label": "Current Consumption",
+        "format": "{{(msg.payload >= 0 ? msg.payload : 0 )| number:3}} Wh",
+        "layout": "row-spread",
+        "className": "",
+        "style": false,
+        "font": "",
+        "fontSize": 16,
+        "color": "#000000",
+        "x": 980,
+        "y": 980,
+        "wires": []
+    },
+    {
+        "id": "149af53453b77c06",
+        "type": "ui_button",
+        "z": "6127eaeadf941c69",
+        "g": "52d1425e510d0bee",
+        "name": "",
+        "group": "3bba53499f695836",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "label": "Refresh",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "className": "",
+        "icon": "",
+        "payload": "",
+        "payloadType": "str",
+        "topic": "topic",
+        "topicType": "msg",
+        "x": 180,
+        "y": 700,
+        "wires": [
+            [
+                "93c41afcb4ac3710"
+            ]
+        ]
+    },
+    {
+        "id": "0a5d8812c21d5bfd",
+        "type": "ui_button",
+        "z": "6127eaeadf941c69",
+        "g": "443f62182e0eaacd",
+        "name": "",
+        "group": "a912e959f4cc6ec9",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "label": "Refresh",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "className": "",
+        "icon": "",
+        "payload": "",
+        "payloadType": "str",
+        "topic": "topic",
+        "topicType": "msg",
+        "x": 180,
+        "y": 900,
+        "wires": [
+            [
+                "d4bc9e406791255a"
+            ]
+        ]
+    },
+    {
+        "id": "b2edd8ef35f797e4",
+        "type": "function",
+        "z": "6127eaeadf941c69",
+        "g": "443f62182e0eaacd",
+        "name": "function 4",
+        "func": "let value = 0\nconst [result] = msg.payload\nif(result) value = result._value\nmsg.payload = value\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 720,
+        "y": 960,
+        "wires": [
+            [
+                "575faf7714bcc57d",
+                "9fd1e1bd0383a7d7"
+            ]
+        ]
+    },
+    {
+        "id": "5dbb02e63ab881ed",
+        "type": "function",
+        "z": "6127eaeadf941c69",
+        "g": "52d1425e510d0bee",
+        "name": "function 5",
+        "func": "let value = 0\nconst [result] = msg.payload\nif (result) value = result._value\nmsg.payload = value\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 720,
+        "y": 760,
+        "wires": [
+            [
+                "cc328b61b262a0b0",
+                "c3b337e32961dbc4"
+            ]
+        ]
+    },
+    {
+        "id": "a3a996ed79502ea4",
+        "type": "http request",
+        "z": "41f8c2b710ddca0a",
+        "g": "9cd83b71e925ce2c",
+        "name": "",
+        "method": "GET",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "bearer",
+        "senderr": false,
+        "headers": [],
+        "x": 430,
+        "y": 300,
+        "wires": [
+            [
+                "467c1c21e8a027ac"
+            ]
+        ]
+    },
+    {
+        "id": "a6cc92e90d1bed09",
+        "type": "inject",
+        "z": "41f8c2b710ddca0a",
+        "g": "9cd83b71e925ce2c",
+        "name": "",
+        "props": [
+            {
+                "p": "url",
+                "v": "$replace($env(\"GF_SERVER_ROOT_URL\"), \"http://\", \"\") & \":\" & $env(\"GRAFANA_SERVER_PORT\") & \"/api/search\"\t",
+                "vt": "jsonata"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 230,
+        "y": 300,
+        "wires": [
+            [
+                "a3a996ed79502ea4"
+            ]
+        ]
+    },
+    {
+        "id": "467c1c21e8a027ac",
+        "type": "function",
+        "z": "41f8c2b710ddca0a",
+        "g": "9cd83b71e925ce2c",
+        "name": "function 6",
+        "func": "const response = msg.payload\nconst dashboards = response.map(data => data.uid)\nmsg.payload = msg.options = dashboards\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 620,
+        "y": 300,
+        "wires": [
+            [
+                "3bdf07b8ddea81d1"
+            ]
+        ]
+    },
+    {
+        "id": "3bdf07b8ddea81d1",
+        "type": "ui_dropdown",
+        "z": "41f8c2b710ddca0a",
+        "g": "9cd83b71e925ce2c",
+        "name": "",
+        "label": "",
+        "tooltip": "",
+        "place": "Select option",
+        "group": "88bdb19be1806be2",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "multiple": false,
+        "options": [
+            {
+                "label": "",
+                "value": "",
+                "type": "str"
+            }
+        ],
+        "payload": "",
+        "topic": "topic",
+        "topicType": "msg",
+        "className": "",
+        "x": 800,
+        "y": 300,
+        "wires": [
+            [
+                "9ff94f56f58b8351"
+            ]
+        ]
+    },
+    {
+        "id": "9ff94f56f58b8351",
+        "type": "function",
+        "z": "41f8c2b710ddca0a",
+        "g": "9cd83b71e925ce2c",
+        "name": "function 7",
+        "func": "const dashboard = msg.payload\nflow.set('selectedDashboard', dashboard)\nconst url = `grafana:3000/api/dashboards/uid/${dashboard}`\nmsg.url = url\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 980,
+        "y": 300,
+        "wires": [
+            [
+                "0e0189a340ec3144"
+            ]
+        ]
+    },
+    {
+        "id": "0e0189a340ec3144",
+        "type": "http request",
+        "z": "41f8c2b710ddca0a",
+        "g": "9cd83b71e925ce2c",
+        "name": "",
+        "method": "GET",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "bearer",
+        "senderr": false,
+        "headers": [],
+        "x": 1150,
+        "y": 300,
+        "wires": [
+            [
+                "b656fce925a04029"
+            ]
+        ]
+    },
+    {
+        "id": "71eff3b7c67cf372",
+        "type": "link in",
+        "z": "41f8c2b710ddca0a",
+        "g": "9cd83b71e925ce2c",
+        "name": "link in 3",
+        "links": [
+            "b656fce925a04029"
+        ],
+        "x": 175,
+        "y": 380,
+        "wires": [
+            [
+                "adb2af0461604686"
+            ]
+        ]
+    },
+    {
+        "id": "adb2af0461604686",
+        "type": "function",
+        "z": "41f8c2b710ddca0a",
+        "g": "9cd83b71e925ce2c",
+        "name": "function 8",
+        "func": "const response = msg.payload\nconst orgId = 1\nconst iframeUrls = []\nconst { dashboard } = response\nlet id = 1\nfor (const panel of dashboard.panels) {\n    const iframeUrl = `http://localhost:3000/d-solo/${dashboard.uid}/${dashboard.title}?orgId=${orgId}&panelId=${id}`;\n    iframeUrls.push(iframeUrl)\n    id++\n}\nmsg.payload = iframeUrls\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 300,
+        "y": 380,
+        "wires": [
+            [
+                "ef543c086902d527"
+            ]
+        ]
+    },
+    {
+        "id": "b656fce925a04029",
+        "type": "link out",
+        "z": "41f8c2b710ddca0a",
+        "g": "9cd83b71e925ce2c",
+        "name": "link out 3",
+        "mode": "link",
+        "links": [
+            "71eff3b7c67cf372"
+        ],
+        "x": 1275,
+        "y": 300,
+        "wires": []
+    },
+    {
+        "id": "7b63df752c36ba6f",
+        "type": "ui_template",
+        "z": "41f8c2b710ddca0a",
+        "g": "9cd83b71e925ce2c",
+        "group": "88bdb19be1806be2",
+        "name": "",
+        "order": 3,
+        "width": 0,
+        "height": 0,
+        "format": "<div id=\"content\">\n  {{msg.payload}}\n</div>",
+        "storeOutMessages": false,
+        "fwdInMessages": true,
+        "resendOnRefresh": true,
+        "templateScope": "local",
+        "className": "",
+        "x": 780,
+        "y": 380,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "9a7c0ce63d4c336f",
+        "type": "template",
+        "z": "41f8c2b710ddca0a",
+        "g": "9cd83b71e925ce2c",
+        "name": "",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "html",
+        "syntax": "mustache",
+        "template": "",
+        "output": "str",
+        "x": 620,
+        "y": 380,
+        "wires": [
+            [
+                "7b63df752c36ba6f"
+            ]
+        ]
+    },
+    {
+        "id": "ef543c086902d527",
+        "type": "function",
+        "z": "41f8c2b710ddca0a",
+        "g": "9cd83b71e925ce2c",
+        "name": "function 9",
+        "func": "function createIframe(url){\n    return `<iframe style='flex: 1 0 31%' height=\"400\" frameborder=\"0\" src=\"${url}\"></iframe>`\n}\n\nlet urls = msg.payload\nmsg.template = urls.reduce((prev, curr) => prev + createIframe(curr), '<div style=\"display:flex; flex-direction:row; flex-wrap:wrap; gap:2px 3px; justify-content: space-between\">')\nmsg.template = msg.template + \"</div>\"\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 460,
+        "y": 380,
+        "wires": [
+            [
+                "9a7c0ce63d4c336f"
+            ]
+        ]
+    },
+    {
+        "id": "64cb8d94f3d6dca7",
+        "type": "ui_button",
+        "z": "41f8c2b710ddca0a",
+        "d": true,
+        "g": "9cd83b71e925ce2c",
+        "name": "",
+        "group": "88bdb19be1806be2",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "label": "Refresh",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "className": "",
+        "icon": "",
+        "payload": "selectedDashboard",
+        "payloadType": "flow",
+        "topic": "payload",
+        "topicType": "msg",
+        "x": 960,
+        "y": 220,
+        "wires": [
+            [
+                "9ff94f56f58b8351"
             ]
         ]
     },

@@ -125,9 +125,14 @@ services:
       - ./influxdb/.env
       - ./mosquitto/.env
       - ./backend/.env
+      - ./grafana/.env
     depends_on:
-      - influxdb
-      - mosquitto
+      influxdb:
+        condition: service_started
+      mosquitto:
+        condition: service_started
+      server:
+        condition: service_healthy
     networks:
       se4iot:
         ipv4_address: 172.20.0.108
