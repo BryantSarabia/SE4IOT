@@ -5,7 +5,8 @@ export const MONGODB_CONFIG = {
   collectionName: process.env.MONGODB_COLLECTION_NAME ?? 'user_preferences',
   user_preferences: {
     minimumLightIntensityThreshold: 500,
-    maximumLightIntensityThreshold: 1500
+    maximumLightIntensityThreshold: 1000,
+    lightsEnabled: true
   }
 }
 

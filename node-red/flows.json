@@ -83,7 +83,8 @@
             "a989fc750982ec19",
             "eec7c8eaf3e4a887",
             "139105f6a651c339",
-            "c78a541774da3274"
+            "c78a541774da3274",
+            "de3e1bb4379ac437"
         ],
         "x": 54,
         "y": 219,
@@ -112,11 +113,12 @@
             "9a7c0ce63d4c336f",
             "ef543c086902d527",
             "64cb8d94f3d6dca7",
-            "341c79926f0ed1e4"
+            "341c79926f0ed1e4",
+            "acfdbcdab7132255"
         ],
-        "x": 134,
+        "x": 54,
         "y": 199,
-        "w": 1182,
+        "w": 1322,
         "h": 222
     },
     {
@@ -212,9 +214,9 @@
     {
         "id": "c1dbac1a29cb8513",
         "type": "ui_tab",
-        "name": "Settings",
-        "icon": "settings",
-        "order": 3,
+        "name": "Home",
+        "icon": "fa-lightbulb-o",
+        "order": 1,
         "disabled": false,
         "hidden": false
     },
@@ -351,7 +353,7 @@
         "id": "3bba53499f695836",
         "type": "ui_group",
         "name": "Total Consumption",
-        "tab": "2b8c56ad6ade67c2",
+        "tab": "c1dbac1a29cb8513",
         "order": 2,
         "disp": true,
         "width": "10",
@@ -362,7 +364,7 @@
         "id": "a912e959f4cc6ec9",
         "type": "ui_group",
         "name": "Current Consumption",
-        "tab": "2b8c56ad6ade67c2",
+        "tab": "c1dbac1a29cb8513",
         "order": 3,
         "disp": true,
         "width": "10",
@@ -374,7 +376,7 @@
         "type": "ui_tab",
         "name": "Home statistics",
         "icon": "home",
-        "order": 2,
+        "order": 3,
         "disabled": false,
         "hidden": false
     },
@@ -398,15 +400,6 @@
         "order": 3,
         "width": 22,
         "height": 1
-    },
-    {
-        "id": "2b8c56ad6ade67c2",
-        "type": "ui_tab",
-        "name": "Consumption",
-        "icon": "fa-lightbulb-o",
-        "order": 1,
-        "disabled": false,
-        "hidden": false
     },
     {
         "id": "fc03d7aeb9681b90",
@@ -1027,7 +1020,7 @@
         "authType": "",
         "senderr": false,
         "headers": [],
-        "x": 360,
+        "x": 540,
         "y": 260,
         "wires": [
             [
@@ -1057,7 +1050,7 @@
         "y": 260,
         "wires": [
             [
-                "a47911ec1ade51f0"
+                "de3e1bb4379ac437"
             ]
         ]
     },
@@ -1245,7 +1238,7 @@
         "links": [
             "ced9bbc8682f193f"
         ],
-        "x": 905,
+        "x": 1065,
         "y": 260,
         "wires": []
     },
@@ -1412,7 +1405,7 @@
         "topicType": "msg",
         "splitLayout": "",
         "className": "",
-        "x": 590,
+        "x": 750,
         "y": 260,
         "wires": [
             [
@@ -1448,7 +1441,7 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 780,
+        "x": 940,
         "y": 260,
         "wires": [
             [
@@ -1479,7 +1472,7 @@
         "links": [
             "eec7c8eaf3e4a887"
         ],
-        "x": 795,
+        "x": 955,
         "y": 340,
         "wires": [
             [
@@ -1516,6 +1509,32 @@
         ]
     },
     {
+        "id": "de3e1bb4379ac437",
+        "type": "delay",
+        "z": "6127eaeadf941c69",
+        "g": "bf43cffc3a2be301",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "2",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 320,
+        "y": 260,
+        "wires": [
+            [
+                "a47911ec1ade51f0"
+            ]
+        ]
+    },
+    {
         "id": "a3a996ed79502ea4",
         "type": "http request",
         "z": "41f8c2b710ddca0a",
@@ -1532,7 +1551,7 @@
         "authType": "bearer",
         "senderr": false,
         "headers": [],
-        "x": 430,
+        "x": 490,
         "y": 300,
         "wires": [
             [
@@ -1558,11 +1577,11 @@
         "once": true,
         "onceDelay": 0.1,
         "topic": "",
-        "x": 230,
+        "x": 150,
         "y": 300,
         "wires": [
             [
-                "a3a996ed79502ea4"
+                "acfdbcdab7132255"
             ]
         ]
     },
@@ -1579,7 +1598,7 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 620,
+        "x": 680,
         "y": 300,
         "wires": [
             [
@@ -1613,7 +1632,7 @@
         "topic": "topic",
         "topicType": "msg",
         "className": "",
-        "x": 800,
+        "x": 860,
         "y": 300,
         "wires": [
             [
@@ -1634,7 +1653,7 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 980,
+        "x": 1040,
         "y": 300,
         "wires": [
             [
@@ -1659,7 +1678,7 @@
         "authType": "bearer",
         "senderr": false,
         "headers": [],
-        "x": 1150,
+        "x": 1210,
         "y": 300,
         "wires": [
             [
@@ -1715,7 +1734,7 @@
         "links": [
             "71eff3b7c67cf372"
         ],
-        "x": 1275,
+        "x": 1335,
         "y": 300,
         "wires": []
     },
@@ -1727,8 +1746,8 @@
         "group": "88bdb19be1806be2",
         "name": "",
         "order": 4,
-        "width": 0,
-        "height": 0,
+        "width": "0",
+        "height": "0",
         "format": "<div id=\"content\">\n  {{msg.payload}}\n</div>",
         "storeOutMessages": false,
         "fwdInMessages": true,
@@ -1833,6 +1852,32 @@
         "reg": false,
         "x": 430,
         "y": 240,
+        "wires": [
+            [
+                "a3a996ed79502ea4"
+            ]
+        ]
+    },
+    {
+        "id": "acfdbcdab7132255",
+        "type": "delay",
+        "z": "41f8c2b710ddca0a",
+        "g": "9cd83b71e925ce2c",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "2",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 300,
+        "y": 300,
         "wires": [
             [
                 "a3a996ed79502ea4"
