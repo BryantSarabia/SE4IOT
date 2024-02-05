@@ -110,6 +110,24 @@ After the central control system generates the action to perform, it sends the a
 - Run `docker-compose up`
 - Open the web browser and go to <http://localhost:1880/ui>
 
+## Configuration
+
+- **Influxdb**:
+  - Username: `admin`
+  - Password: `adminadmin`
+  - Url: <http://localhost:8086>
+- **Grafana**:
+  - Username: `admin`
+  - Password: `admin`
+  - Url: <http://localhost:3000>
+- **PostgreSQL**:
+  - Username: `admin`
+  - Password: `adminadmin`
+- **NodeRED**:
+  - Url: <http://localhost:1880>
+- **Mosquitto**:
+  - Local port: `1882` and `9002`
+
 ## Usage
 
 - Open the [nodered dashboard](http://localhost:1880/ui)
