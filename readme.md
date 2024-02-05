@@ -85,18 +85,21 @@ Mosquitto is used to create the MQTT broker for the system. The sensors and actu
 
 The central control system is implemented using Node.js. It is used to register the sensors and actuators in the system and to create the dashboards for them in Grafana. It is also used to get and update the user preferences.
 
-It is responsible of evaluating the sensors data by using the user preferences and to send the commands to the actuators.
+It is responsible for evaluating the sensors data by using the user preferences and to send the commands to the actuators and turning off all the lights when the user disables them.
 
 There is a evaluation rule for every type of sensor. The current evaluation rules are the following:
 
 - **Light rule**:
   - If lights are disabled, do not perform any action.
-  - If there is not motion in the room, do not perform any action.
+  - If lights are off, do not perform any action.
+  - If no motion is detected in the room, do not perform any action.
   - Otherwise, if the light sensor value is less than the minimum brightness, increase the brightness. If the light sensor value is greater than the maximum brightness, decrease the brightness.
 
 - **Motion rule**:
-  - If lights are disabled, turn off the lights.
-  - If there is motion in the room, turn on the lights. Otherwise, turn off the lights.
+  - If lights are disabled, do not perform any action.
+  - If there is motion in the room and lights are off, turn on the lights.
+  - If there is motion in the room and lights are on, do not perform any action.
+  - Otherwise, turn off the lights.
 
 After the central control system generates the action to perform, it sends the action to the actuator using MQTT.
   
