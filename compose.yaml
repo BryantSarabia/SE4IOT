@@ -71,8 +71,6 @@ services:
         ipv4_address: 172.20.0.105
   server:
     build: ./backend
-    volumes:
-      - ./backend:/usr/src/app
     container_name: server
     hostname: server
     restart: "no"
@@ -96,8 +94,6 @@ services:
         ipv4_address: 172.20.0.106
   central-control-system:
     build: ./central-control-system
-    volumes:
-      - ./central-control-system:/usr/src/app
     container_name: central-control-system
     hostname: central-control-system
     restart: always
