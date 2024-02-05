@@ -105,13 +105,7 @@ After the central control system generates the action to perform, it sends the a
   
 ## Requirements
 
-- Docker
-
-## Installation
-
-- Clone the repository `git clone <https://github.com/BryantSarabia/SE4IOT.git>`
-- Run `docker-compose up`
-- Open the web browser and go to <http://localhost:1880/ui>
+- [Docker](https://www.docker.com/get-started/)
 
 ## Configuration
 
@@ -130,6 +124,12 @@ After the central control system generates the action to perform, it sends the a
   - Url: <http://localhost:1880>
 - **Mosquitto**:
   - Local port: `1882` and `9002`
+
+## Installation
+
+- Clone the repository `git clone <https://github.com/BryantSarabia/SE4IOT.git>`
+- Run `docker-compose up`
+- Open the web browser and go to <http://localhost:1880/ui>
 
 ## Usage
 
