@@ -167,7 +167,6 @@ services:
     volumes:
       - ./postgresql/data:/var/lib/postgresql/data
       - ./postgresql/config:/docker-entrypoint-initdb.d
-      - ./postgresql/.env:/docker-entrypoint-initdb.d/.env
     env_file:
       - ./postgresql/.env
     networks:
