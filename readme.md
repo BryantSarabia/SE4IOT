@@ -14,9 +14,9 @@ This project is a smart light system for home. It is a simple project that can b
 
 The sensors and actuators used in this project are simulated using Node.js. The sensors and actuators are the following:
 
-- Light sensor
-- Motion sensor
-- Light Bulb
+- Light sensor *(simulated)*
+- Motion sensor *(simulated)*
+- Light Bulb *(simulated)*
 
 ## Software
 
@@ -85,13 +85,13 @@ Mosquitto is used to create the MQTT broker for the system. The sensors and actu
 
 The central control system is implemented using Node.js. It is used to register the sensors and actuators in the system and to create the dashboards for them in Grafana. It is also used to get and update the user preferences.
 
-It is responsible for evaluating the sensors data by using the user preferences and to send the commands to the actuators and turning off all the lights when the user disables them.
+It is responsible for evaluating the sensors data by using the user preferences, to send the commands to the actuators and turning off all the lights when the user disables them.
 
 There is a evaluation rule for every type of sensor. The current evaluation rules are the following:
 
 - **Light rule**:
   - If lights are disabled, do not perform any action.
-  - If lights are off, do not perform any action.
+  - If the lights are off, do not perform any action.
   - If no motion is detected in the room, do not perform any action.
   - Otherwise, if the light sensor value is less than the minimum brightness, increase the brightness. If the light sensor value is greater than the maximum brightness, decrease the brightness.
 
