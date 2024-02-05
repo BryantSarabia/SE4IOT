@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "set MQTT_BROKER=localhost&& set MQTT_BROKER_PORT=1883&& set ACTUATORS_TOPIC=actuators/#&& node-red --s settings.js",
+    "start": "node $NODE_OPTIONS node_modules/node-red/red.js $FLOWS",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],

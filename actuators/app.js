@@ -23,7 +23,7 @@ async function initializeActuators () {
 }
 
 async function initialize () {
-  await delay(10000) // Wait 5 seconds for the central control system to be initialized
+  await delay(20000) // Wait 30 seconds for the sensors to initialize dashboards
   initializeActuators()
 }
 
