@@ -29,15 +29,14 @@ export class LightSensor extends Sensor {
     let payload = null
     try {
       if (message) payload = JSON.parse(message.toString())
-    } catch (error) {
-
-    } finally {
       let { value } = payload
       value = Number(value)
       this.value += value
       if (this.value < 0) this.value = 0
       if (this.value > this.maxValue) this.value = this.maxValue
       this.publishData()
+    } catch (error) {
+
     }
   }
 }

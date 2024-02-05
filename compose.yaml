@@ -75,7 +75,7 @@ services:
       - ./backend:/usr/src/app
     container_name: server
     hostname: server
-    restart: no
+    restart: "no"
     env_file:
       - ./mosquitto/.env
       - ./backend/.env

@@ -2,7 +2,7 @@
 
 ## Introduction
 
-This project is a smart light system for home. It is a simple project that can be used to control the lights in your home. The system is designed to be controlled by dashboard. The system is designed to be simple and easy to use.
+This project is a smart light system for home. It is a simple project that can be used to control the lights in your home. The system is designed to be controlled by dashboard and to be simple and easy to use.
 
 ## Features
 
@@ -33,17 +33,31 @@ The sensors and actuators used in this project are simulated using Node.js. The 
 ## Architecture
 
 ![Architecture diagram](./docs/arch.jpg)
+
 The architecture of the system is the following:
 
 ### Sensors and actuators
 
-The sensors and actuators are simulated using Node.js
+The sensors and actuators are simulated using Node.js.
+The measurement unit of the light sensor is **lux** and the measurement unit of the motion sensor is a **boolean** value.
+
+- **Light Sensor**: The light sensor is used to measure the brightness of the room. It generates a random number between 0 and 100 every 5 seconds. It receives data from simulated actuators to change its value.
+- **Motion Sensor**: The motion sensor is used to detect motion in the room. It generates a random number between 0 and 1 every 5 seconds.
+- **Light Bulb**: The light bulb is used to control the brightness of the room. It receives commands from the central control system. It has 5 methods:
+  - `on`: Turns on the light
+  - `off`: Turns off the light
+  - `increase`: Increases the brightness of the light
+  - `decrease`: Decreases the brightness of the light
+  - `updateConsumption`: Updates the current consumption of the light and publishes the value to the MQTT broker.
+    - The current consumption is calculated using the following formula: `currentConsumption = currentLux * consumptionPerLux`
 
 ### Server (backend)
 
 The server is implemented using Node.js and Express, it is used to get and update the user preferences and to create a new dashboard on grafana for every sensor and actuator added to the system.
 
 The user preferences are stored in a MongoDB database.
+
+**User preferences sent to the backend are valitated using [zod](https://zod.dev/).**
 
 ### Grafana
 
@@ -73,6 +87,19 @@ The central control system is implemented using Node.js. It is used to register 
 
 It is responsible of evaluating the sensors data by using the user preferences and to send the commands to the actuators.
 
+There is a evaluation rule for every type of sensor. The current evaluation rules are the following:
+
+- **Light rule**:
+  - If lights are disabled, do not perform any action.
+  - If there is not motion in the room, do not perform any action.
+  - Otherwise, if the light sensor value is less than the minimum brightness, increase the brightness. If the light sensor value is greater than the maximum brightness, decrease the brightness.
+
+- **Motion rule**:
+  - If lights are disabled, turn off the lights.
+  - If there is motion in the room, turn on the lights. Otherwise, turn off the lights.
+
+After the central control system generates the action to perform, it sends the action to the actuator using MQTT.
+  
 ## Requirements
 
 - Docker
