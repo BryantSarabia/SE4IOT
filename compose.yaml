@@ -166,7 +166,7 @@ services:
       - 5432:5432
     volumes:
       - ./postgresql/data:/var/lib/postgresql/data
-      - ./postgresql/config:/docker-entrypoint-initdb.d
+      - ./postgresql/config/create_grafana_db.sh:/docker-entrypoint-initdb.d/create_grafana_db.sh
     env_file:
       - ./postgresql/.env
     networks:
