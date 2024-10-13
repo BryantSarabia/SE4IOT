@@ -150,36 +150,12 @@ services:
     env_file:
       - ./grafana/.env
       - ./influxdb/.env
-      - ./postgresql/.env
     depends_on:
       influxdb:
         condition: service_started
-      postgresql:
-        condition: service_healthy
     networks:
       se4iot:
         ipv4_address: 172.20.0.109
-  postgresql:
-    image: postgres:latest
-    container_name: postgresql
-    hostname: postgresql
-    restart: always
-    ports:
-      - 5432:5432
-    volumes:
-      - ./postgresql/data:/var/lib/postgresql/data
-      - ./postgresql/init.sql:/docker-entrypoint-initdb.d/init.sql
-    env_file:
-      - ./postgresql/.env
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U $$POSTGRES_USER -d $$POSTGRES_GRAFANA_DB"]
-      interval: 30s
-      timeout: 10s
-      retries: 5
-      start_period: 15s
-    networks:
-      se4iot:
-        ipv4_address: 172.20.0.110
 networks:
   se4iot:
     ipam:
