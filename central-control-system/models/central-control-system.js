@@ -30,7 +30,6 @@ export class CentralControlSystem {
       [SENSOR_TYPES.MOTION]: new MotionRule({ logger }),
     };
     this.userPreferences = null;
-    this.initialize();
     this.logger = logger;
   }
 
@@ -86,7 +85,7 @@ export class CentralControlSystem {
     const topic = ACTIVATE_ACTUATOR_TOPIC;
     mqttClient.subscribe(topic);
     mqttClient.on("message", async (topic) => {
-      await this.handleActuatorActivation(topic).bind(this);
+      await this.handleActuatorActivation(topic);
       this.logger.log(topic);
     });
   }
