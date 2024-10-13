@@ -3,16 +3,21 @@ version: '3.8'
 services:
   influxdb:
     image: influxdb:latest
-    container_name: influxdb
+    container_name: univaq_influxdb
     hostname: influx
     restart: always
     ports:
       - 8086:8086
-    volumes:
-      - ./influxdb:/var/lib/influxdb2
-      - ./influxdb/config:/etc/influxdb2
+    # volumes:
+    #   - ./influxdb:/var/lib/influxdb2
+    #   - ./influxdb/config:/etc/influxdb2
     env_file:
       - ./influxdb/.env
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8086/health"]
+      interval: 1m
+      timeout: 10s
+      retries: 3
     networks:
       se4iot:
         ipv4_address: 172.20.0.101
@@ -109,6 +114,8 @@ services:
           condition: service_healthy
       mosquitto:
           condition: service_started
+      grafana:
+          condition: service_started
     networks:
       se4iot:
         ipv4_address: 172.20.0.107
@@ -128,7 +135,7 @@ services:
       - ./grafana/.env
     depends_on:
       influxdb:
-        condition: service_started
+        condition: service_healthy
       mosquitto:
         condition: service_started
       server:

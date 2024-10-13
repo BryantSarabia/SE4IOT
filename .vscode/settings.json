@@ -1,4 +1,6 @@
 {
+  // add default formater eslint
+  "editor.defaultFormatter": "dbaeumer.vscode-eslint",
   "conventionalCommits.scopes": [
     "grafana",
     "actuators",
