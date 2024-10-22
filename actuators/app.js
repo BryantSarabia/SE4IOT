@@ -19,7 +19,6 @@ async function initializeActuators() {
         actuatorInstance.initialize();
         console.log(`Initialized ${type} in ${roomName}.`);
         id++;
-        await delay(300); // Wait 300ms between each actuator initialization to avoid Grafana errors
       } catch (error) {
         console.log(error.message);
       }
@@ -28,8 +27,7 @@ async function initializeActuators() {
 }
 
 async function initialize() {
-  await delay(20000); // Wait 20 seconds for the sensors to initialize dashboards
   initializeActuators();
 }
 
-initialize();
+await initialize();
