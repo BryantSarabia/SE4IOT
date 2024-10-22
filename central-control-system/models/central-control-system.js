@@ -176,14 +176,12 @@ export class CentralControlSystem {
   handleSensorData(topic) {
     const subscribedTopic = topic.replace("/#", "");
     return (topic, message) => {
-      console.log(topic);
       // topic: sensors/data/<room>/<type>/<id>
       if (!topic || !topic.includes(subscribedTopic)) return;
       const [room, type, id] = topic.split("/").slice(2);
       if (type && room && id && message) {
         try {
           const payload = JSON.parse(message.toString());
-          this.logger.log(payload);
           this.evaluateData({ type, roomName: room, id, message: payload });
         } catch (error) {
           this.logger.log(error.message);
