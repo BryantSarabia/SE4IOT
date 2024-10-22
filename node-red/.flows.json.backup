@@ -1709,7 +1709,7 @@
         "z": "41f8c2b710ddca0a",
         "g": "9cd83b71e925ce2c",
         "name": "function 8",
-        "func": "const response = msg.payload\nconst orgId = 1\nconst iframeUrls = []\nconst { dashboard } = response\nlet id = 1\nfor (const panel of dashboard.panels) {\n    const iframeUrl = `http://localhost:3000/d-solo/${dashboard.uid}/${dashboard.title}?orgId=${orgId}&panelId=${id}`;\n    iframeUrls.push(iframeUrl)\n    id++\n}\nmsg.payload = iframeUrls\nreturn msg;",
+        "func": "const response = msg.payload\nconst orgId = 1\nconst iframeUrls = []\nconst refresh = '10s'\nconst from = 'now-3h'\nconst to = 'now'\nconst { dashboard } = response\nlet id = 1\nfor (const panel of dashboard.panels) {\n    const iframeUrl = `http://localhost:3000/d-solo/${dashboard.uid}/${dashboard.title}?orgId=${orgId}&panelId=${id}&from=${from}&to=${to}&refresh=${refresh}&__feature.dashboardSceneSolo`;\n    iframeUrls.push(iframeUrl)\n    id++\n}\nmsg.payload = iframeUrls\nreturn msg;",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
@@ -1786,7 +1786,7 @@
         "z": "41f8c2b710ddca0a",
         "g": "9cd83b71e925ce2c",
         "name": "function 9",
-        "func": "function createIframe(url){\n    return `<iframe style='flex: 1 0 31%' height=\"400\" frameborder=\"0\" src=\"${url}\"></iframe>`\n}\n\nlet urls = msg.payload\nmsg.template = urls.reduce((prev, curr) => prev + createIframe(curr), '<div style=\"display:flex; flex-direction:row; flex-wrap:wrap; gap:2px 3px; justify-content: space-between\">')\nmsg.template = msg.template + \"</div>\"\nreturn msg;\n",
+        "func": "function createIframe(url){\n    return `<object style='flex: 1 0 31%' height=\"400\" frameborder=\"0\" data=\"${url}\"></object>`\n}\n\nlet urls = msg.payload\nmsg.template = urls.reduce((prev, curr) => prev + createIframe(curr), '<div style=\"display:flex; flex-direction:row; flex-wrap:wrap; gap:2px 3px; justify-content: space-between\">')\nmsg.template = msg.template + \"</div>\"\nreturn msg;\n",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
@@ -2162,9 +2162,7 @@
         "type": "link in",
         "z": "755838468578bf48",
         "name": "Global Var Initialized",
-        "links": [
-            "c623a22e0f8f2072"
-        ],
+        "links": [],
         "x": 205,
         "y": 440,
         "wires": [
