@@ -107,6 +107,7 @@ services:
     hostname: central-control-system
     restart: always
     env_file:
+      - ./central-control-system/.env
       - ./backend/.env
       - ./mosquitto/.env
     depends_on:

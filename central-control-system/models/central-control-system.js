@@ -51,11 +51,9 @@ export class CentralControlSystem {
 
   subscribeUserPreferencesUpdates() {
     const topic = USER_PREFERENCES_TOPIC;
+    const listenFn = this.handleUserPreferencesUpdate(topic);
     mqttClient.subscribe(topic);
-    mqttClient.on(
-      "message",
-      this.handleUserPreferencesUpdate(topic).bind(this)
-    );
+    mqttClient.on("message", (topic) => listenFn(topic));
   }
 
   handleUserPreferencesUpdate(subscribedTopic) {
@@ -74,25 +72,21 @@ export class CentralControlSystem {
 
   subscribeSensorActivation() {
     const topic = ACTIVATE_SENSOR_TOPIC;
+    const listenFn = this.handleSensorActivation(topic);
     mqttClient.subscribe(topic);
-    mqttClient.on("message", async (topic) => {
-      await this.handleSensorActivation(topic);
-      this.logger.log(topic);
-    });
+    mqttClient.on("message", async (topic) => await listenFn(topic));
   }
 
   subscribeActuatorActivation() {
-    const topic = ACTIVATE_ACTUATOR_TOPIC;
-    mqttClient.subscribe(topic);
-    mqttClient.on("message", async (topic) => {
-      await this.handleActuatorActivation(topic);
-      this.logger.log(topic);
-    });
+    const topicToListen = ACTIVATE_ACTUATOR_TOPIC;
+    const listenFn = this.handleActuatorActivation(topicToListen);
+    mqttClient.subscribe(topicToListen);
+    mqttClient.on("message", async (topic) => await listenFn(topic));
   }
 
-  async handleSensorActivation(topic) {
+  handleSensorActivation(topic) {
     const subscribedTopic = topic.replace("/#", "");
-    return async (topic, message) => {
+    return async (topic) => {
       // topic: sensors/activate/<room>/<type>/<id>
       if (!topic || !topic.includes(subscribedTopic)) return;
       const [room, type, id] = topic.split("/").slice(2);
@@ -108,9 +102,9 @@ export class CentralControlSystem {
     };
   }
 
-  async handleActuatorActivation(topic) {
+  handleActuatorActivation(topic) {
     const subscribedTopic = topic.replace("/#", "");
-    return async (topic, message) => {
+    return async (topic) => {
       // topic: actuators/activate/<room>/<type>/<id>
       if (!topic || !topic.includes(subscribedTopic)) return;
       const [room, type, id] = topic.split("/").slice(2);
@@ -173,9 +167,10 @@ export class CentralControlSystem {
   }
 
   subscribeSensorData() {
-    const topic = SENSOR_DATA_TOPIC;
-    mqttClient.subscribe(topic);
-    mqttClient.on("message", this.handleSensorData(topic).bind(this));
+    const topicToListen = SENSOR_DATA_TOPIC;
+    const listenFn = this.handleSensorData(topicToListen);
+    mqttClient.subscribe(topicToListen);
+    mqttClient.on("message", (topic) => listenFn(topic));
   }
 
   handleSensorData(topic) {
