@@ -53,7 +53,7 @@ export class CentralControlSystem {
     const topic = USER_PREFERENCES_TOPIC;
     const listenFn = this.handleUserPreferencesUpdate(topic);
     mqttClient.subscribe(topic);
-    mqttClient.on("message", (topic) => listenFn(topic));
+    mqttClient.on("message", (topic, message) => listenFn(topic, message));
   }
 
   handleUserPreferencesUpdate(subscribedTopic) {
@@ -139,7 +139,7 @@ export class CentralControlSystem {
       const sensor = { type, room: roomName, id };
       await addSensorToRoomDashboard({ sensor });
       room.addSensor(sensor);
-      this.logger.log(`Activated ${type} sensor in ${roomName}.`);
+      this.logger.log(`2) Activated ${type} sensor in ${roomName}.`);
     } catch (error) {
       this.logger.log(error.message);
     } finally {
@@ -158,7 +158,7 @@ export class CentralControlSystem {
       const actuator = { type, room: roomName, id };
       await addActuatorToRoomDashboard({ actuator });
       room.addActuator(actuator);
-      this.logger.log(`Activated ${type} actuator in ${roomName}.`);
+      this.logger.log(`2) Activated ${type} actuator in ${roomName}.`);
     } catch (error) {
       this.logger.log(error.message);
     } finally {
@@ -170,19 +170,20 @@ export class CentralControlSystem {
     const topicToListen = SENSOR_DATA_TOPIC;
     const listenFn = this.handleSensorData(topicToListen);
     mqttClient.subscribe(topicToListen);
-    mqttClient.on("message", (topic) => listenFn(topic));
+    mqttClient.on("message", (topic, message) => listenFn(topic, message));
   }
 
   handleSensorData(topic) {
     const subscribedTopic = topic.replace("/#", "");
     return (topic, message) => {
+      console.log(topic);
       // topic: sensors/data/<room>/<type>/<id>
       if (!topic || !topic.includes(subscribedTopic)) return;
       const [room, type, id] = topic.split("/").slice(2);
       if (type && room && id && message) {
         try {
           const payload = JSON.parse(message.toString());
-          // this.logger.log(payload)
+          this.logger.log(payload);
           this.evaluateData({ type, roomName: room, id, message: payload });
         } catch (error) {
           this.logger.log(error.message);
@@ -233,6 +234,7 @@ export class CentralControlSystem {
   async processQueue() {
     if (this.activationQueue.length === 0) {
       this.isProcessingQueue = false;
+      console.log("Queue is empty.");
       return;
     }
 
@@ -241,22 +243,14 @@ export class CentralControlSystem {
     // activateSensor or activateActuator methods
     const key = `activate${device.activationType}`;
     await this[key]({ ...device });
-    this.logger.log("-----------------------------------");
-    this.logger.log(
-      `Processing Queue with device ${device.id}-${device.type} in room ${device.roomName}.`
-    );
-    this.logger.log("-----------------------------------");
     await this.processQueue();
   }
 
   async queueActivation({ device }) {
     this.logger.log(
-      `Queued ${device.activationType} ${device.type} in room ${device.roomName}.`
+      `1) Queued ${device.activationType} ${device.type} in room ${device.roomName}.`
     );
     this.activationQueue.push(device);
-    this.logger.log(
-      `Queued ${device.activationType} ${device.type} in room ${device.roomName}.`
-    );
     if (!this.isProcessingQueue) {
       await this.processQueue();
     }
