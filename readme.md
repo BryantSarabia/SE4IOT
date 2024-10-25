@@ -28,7 +28,6 @@ The sensors and actuators used in this project are simulated using Node.js. The 
 - MongoDB
 - Grafana
 - InfluxDB
-- PostgreSQL
 
 ## Architecture
 
@@ -62,10 +61,6 @@ The user preferences are stored in a MongoDB database.
 ### Grafana
 
 Grafana is used to create the dashboards for the sensors and actuators. The dashboards are created using the Grafana API.
-
-### PostgreSQL
-
-PostgreSQL is used to store the data of grafana.
 
 ### Influxdb
 
@@ -117,9 +112,6 @@ After the central control system generates the action to perform, it sends the a
   - Username: `admin`
   - Password: `admin`
   - Url: <http://localhost:3000>
-- **PostgreSQL**:
-  - Username: `admin`
-  - Password: `adminadmin`
 - **NodeRED**:
   - Url: <http://localhost:1880>
 - **Mosquitto**:
